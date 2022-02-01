@@ -8,9 +8,9 @@ import br.com.devcapu.beehealthy.data.database.dao.PatientDAO
 import br.com.devcapu.beehealthy.data.database.entity.PatientEntity
 
 @Database(entities = [PatientEntity::class], version = 1)
-abstract class BeeHealthyDatabase: RoomDatabase() {
+abstract class BeeHealthyDatabase : RoomDatabase() {
     companion object {
-        private const val DATABASE_NAME = "note.db"
+        private const val DATABASE_NAME = "beeHealthy.db"
 
         private var instance: BeeHealthyDatabase? = null
 

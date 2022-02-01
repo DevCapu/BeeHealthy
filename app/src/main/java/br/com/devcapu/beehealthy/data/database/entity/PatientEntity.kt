@@ -1,9 +1,10 @@
 package br.com.devcapu.beehealthy.data.database.entity
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "patient")
 data class PatientEntity(
-    private val height: Float,
-    private val weight: Float
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    val bmi: Float,
 )
