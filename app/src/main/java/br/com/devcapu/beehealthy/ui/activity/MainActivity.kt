@@ -1,5 +1,7 @@
 package br.com.devcapu.beehealthy.ui.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -52,6 +54,12 @@ class MainActivity : ComponentActivity() {
             }) {
                 Text(text = stringResource(R.string.calculate_imc))
             }
+        }
+    }
+
+    companion object{
+        fun getIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
         }
     }
 

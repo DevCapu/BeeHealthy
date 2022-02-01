@@ -11,8 +11,10 @@
         android:theme="@style/Theme.BeeHealthy">
         <activity
             android:name=".ui.activity.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.BeeHealthy">
+            android:theme="@style/Theme.BeeHealthy" />
+
+        <activity android:name=".ui.activity.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
