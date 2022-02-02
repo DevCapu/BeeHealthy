@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.ui.viewModel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -27,8 +28,11 @@ class LoginViewModel() : ViewModel() {
         val auth = Firebase.auth
         if (!isSignedIn()) {
             val createUserWithEmailAndPassword = auth.signInWithEmailAndPassword(email, password)
-            createUserWithEmailAndPassword.addOnCompleteListener {
-                _loggedIn.value = it.isSuccessful
+            createUserWithEmailAndPassword.addOnSuccessListener {
+                _loggedIn.value = true
+            }
+            createUserWithEmailAndPassword.addOnFailureListener {
+                Log.e("LOGIN", "signIn: ${it.message}", )
             }
         }
     }
