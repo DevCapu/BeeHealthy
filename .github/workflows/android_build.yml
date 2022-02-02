@@ -3,9 +3,10 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
+      - name: Clone repository
       - uses: actions/checkout@v1
+
       - name: Setup JDK
         uses: actions/setup-java@v1
         with:
@@ -16,8 +17,8 @@ jobs:
           FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
         run: echo $FIREBASE_SECRET > app/google-services.json
 
-      - name: Run Tests
-        run: ./gradlew test
-
       - name: Build Project
         run: ./gradlew assemble
+
+      - name: Run Tests
+        run: ./gradlew test
