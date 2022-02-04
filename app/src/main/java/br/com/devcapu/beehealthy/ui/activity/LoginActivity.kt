@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.ui.viewModel.LoginViewModel
@@ -30,14 +31,14 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.signedIn.observe(this) {
-            if (it) {
+        viewModel.signedIn.observe(this) { isSignedIn ->
+            if (isSignedIn) {
                 goToHomeActivity()
             }
         }
 
         setContent {
-            LoginScreen()
+            LoginScreen { goToRegisterActivity() }
         }
     }
 
@@ -58,94 +59,94 @@ class LoginActivity : ComponentActivity() {
     companion object {
         fun getIntent(context: Context) = Intent(context, LoginActivity::class.java)
     }
+}
 
-    @Composable
-    fun LoginScreen() {
-        var showPassword by remember { mutableStateOf(false) }
-        BeeHealthyTheme {
-            Column(
+@Composable
+fun LoginScreen(viewModel: LoginViewModel = viewModel(), onClickOnRegisterButton: () -> Unit) {
+    var showPassword by remember { mutableStateOf(false) }
+    BeeHealthyTheme {
+        Column(
+            modifier = Modifier
+                .padding(32.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.beehealthylogo),
+                contentDescription = "Bee with a plus sign icon",
                 modifier = Modifier
-                    .padding(32.dp)
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.beehealthylogo),
-                    contentDescription = "Bee with a plus sign icon",
-                    modifier = Modifier
-                        .size(128.dp)
-                        .padding(bottom = 16.dp)
-                )
+                    .size(128.dp)
+                    .padding(bottom = 16.dp)
+            )
 
-                Text(
-                    text = "Don't worry",
-                    style = MaterialTheme.typography.h2
-                )
-                Text(
-                    text = "Bee Healthy",
-                    style = MaterialTheme.typography.h1,
-                    modifier = Modifier.padding(bottom = 32.dp)
-                )
+            Text(
+                text = "Don't worry",
+                style = MaterialTheme.typography.h2
+            )
+            Text(
+                text = "Bee Healthy",
+                style = MaterialTheme.typography.h1,
+                modifier = Modifier.padding(bottom = 32.dp)
+            )
 
-                OutlinedTextField(
-                    value = viewModel.email,
-                    onValueChange = { viewModel.email = it },
-                    placeholder = {
-                        Text(text = "Email")
-                    },
-                    modifier = Modifier
-                        .padding(bottom = 16.dp)
-                        .fillMaxWidth()
-                )
+            OutlinedTextField(
+                value = viewModel.email,
+                onValueChange = { viewModel.email = it },
+                placeholder = {
+                    Text(text = "Email")
+                },
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .fillMaxWidth()
+            )
 
-                OutlinedTextField(
-                    value = viewModel.password,
-                    onValueChange = { viewModel.password = it },
-                    placeholder = {
-                        Text(text = "Senha")
-                    },
-                    visualTransformation = if (showPassword) {
-                        VisualTransformation.None
-                    } else {
-                        PasswordVisualTransformation()
-                    },
-                    trailingIcon = {
-                        IconButton(onClick = { showPassword = !showPassword }) {
-                            if (showPassword) {
-                                Icon(imageVector = Icons.Outlined.Visibility,
-                                    contentDescription = "Eye open")
-                            } else {
-                                Icon(imageVector = Icons.Outlined.VisibilityOff,
-                                    contentDescription = "Eye open")
-                            }
+            OutlinedTextField(
+                value = viewModel.password,
+                onValueChange = { viewModel.password = it },
+                placeholder = {
+                    Text(text = "Senha")
+                },
+                visualTransformation = if (showPassword) {
+                    VisualTransformation.None
+                } else {
+                    PasswordVisualTransformation()
+                },
+                trailingIcon = {
+                    IconButton(onClick = { showPassword = !showPassword }) {
+                        if (showPassword) {
+                            Icon(imageVector = Icons.Outlined.Visibility,
+                                contentDescription = "Eye open")
+                        } else {
+                            Icon(imageVector = Icons.Outlined.VisibilityOff,
+                                contentDescription = "Eye open")
                         }
-                    },
-                    modifier = Modifier
-                        .padding(bottom = 32.dp)
-                        .fillMaxWidth()
-                )
+                    }
+                },
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+                    .fillMaxWidth()
+            )
 
-                Button(
-                    onClick = {
-                        viewModel.signIn()
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp)
-                ) {
-                    Text(text = "Entrar")
-                }
-                TextButton(onClick = { goToRegisterActivity() }) {
-                    Text(text = "Não tem conta ainda? Criar!")
-                }
+            Button(
+                onClick = {
+                    viewModel.signIn()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
+            ) {
+                Text(text = "Entrar")
+            }
+            TextButton(onClick = { onClickOnRegisterButton() }) {
+                Text(text = "Não tem conta ainda? Criar!")
             }
         }
     }
+}
 
-    @Preview(showSystemUi = true)
-    @Composable
-    fun LoginScreenPreview() {
-        LoginScreen()
-    }
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+    LoginScreen() {}
 }

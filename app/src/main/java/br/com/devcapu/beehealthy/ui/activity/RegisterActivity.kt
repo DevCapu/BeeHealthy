@@ -150,7 +150,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(), onClickAlreadyHas
     }
 }
 
-@Preview
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
     RegisterScreen(){}

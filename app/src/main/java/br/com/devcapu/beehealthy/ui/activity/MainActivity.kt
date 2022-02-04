@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
@@ -21,7 +22,7 @@ import br.com.devcapu.beehealthy.ui.viewModel.HomeViewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val factory by lazy {
+    private val viewModel: HomeViewModel by viewModels() {
         val dataSource = PatientDataSource(this)
         HomeViewModel.Factory(dataSource)
     }
@@ -30,29 +31,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BeeHealthyTheme {
-                HomeScreen()
-            }
-        }
-    }
-
-    @Composable
-    fun HomeScreen(viewModel: HomeViewModel = viewModel(factory = factory)) {
-        Column {
-            OutlinedTextField(value = viewModel.height,
-                onValueChange = { viewModel.height = it },
-                placeholder = {
-                    Text(text = stringResource(R.string.height))
-                })
-            OutlinedTextField(value = viewModel.weight,
-                onValueChange = { viewModel.weight = it },
-                placeholder = {
-                    Text(text = stringResource(R.string.weight))
-                })
-
-            Button(onClick = {
-                viewModel.calculateBMI()
-            }) {
-                Text(text = stringResource(R.string.calculate_imc))
+                HomeScreen(viewModel)
             }
         }
     }
@@ -62,13 +41,34 @@ class MainActivity : ComponentActivity() {
             return Intent(context, MainActivity::class.java)
         }
     }
+}
 
+@Composable
+fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
+    Column {
+        OutlinedTextField(value = viewModel.height,
+            onValueChange = { viewModel.height = it },
+            placeholder = {
+                Text(text = stringResource(R.string.height))
+            })
+        OutlinedTextField(value = viewModel.weight,
+            onValueChange = { viewModel.weight = it },
+            placeholder = {
+                Text(text = stringResource(R.string.weight))
+            })
 
-    @Preview(showBackground = true, showSystemUi = true)
-    @Composable
-    private fun HomeScreenPreview() {
-        BeeHealthyTheme {
-            HomeScreen()
+        Button(onClick = {
+            viewModel.calculateBMI()
+        }) {
+            Text(text = stringResource(R.string.calculate_imc))
         }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun HomeScreenPreview() {
+    BeeHealthyTheme {
+        HomeScreen()
     }
 }
