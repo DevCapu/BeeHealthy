@@ -1,5 +1,7 @@
 package br.com.devcapu.beehealthy.ui.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -49,10 +51,17 @@ class LoginActivity : ComponentActivity() {
         startActivity(MainActivity.getIntent(this))
     }
 
+    private fun goToRegisterActivity() {
+        startActivity(RegisterActivity.getIntent(this))
+    }
+
+    companion object {
+        fun getIntent(context: Context) = Intent(context, LoginActivity::class.java)
+    }
+
     @Composable
     fun LoginScreen() {
         var showPassword by remember { mutableStateOf(false) }
-
         BeeHealthyTheme {
             Column(
                 modifier = Modifier
@@ -127,8 +136,9 @@ class LoginActivity : ComponentActivity() {
                 ) {
                     Text(text = "Entrar")
                 }
-
-                TextButton(onClick = { /*TODO*/ }) { Text(text = "Não tem conta ainda? Criar!") }
+                TextButton(onClick = { goToRegisterActivity() }) {
+                    Text(text = "Não tem conta ainda? Criar!")
+                }
             }
         }
     }
