@@ -19,6 +19,7 @@ class HomeViewModel(patientDataSource: PatientDataSource) : ViewModel() {
     }
 
     class Factory(private val patientDataSource: PatientDataSource) : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return HomeViewModel(patientDataSource = patientDataSource) as T
         }
