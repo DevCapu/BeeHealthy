@@ -33,8 +33,7 @@ class RegisterActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         viewModel.goToNextStep.observe(this) {
             if (it) {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
+                startActivity(HealthRegisterActivity.getIntent(this))
             }
         }
 
@@ -42,7 +41,7 @@ class RegisterActivity : ComponentActivity() {
     }
 
     private fun goToLoginActivity() {
-       startActivity(LoginActivity.getIntent(this))
+        startActivity(LoginActivity.getIntent(this))
     }
 
     companion object {
@@ -51,7 +50,10 @@ class RegisterActivity : ComponentActivity() {
 }
 
 @Composable
-fun RegisterScreen(viewModel: RegisterViewModel = viewModel(), onClickAlreadyHasAnAccount: () -> Unit) {
+fun RegisterScreen(
+    viewModel: RegisterViewModel = viewModel(),
+    onClickAlreadyHasAnAccount: () -> Unit
+) {
     var showPassword by remember { mutableStateOf(false) }
     BeeHealthyTheme {
         Column(
