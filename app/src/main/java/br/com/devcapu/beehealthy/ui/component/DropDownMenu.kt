@@ -151,6 +151,6 @@ fun DropDownMenuPreview() {
         selectedIndex = 0,
         onChange = {},
         label = { Text(text = "Label") },
-        modifier = Modifier
+        modifier = Modifier.fillMaxWidth()
     )
 }
