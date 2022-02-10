@@ -1,5 +1,8 @@
 package br.com.devcapu.domain.repository
 
+import br.com.devcapu.domain.model.Patient
+
 class PatientRepository(private val patientDataSource: PatientDataSource) {
-    fun saveBMI(bmi: Float) = patientDataSource.saveBMI(bmi)
+
+    fun save(patient: Patient) = patientDataSource.save(patient)
 }

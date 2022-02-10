@@ -13,10 +13,10 @@ import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.ui.theme.BeeHealthyTheme
 
 @Composable
-fun FormWithBeeHealthIdentity(content: @Composable () -> Unit) {
+fun FormWithBeeHealthIdentity(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     BeeHealthyTheme {
         Column(
-            modifier = Modifier.padding(32.dp).fillMaxSize(),
+            modifier = modifier.fillMaxSize().padding(32.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

@@ -1,11 +1,12 @@
 package br.com.devcapu.beehealthy.data.database.dao
 
 import androidx.room.Dao
-import androidx.room.Query
+import androidx.room.Insert
+import br.com.devcapu.beehealthy.data.database.entity.PatientEntity
 
 @Dao
 interface PatientDAO {
 
-    @Query("INSERT INTO patient (bmi) VALUES (:bmi)")
-    fun saveBMI(bmi: Float)
+    @Insert
+    fun insert(patient: PatientEntity)
 }

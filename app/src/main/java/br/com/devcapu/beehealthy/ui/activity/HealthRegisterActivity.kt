@@ -5,22 +5,35 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.devcapu.beehealthy.data.database.dataSource.PatientDataSource
 import br.com.devcapu.beehealthy.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.ui.component.OutlineDropDownMenu
 import br.com.devcapu.beehealthy.ui.viewModel.HealthRegisterViewModel
 
 class HealthRegisterActivity : ComponentActivity() {
 
+    private val viewModel: HealthRegisterViewModel by viewModels {
+        val dataSource = PatientDataSource(this)
+        HealthRegisterViewModel.Factory(patientDataSource = dataSource)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val email: String = intent.getStringExtra("PATIENT_EMAIL") as String
+        viewModel.email = email
+
         setContent { HealthRegisterScreen() }
     }
 
@@ -35,7 +48,9 @@ fun HealthRegisterScreen(viewModel: HealthRegisterViewModel = viewModel()) {
     val objectives = listOf("Perder", "Definir", "Manter")
     val activityLevel = listOf("Baixo", "Médio", "Alto")
 
-    FormWithBeeHealthIdentity {
+    val scrollState = rememberScrollState()
+
+    FormWithBeeHealthIdentity(modifier = Modifier.verticalScroll(state = scrollState)) {
         OutlinedTextField(
             value = viewModel.name,
             onValueChange = { viewModel.name = it },
@@ -61,13 +76,6 @@ fun HealthRegisterScreen(viewModel: HealthRegisterViewModel = viewModel()) {
             value = viewModel.weight,
             onValueChange = { viewModel.weight = it },
             placeholder = { Text(text = "peso") },
-            modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = viewModel.height,
-            onValueChange = { viewModel.height = it },
-            placeholder = { Text(text = "Altura") },
             modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
         )
 
@@ -100,7 +108,7 @@ fun HealthRegisterScreen(viewModel: HealthRegisterViewModel = viewModel()) {
         OutlineDropDownMenu(
             values = activityLevel,
             selectedIndex = 0,
-            onChange = { viewModel.activityLevel = genders[it] },
+            onChange = { viewModel.activityLevel = activityLevel[it] },
             label = {
                 Text(
                     text = "Nível de atividade",
@@ -111,7 +119,7 @@ fun HealthRegisterScreen(viewModel: HealthRegisterViewModel = viewModel()) {
         )
 
         Button(
-            onClick = { /*TODO()*/ },
+            onClick = { viewModel.finishSignUp() },
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         ) { Text(text = "Pronto!") }
     }

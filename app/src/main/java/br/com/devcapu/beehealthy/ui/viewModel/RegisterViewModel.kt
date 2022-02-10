@@ -33,7 +33,10 @@ class RegisterViewModel : ViewModel() {
             }
 
             createUserWithEmailAndPassword.addOnFailureListener {
-                Log.e("ERROR", "register: ${it.message} email: $email", )
+                Log.e("RegisterViewModel",
+                    "Register: ${it.message}" +
+                        "\n email: $email" +
+                        "\n password: $password")
             }
         }
     }

@@ -31,7 +31,9 @@ class RegisterActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         viewModel.goToNextStep.observe(this) {
             if (it) {
-                startActivity(HealthRegisterActivity.getIntent(this))
+                val intent = HealthRegisterActivity.getIntent(this)
+                intent.putExtra("PATIENT_EMAIL", viewModel.email)
+                startActivity(intent)
             }
         }
 
