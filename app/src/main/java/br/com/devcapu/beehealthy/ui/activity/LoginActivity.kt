@@ -8,14 +8,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.ui.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.ui.viewModel.LoginViewModel
@@ -33,7 +35,24 @@ class LoginActivity : ComponentActivity() {
         }
 
         setContent {
-            LoginScreen { goToRegisterActivity() }
+            var showPassword by remember { mutableStateOf(false) }
+            val passwordVisualizationMode = if (showPassword) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            }
+
+            LoginContent(
+                email = viewModel.email,
+                onEmailChange = { viewModel.email = it },
+                password = viewModel.password,
+                onPasswordChange = { viewModel.password = it },
+                showPassword = showPassword,
+                passwordVisualizationMode = passwordVisualizationMode,
+                onChangePasswordVisualizationMode = { showPassword = !showPassword },
+                onClickOnSignIn = { viewModel.signIn() },
+                onClickGoToRegistration = { goToRegisterActivity() }
+            )
         }
     }
 
@@ -57,38 +76,42 @@ class LoginActivity : ComponentActivity() {
 }
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = viewModel(), onClickOnRegisterButton: () -> Unit) {
-    var showPassword by remember { mutableStateOf(false) }
-    val passwordVisualizationMode = if (showPassword) {
-        VisualTransformation.None
-    } else {
-        PasswordVisualTransformation()
-    }
+fun LoginContent(
+    email: String,
+    onEmailChange: (String) -> Unit,
+    password: String,
+    showPassword: Boolean,
+    passwordVisualizationMode: VisualTransformation,
+    onChangePasswordVisualizationMode: () -> Unit,
+    onClickGoToRegistration: () -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onClickOnSignIn: () -> Unit,
+) {
 
     FormWithBeeHealthIdentity {
         OutlinedTextField(
-            value = viewModel.email,
-            onValueChange = { viewModel.email = it },
+            value = email,
+            onValueChange = onEmailChange,
             placeholder = { Text(text = "Email") },
             modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
         )
 
         OutlinedTextField(
-            value = viewModel.password,
-            onValueChange = { viewModel.password = it },
+            value = password,
+            onValueChange = onPasswordChange,
             placeholder = { Text(text = "Senha") },
             visualTransformation = passwordVisualizationMode,
-            trailingIcon = { PasswordTrailingIcon(showPassword) { showPassword = !showPassword} },
+            trailingIcon = { PasswordTrailingIcon(showPassword) { onChangePasswordVisualizationMode() } },
             modifier = Modifier.padding(bottom = 32.dp).fillMaxWidth()
         )
 
         Button(
-            onClick = { viewModel.signIn() },
+            onClick = onClickOnSignIn,
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         ) { Text(text = "Entrar") }
 
         TextButton(
-            onClick = { onClickOnRegisterButton() }
+            onClick = onClickGoToRegistration
         ) { Text(text = "Não tem conta ainda? Criar!") }
     }
 }
@@ -96,5 +119,15 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel(), onClickOnRegisterButton
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen() {}
+    LoginContent(
+        email = "",
+        password = "",
+        onPasswordChange = {},
+        passwordVisualizationMode = PasswordVisualTransformation(),
+        onChangePasswordVisualizationMode = {},
+        onClickGoToRegistration = {},
+        onClickOnSignIn = {},
+        onEmailChange = {},
+        showPassword = false
+    )
 }

@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.data.database.dataSource.PatientDataSource
 import br.com.devcapu.beehealthy.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.ui.component.OutlineDropDownMenu
@@ -34,7 +33,29 @@ class HealthRegisterActivity : ComponentActivity() {
         val email: String = intent.getStringExtra("PATIENT_EMAIL") as String
         viewModel.email = email
 
-        setContent { HealthRegisterScreen() }
+        val genders = listOf("Masculino", "Feminino")
+        val objectives = listOf("Perder", "Definir", "Manter")
+        val activityLevel = listOf("Baixo", "Médio", "Alto")
+
+        setContent {
+            HealthRegisterContent(
+                name = viewModel.name,
+                onNameChange = { viewModel.name = it },
+                age = viewModel.age,
+                onAgeChange = { viewModel.age = it },
+                height = viewModel.height,
+                onHeightChange = { viewModel.height = it },
+                weight = viewModel.weight,
+                onWeightChange = { viewModel.weight = it },
+                biologicalGenders = genders,
+                onBiologicalGenderChange = { viewModel.biologicGender = genders[it] },
+                objectives = objectives,
+                onObjectiveChange = { viewModel.objective = objectives[it] },
+                activitiesLevel = activityLevel,
+                onActivityLevelChange = { viewModel.activityLevel = activityLevel[it] },
+                finishSignUp = { viewModel.finishSignUp() }
+            )
+        }
     }
 
     companion object {
@@ -43,46 +64,58 @@ class HealthRegisterActivity : ComponentActivity() {
 }
 
 @Composable
-fun HealthRegisterScreen(viewModel: HealthRegisterViewModel = viewModel()) {
-    val genders = listOf("Masculino", "Feminino")
-    val objectives = listOf("Perder", "Definir", "Manter")
-    val activityLevel = listOf("Baixo", "Médio", "Alto")
-
-    val scrollState = rememberScrollState()
-
-    FormWithBeeHealthIdentity(modifier = Modifier.verticalScroll(state = scrollState)) {
+fun HealthRegisterContent(
+    name: String,
+    onNameChange: (String) -> Unit,
+    age: String,
+    onAgeChange: (String) -> Unit,
+    height: String,
+    onHeightChange: (String) -> Unit,
+    weight: String,
+    onWeightChange: (String) -> Unit,
+    biologicalGenders: List<String>,
+    onBiologicalGenderChange: (Int) -> Unit,
+    objectives: List<String>,
+    onObjectiveChange: (Int) -> Unit,
+    activitiesLevel: List<String>,
+    onActivityLevelChange: (Int) -> Unit,
+    finishSignUp: () -> Unit,
+) {
+    FormWithBeeHealthIdentity(modifier = Modifier.verticalScroll(state = rememberScrollState())) {
         OutlinedTextField(
-            value = viewModel.name,
-            onValueChange = { viewModel.name = it },
+            value = name,
+            onValueChange = onNameChange,
             placeholder = { Text(text = "Name") },
             modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
         )
 
         OutlinedTextField(
-            value = viewModel.age,
-            onValueChange = { viewModel.age = it },
+            value = age,
+            onValueChange = onAgeChange,
             placeholder = { Text(text = "Age") },
             modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
         )
 
         OutlinedTextField(
-            value = viewModel.height,
-            onValueChange = { viewModel.height = it },
+            value = height,
+            onValueChange = onHeightChange,
             placeholder = { Text(text = "Altura") },
-            modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
         )
 
         OutlinedTextField(
-            value = viewModel.weight,
-            onValueChange = { viewModel.weight = it },
+            value = weight,
+            onValueChange = onWeightChange,
             placeholder = { Text(text = "peso") },
             modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
         )
 
         OutlineDropDownMenu(
-            values = genders,
+            values = biologicalGenders,
             selectedIndex = 0,
-            onChange = { viewModel.biologicGender = genders[it] },
+            onChange = onBiologicalGenderChange,
             label = {
                 Text(
                     text = "Sexo biológico",
@@ -95,7 +128,7 @@ fun HealthRegisterScreen(viewModel: HealthRegisterViewModel = viewModel()) {
         OutlineDropDownMenu(
             values = objectives,
             selectedIndex = 0,
-            onChange = { viewModel.objective = objectives[it] },
+            onChange = onObjectiveChange,
             label = {
                 Text(
                     text = "Objetivo",
@@ -106,9 +139,9 @@ fun HealthRegisterScreen(viewModel: HealthRegisterViewModel = viewModel()) {
         )
 
         OutlineDropDownMenu(
-            values = activityLevel,
+            values = activitiesLevel,
             selectedIndex = 0,
-            onChange = { viewModel.activityLevel = activityLevel[it] },
+            onChange = onActivityLevelChange,
             label = {
                 Text(
                     text = "Nível de atividade",
@@ -119,15 +152,31 @@ fun HealthRegisterScreen(viewModel: HealthRegisterViewModel = viewModel()) {
         )
 
         Button(
-            onClick = { viewModel.finishSignUp() },
+            onClick = finishSignUp,
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         ) { Text(text = "Pronto!") }
     }
 }
 
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun HealthRegisterScreenPreview() {
-    HealthRegisterScreen()
+    HealthRegisterContent(
+        name = "",
+        onNameChange = { },
+        age = "",
+        onAgeChange = { },
+        height = "",
+        onHeightChange = { },
+        weight = "",
+        onWeightChange = { },
+        biologicalGenders = listOf(""),
+        onBiologicalGenderChange = { },
+        objectives = listOf(""),
+        onObjectiveChange = { },
+        activitiesLevel = listOf(""),
+        onActivityLevelChange = { },
+        finishSignUp = { }
+    )
 }

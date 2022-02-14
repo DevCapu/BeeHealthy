@@ -8,17 +8,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Visibility
-import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material.Button
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.ui.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.ui.viewModel.RegisterViewModel
@@ -37,7 +36,28 @@ class RegisterActivity : ComponentActivity() {
             }
         }
 
-        setContent { RegisterScreen() { goToLoginActivity() } }
+        setContent {
+            var showPassword by remember { mutableStateOf(false) }
+            val passwordVisualizationMode = if (showPassword) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            }
+
+            RegisterContent(
+                email = viewModel.email,
+                onEmailChange = { viewModel.email = it },
+                password = viewModel.password,
+                onPasswordChange = { viewModel.password = it },
+                passwordConfirmation = viewModel.passwordConfirmation,
+                onPasswordConfirmationChange = { viewModel.passwordConfirmation = it },
+                showPassword = showPassword,
+                passwordVisualizationMode = passwordVisualizationMode,
+                onChangePasswordVisualizationMode = { showPassword = !showPassword },
+                onClickRegisterButton = { viewModel.register() },
+                onClickAlreadyHasAnAccount = { goToLoginActivity() }
+            )
+        }
     }
 
     private fun goToLoginActivity() {
@@ -50,57 +70,71 @@ class RegisterActivity : ComponentActivity() {
 }
 
 @Composable
-fun RegisterScreen(
-    viewModel: RegisterViewModel = viewModel(),
+fun RegisterContent(
+    email: String,
+    onEmailChange: (String) -> Unit,
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    passwordVisualizationMode: VisualTransformation,
+    onChangePasswordVisualizationMode: () -> Unit,
+    showPassword: Boolean,
+    passwordConfirmation: String,
+    onPasswordConfirmationChange: (String) -> Unit,
+    onClickRegisterButton: () -> Unit,
     onClickAlreadyHasAnAccount: () -> Unit,
 ) {
-    var showPassword by remember { mutableStateOf(false) }
-    val passwordVisualizationMode = if (showPassword) {
-        VisualTransformation.None
-    } else {
-        PasswordVisualTransformation()
-    }
-
     FormWithBeeHealthIdentity {
         OutlinedTextField(
-            value = viewModel.email,
-            onValueChange = { viewModel.email = it },
+            value = email,
+            onValueChange = onEmailChange,
             placeholder = { Text(text = "Email") },
-            modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
         )
 
         OutlinedTextField(
-            value = viewModel.password,
-            onValueChange = { viewModel.password = it },
-            placeholder = {Text(text = "Senha") },
+            value = password,
+            onValueChange = onPasswordChange ,
+            placeholder = { Text(text = "Senha") },
             visualTransformation = passwordVisualizationMode,
             trailingIcon = {
-                PasswordTrailingIcon(showPassword = showPassword) { showPassword = !showPassword}
+                PasswordTrailingIcon(showPassword = showPassword) { onChangePasswordVisualizationMode() }
             },
             modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
         )
 
         OutlinedTextField(
-            value = viewModel.passwordConfirmation,
-            onValueChange = { viewModel.passwordConfirmation = it },
+            value = passwordConfirmation,
+            onValueChange = onPasswordConfirmationChange,
             placeholder = { Text(text = "Confirmar senha") },
             visualTransformation = passwordVisualizationMode,
             modifier = Modifier.padding(bottom = 32.dp).fillMaxWidth()
         )
 
         Button(
-            onClick = {
-                viewModel.register()
-            },
+            onClick = onClickRegisterButton,
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         ) { Text(text = "Entrar") }
 
-        TextButton(onClick = { onClickAlreadyHasAnAccount() }) { Text(text = "Já tenho uma conta") }
+        TextButton(onClick = onClickAlreadyHasAnAccount) { Text(text = "Já tenho uma conta") }
     }
 }
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen() {}
+    RegisterContent(
+        email = "",
+        password =  "",
+        passwordConfirmation = "",
+        onEmailChange = {},
+        onPasswordChange = {},
+        onChangePasswordVisualizationMode = {},
+        onClickAlreadyHasAnAccount = {},
+        onClickRegisterButton = {},
+        onPasswordConfirmationChange = {},
+        passwordVisualizationMode = PasswordVisualTransformation(),
+        showPassword = true
+    )
 }
