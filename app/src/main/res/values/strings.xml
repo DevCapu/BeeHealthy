@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BeeHealthy</string>
+    <string name="app_name">Bee Healthy</string>
     <string name="weight">Peso</string>
     <string name="height">Altura</string>
     <string name="calculate_imc">Calcular IMC</string>
