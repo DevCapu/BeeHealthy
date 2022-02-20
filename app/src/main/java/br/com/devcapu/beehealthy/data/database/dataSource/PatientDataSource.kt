@@ -9,8 +9,7 @@ import br.com.devcapu.domain.repository.PatientDataSource
 class PatientDataSource(context: Context): PatientDataSource {
     private val patientDao = BeeHealthyDatabase.getInstance(context = context).patientDao()
 
-    override fun save(patient: Patient) {
-
-        patientDao.insert(PatientEntity.from(patient))
+    override fun save(patient: Patient): Long {
+        return patientDao.insert(PatientEntity.from(patient))
     }
 }

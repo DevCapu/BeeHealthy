@@ -8,5 +8,5 @@ import br.com.devcapu.beehealthy.data.database.entity.PatientEntity
 interface PatientDAO {
 
     @Insert
-    fun insert(patient: PatientEntity)
+    fun insert(patient: PatientEntity): Long
 }

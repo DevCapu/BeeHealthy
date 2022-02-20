@@ -5,12 +5,10 @@ import java.io.Serializable
 data class Patient(
     val name: String,
     val email: String,
-    val age: String,
+    val age: Int,
     val weight: Float,
     val height: Float,
-    val biologicGender: String,
+    val biologicGender: BiologicalGender,
     val activityLevel: String,
     val objective: String
-): Serializable {
-    var bmi = 0.0f
-}
+): Serializable

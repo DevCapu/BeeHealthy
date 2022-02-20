@@ -4,5 +4,5 @@ import br.com.devcapu.domain.model.Patient
 
 class PatientRepository(private val patientDataSource: PatientDataSource) {
 
-    fun save(patient: Patient) = patientDataSource.save(patient)
+    fun save(patient: Patient): Long = patientDataSource.save(patient)
 }

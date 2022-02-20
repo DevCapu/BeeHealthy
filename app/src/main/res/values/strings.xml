@@ -3,4 +3,5 @@
     <string name="weight">Peso</string>
     <string name="height">Altura</string>
     <string name="calculate_imc">Calcular IMC</string>
+    <string name="male_option">masculino</string>
 </resources>

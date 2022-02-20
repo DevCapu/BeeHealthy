@@ -5,10 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import br.com.devcapu.beehealthy.data.database.dataSource.HealthResultDataSource
 import br.com.devcapu.beehealthy.data.database.dataSource.PatientDataSource
 import br.com.devcapu.domain.repository.PatientRepository
 
-class HomeViewModel(patientDataSource: PatientDataSource) : ViewModel() {
+class HomeViewModel(
+    patientDataSource: PatientDataSource,
+    healthResultDataSource: HealthResultDataSource
+) : ViewModel() {
     private val patientRepository = PatientRepository(patientDataSource)
 
     var height by mutableStateOf("")
@@ -18,10 +22,16 @@ class HomeViewModel(patientDataSource: PatientDataSource) : ViewModel() {
 
     }
 
-    class Factory(private val patientDataSource: PatientDataSource) : ViewModelProvider.Factory {
+    class Factory(
+        private val patientDataSource: PatientDataSource,
+        private val healthResultDataSource: HealthResultDataSource
+        ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeViewModel(patientDataSource = patientDataSource) as T
+            return HomeViewModel(
+                patientDataSource = patientDataSource,
+                healthResultDataSource = healthResultDataSource
+            ) as T
         }
     }
 }

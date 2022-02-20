@@ -15,16 +15,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.devcapu.beehealthy.R
+import br.com.devcapu.beehealthy.data.database.dataSource.HealthResultDataSource
 import br.com.devcapu.beehealthy.data.database.dataSource.PatientDataSource
 import br.com.devcapu.beehealthy.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.ui.component.OutlineDropDownMenu
 import br.com.devcapu.beehealthy.ui.viewModel.HealthRegisterViewModel
+import br.com.devcapu.domain.model.BiologicalGender
 
 class HealthRegisterActivity : ComponentActivity() {
 
     private val viewModel: HealthRegisterViewModel by viewModels {
-        val dataSource = PatientDataSource(this)
-        HealthRegisterViewModel.Factory(patientDataSource = dataSource)
+        val patientDataSource = PatientDataSource(this)
+        val healthResultDataSource = HealthResultDataSource(this)
+        HealthRegisterViewModel.Factory(
+            patientDataSource = patientDataSource,
+            healthResultDataSource = healthResultDataSource
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,13 +55,25 @@ class HealthRegisterActivity : ComponentActivity() {
                 weight = viewModel.weight,
                 onWeightChange = { viewModel.weight = it },
                 biologicalGenders = genders,
-                onBiologicalGenderChange = { viewModel.biologicGender = genders[it] },
+                onBiologicalGenderChange = {
+                    if (genders[it] == getString(R.string.male_option)) {
+                        viewModel.biologicGender = BiologicalGender.MALE.toString()
+                    } else {
+                        viewModel.biologicGender = BiologicalGender.FEMALE.toString()
+                    }
+                },
                 objectives = objectives,
                 onObjectiveChange = { viewModel.objective = objectives[it] },
                 activitiesLevel = activityLevel,
                 onActivityLevelChange = { viewModel.activityLevel = activityLevel[it] },
                 finishSignUp = { viewModel.finishSignUp() }
             )
+        }
+
+        viewModel.userCreated.observe(this) { wasCreated ->
+            if (wasCreated) {
+                startActivity(MainActivity.getIntent(this))
+            }
         }
     }
 
@@ -86,14 +105,18 @@ fun HealthRegisterContent(
             value = name,
             onValueChange = onNameChange,
             placeholder = { Text(text = "Name") },
-            modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
         )
 
         OutlinedTextField(
             value = age,
             onValueChange = onAgeChange,
             placeholder = { Text(text = "Age") },
-            modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
         )
 
         OutlinedTextField(
@@ -109,7 +132,9 @@ fun HealthRegisterContent(
             value = weight,
             onValueChange = onWeightChange,
             placeholder = { Text(text = "peso") },
-            modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth()
         )
 
         OutlineDropDownMenu(
@@ -122,7 +147,9 @@ fun HealthRegisterContent(
                     color = MaterialTheme.colors.onSurface.copy(ContentAlpha.medium)
                 )
             },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
         )
 
         OutlineDropDownMenu(
@@ -135,7 +162,9 @@ fun HealthRegisterContent(
                     color = MaterialTheme.colors.onSurface.copy(ContentAlpha.medium)
                 )
             },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
         )
 
         OutlineDropDownMenu(
@@ -148,12 +177,16 @@ fun HealthRegisterContent(
                     color = MaterialTheme.colors.onSurface.copy(ContentAlpha.medium)
                 )
             },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 32.dp)
         )
 
         Button(
             onClick = finishSignUp,
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
         ) { Text(text = "Pronto!") }
     }
 }
