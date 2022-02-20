@@ -3,10 +3,7 @@ package br.com.devcapu.beehealthy.ui.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import br.com.devcapu.beehealthy.data.database.dataSource.HealthResultDataSource
 import br.com.devcapu.beehealthy.data.database.dataSource.PatientDataSource
 import br.com.devcapu.domain.model.BiologicalGender
@@ -14,7 +11,6 @@ import br.com.devcapu.domain.model.Patient
 import br.com.devcapu.domain.repository.HealthRepository
 import br.com.devcapu.domain.repository.PatientRepository
 import br.com.devcapu.domain.useCase.SavePatient
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -55,10 +51,10 @@ class HealthRegisterViewModel(
             healthRepository = healthRepository
         )
 
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             savePatient(patient = patient)
-            _userCreated.value = true
         }
+        _userCreated.value = true
     }
 
     class Factory(
