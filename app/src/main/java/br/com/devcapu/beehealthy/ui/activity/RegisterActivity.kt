@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -21,14 +23,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.data.database.dataSource.HealthResultDataSource
 import br.com.devcapu.beehealthy.data.database.dataSource.PatientDataSource
 import br.com.devcapu.beehealthy.ui.component.FormWithBeeHealthIdentity
-import br.com.devcapu.beehealthy.ui.component.OutlineDropDownMenu
 import br.com.devcapu.beehealthy.ui.component.PasswordTrailingIcon
+import br.com.devcapu.beehealthy.ui.component.SelectGender
+import br.com.devcapu.beehealthy.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.ui.viewModel.RegisterViewModel
-import br.com.devcapu.domain.model.BiologicalGender
 
 class RegisterActivity : ComponentActivity() {
 
@@ -46,68 +47,66 @@ class RegisterActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
+            BeeHealthyTheme {
+                NavHost(navController = navController, startDestination = "emailAndPassword") {
+                    composable("emailAndPassword") {
 
-            NavHost(navController = navController, startDestination = "emailAndPassword") {
-                composable("emailAndPassword") {
+                        var showPassword by remember { mutableStateOf(false) }
+                        val passwordVisualizationMode = if (showPassword) {
+                            VisualTransformation.None
+                        } else {
+                            PasswordVisualTransformation()
+                        }
 
-                    var showPassword by remember { mutableStateOf(false) }
-                    val passwordVisualizationMode = if (showPassword) {
-                        VisualTransformation.None
-                    } else {
-                        PasswordVisualTransformation()
-                    }
-
-                    RegisterContent(
-                        email = viewModel.email,
-                        onEmailChange = { viewModel.email = it },
-                        password = viewModel.password,
-                        onPasswordChange = { viewModel.password = it },
-                        passwordConfirmation = viewModel.passwordConfirmation,
-                        onPasswordConfirmationChange = { viewModel.passwordConfirmation = it },
-                        showPassword = showPassword,
-                        passwordVisualizationMode = passwordVisualizationMode,
-                        onChangePasswordVisualizationMode = { showPassword = !showPassword },
-                        onClickRegisterButton = {
-                            viewModel.initSignUp()
-                                .observe(this@RegisterActivity) { userHasBeenCreated ->
-                                    if (userHasBeenCreated) {
-                                        navController.navigate("initialInfoForm")
+                        RegisterContent(
+                            email = viewModel.email,
+                            onEmailChange = { viewModel.email = it },
+                            password = viewModel.password,
+                            onPasswordChange = { viewModel.password = it },
+                            passwordConfirmation = viewModel.passwordConfirmation,
+                            onPasswordConfirmationChange = { viewModel.passwordConfirmation = it },
+                            showPassword = showPassword,
+                            passwordVisualizationMode = passwordVisualizationMode,
+                            onChangePasswordVisualizationMode = { showPassword = !showPassword },
+                            onClickRegisterButton = {
+                                viewModel.initSignUp()
+                                    .observe(this@RegisterActivity) { userHasBeenCreated ->
+                                        if (userHasBeenCreated) {
+                                            navController.navigate("initialInfoForm")
+                                        }
                                     }
-                                }
-                        },
-                        onClickAlreadyHasAnAccount = { goToLoginActivity() }
-                    )
-                }
-                composable("initialInfoForm") {
-                    val genders = listOf("Masculino", "Feminino")
-                    val objectives = listOf("Perder", "Definir", "Manter")
-                    val activityLevel = listOf("Baixo", "Médio", "Alto")
-
-                    HealthRegisterContent(
-                        name = viewModel.name,
-                        onNameChange = { viewModel.name = it },
-                        age = viewModel.age,
-                        onAgeChange = { viewModel.age = it },
-                        height = viewModel.height,
-                        onHeightChange = { viewModel.height = it },
-                        weight = viewModel.weight,
-                        onWeightChange = { viewModel.weight = it },
-                        biologicalGenders = genders,
-                        onBiologicalGenderChange = {
-                            if (genders[it] == getString(R.string.male_option)) {
-                                viewModel.biologicGender = BiologicalGender.MALE.toString()
-                            } else {
-                                viewModel.biologicGender = BiologicalGender.FEMALE.toString()
+                            },
+                            onClickAlreadyHasAnAccount = { goToLoginActivity() }
+                        )
+                    }
+                    composable("initialInfoForm") {
+                        HealthRegisterContent(
+                            name = viewModel.name,
+                            onNameChange = { viewModel.name = it },
+                            age = viewModel.age,
+                            onAgeChange = { viewModel.age = it },
+                            height = viewModel.height,
+                            onHeightChange = { viewModel.height = it },
+                            weight = viewModel.weight,
+                            onWeightChange = { viewModel.weight = it },
+                            finishSignUp = {
+                                navController.navigate("genderSelection")
                             }
-                        },
-                        objectives = objectives,
-                        onObjectiveChange = { viewModel.objective = objectives[it] },
-                        activitiesLevel = activityLevel,
-                        onActivityLevelChange = {
-                            viewModel.activityLevel = activityLevel[it]
-                        },
-                        finishSignUp = { viewModel.finishSignUp() }
-                    )
+                        )
+                    }
+                    composable("genderSelection") {
+                        SelectGender(onClick = {
+                            viewModel.biologicGender = it
+                        }) {
+                            navController.navigate("objectiveSelection")
+                        }
+                    }
+                    composable("objectiveSelection") {
+                        Text("Activity level")
+                    }
+                    composable("activityLevel") {
+                        Text("Activity level")
+                    }
                 }
             }
         }
@@ -174,7 +173,7 @@ fun RegisterContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)
-        ) { Text(text = "Entrar") }
+        ) { Text(text = "Próximo passo") }
 
         TextButton(onClick = onClickAlreadyHasAnAccount) { Text(text = "Já tenho uma conta") }
     }
@@ -190,19 +189,13 @@ fun HealthRegisterContent(
     onHeightChange: (String) -> Unit,
     weight: String,
     onWeightChange: (String) -> Unit,
-    biologicalGenders: List<String>,
-    onBiologicalGenderChange: (Int) -> Unit,
-    objectives: List<String>,
-    onObjectiveChange: (Int) -> Unit,
-    activitiesLevel: List<String>,
-    onActivityLevelChange: (Int) -> Unit,
     finishSignUp: () -> Unit,
 ) {
     FormWithBeeHealthIdentity(modifier = Modifier.verticalScroll(state = rememberScrollState())) {
         OutlinedTextField(
             value = name,
             onValueChange = onNameChange,
-            placeholder = { Text(text = "Name") },
+            placeholder = { Text(text = "Nome") },
             modifier = Modifier
                 .padding(bottom = 16.dp)
                 .fillMaxWidth()
@@ -211,7 +204,7 @@ fun HealthRegisterContent(
         OutlinedTextField(
             value = age,
             onValueChange = onAgeChange,
-            placeholder = { Text(text = "Age") },
+            placeholder = { Text(text = "Idade") },
             modifier = Modifier
                 .padding(bottom = 16.dp)
                 .fillMaxWidth()
@@ -229,63 +222,16 @@ fun HealthRegisterContent(
         OutlinedTextField(
             value = weight,
             onValueChange = onWeightChange,
-            placeholder = { Text(text = "peso") },
+            placeholder = { Text(text = "Peso") },
             modifier = Modifier
                 .padding(bottom = 16.dp)
                 .fillMaxWidth()
-        )
-
-        OutlineDropDownMenu(
-            values = biologicalGenders,
-            selectedIndex = 0,
-            onChange = onBiologicalGenderChange,
-            label = {
-                Text(
-                    text = "Sexo biológico",
-                    color = MaterialTheme.colors.onSurface.copy(ContentAlpha.medium)
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        )
-
-        OutlineDropDownMenu(
-            values = objectives,
-            selectedIndex = 0,
-            onChange = onObjectiveChange,
-            label = {
-                Text(
-                    text = "Objetivo",
-                    color = MaterialTheme.colors.onSurface.copy(ContentAlpha.medium)
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        )
-
-        OutlineDropDownMenu(
-            values = activitiesLevel,
-            selectedIndex = 0,
-            onChange = onActivityLevelChange,
-            label = {
-                Text(
-                    text = "Nível de atividade",
-                    color = MaterialTheme.colors.onSurface.copy(ContentAlpha.medium)
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 32.dp)
         )
 
         Button(
             onClick = finishSignUp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        ) { Text(text = "Pronto!") }
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        ) { Text(text = "Próximo passo") }
     }
 }
 
@@ -305,4 +251,28 @@ fun RegisterScreenPreview() {
         passwordVisualizationMode = PasswordVisualTransformation(),
         showPassword = true
     )
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun HealthRegisterScreenPreview() {
+    HealthRegisterContent(
+        name = "",
+        onNameChange = {},
+        weight = "",
+        onWeightChange = {},
+        height = "",
+        onHeightChange = {},
+        age = "",
+        onAgeChange = {},
+        finishSignUp = {}
+    )
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun SelectGenderScreenPreview() {
+    BeeHealthyTheme {
+        SelectGender({}) {}
+    }
 }
