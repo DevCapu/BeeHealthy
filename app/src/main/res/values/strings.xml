@@ -4,4 +4,19 @@
     <string name="height">Altura</string>
     <string name="calculate_imc">Calcular IMC</string>
     <string name="male_option">masculino</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Senha</string>
+    <string name="confirm_password_label">Confirmar senha</string>
+    <string name="next_step">Próximo passo</string>
+    <string name="already_have_an_account">Já tenho uma conta</string>
+    <string name="name_label">Nome</string>
+    <string name="age_label">Idade</string>
+    <string name="height_label">Altura</string>
+    <string name="weight_label">Peso</string>
+    <string name="gender_selection_title">Selecione seu gênero biológico</string>
+    <string name="male_label">Masculino</string>
+    <string name="female_label">Feminino</string>
+    <string name="did_not_choose_an_option">Nenhuma opção selecionada</string>
+    <string name="enter_label">Entrar</string>
+    <string name="create_an_account">Não tem conta ainda? Criar!</string>
 </resources>

@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.ui.component
+package br.com.devcapu.beehealthy.ui.screen.onboarding
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -17,16 +17,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.ui.theme.PrimaryFont
+import br.com.devcapu.beehealthy.ui.viewModel.RegisterViewModel
 
 @Composable
-fun SelectGender(
+fun GenderSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
+    GenderSelectionContent(
+        onClick = { viewModel.biologicGender = it }
+    ) { viewModel.goTo(OnboardSteps.OBJECTIVE_SELECTION.name) }
+}
+
+@Composable
+fun GenderSelectionContent(
     onClick: (String) -> Unit,
     onClickGoToNextStep: () -> Unit,
 ) = Column(
@@ -39,7 +50,7 @@ fun SelectGender(
     var showNoGenderSelectedError by remember { mutableStateOf(false) }
 
     Text(
-        text = "Selecione seu gênero biológico",
+        text = stringResource(R.string.gender_selection_title),
         fontSize = 36.sp,
         fontFamily = PrimaryFont,
         color = MaterialTheme.colors.primary,
@@ -55,27 +66,29 @@ fun SelectGender(
             .fillMaxWidth()
             .padding(vertical = 32.dp)
     ) {
+        val maleLabel = stringResource(R.string.male_label)
+        val femaleLabel = stringResource(R.string.female_label)
         GenderCard(
             icon = Icons.Filled.Male,
-            title = "Masculino",
+            title = maleLabel,
             isSelected = maleCardIsSelected,
             onClick = {
                 maleCardIsSelected = true
                 femaleCardIsSelected = false
                 showNoGenderSelectedError = false
-                onClick("Masculino")
+                onClick(maleLabel)
             }
         )
 
         GenderCard(
             icon = Icons.Filled.Female,
-            title = "Feminino",
+            title = femaleLabel,
             isSelected = femaleCardIsSelected,
             onClick = {
                 maleCardIsSelected = false
                 femaleCardIsSelected = true
                 showNoGenderSelectedError = false
-                onClick("Feminino")
+                onClick(femaleLabel)
             }
         )
     }
@@ -88,11 +101,11 @@ fun SelectGender(
                 showNoGenderSelectedError = true
             }
         }
-    ) { Text("Próximo passo") }
+    ) { Text(stringResource(id = R.string.next_step)) }
 
-    if (showNoGenderSelectedError){
+    if (showNoGenderSelectedError) {
         Text(
-            text = "Nenhuma opção selecionada",
+            text = stringResource(R.string.did_not_choose_an_option),
             color = MaterialTheme.colors.error,
             modifier = Modifier.padding(top = 24.dp)
         )
@@ -130,6 +143,6 @@ fun GenderCard(icon: ImageVector, title: String, isSelected: Boolean, onClick: (
 @Composable
 fun SelectGenderPreview() {
     BeeHealthyTheme {
-        SelectGender({}, {})
+        GenderSelectionContent({}, {})
     }
 }
