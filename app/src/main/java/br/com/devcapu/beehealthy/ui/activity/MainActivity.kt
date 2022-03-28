@@ -18,7 +18,7 @@ import br.com.devcapu.beehealthy.ui.viewModel.HomeViewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: HomeViewModel by viewModels() {
+    private val viewModel: HomeViewModel by viewModels {
         val patientDataSource = PatientDataSource(this)
         val healthResultDataSource = HealthResultDataSource(this)
         HomeViewModel.Factory(patientDataSource, healthResultDataSource)
@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun HomeScreen() {
     BeeHealthyTheme {
-        Scaffold() {
+        Scaffold {
 
         }
     }

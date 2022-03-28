@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class LoginViewModel() : ViewModel() {
+class LoginViewModel : ViewModel() {
     var email by mutableStateOf("")
     var password by mutableStateOf("")
 
