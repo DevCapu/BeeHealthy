@@ -29,7 +29,7 @@ class RegisterViewModel(
 
     private val passwordsAreTheSame = password == passwordConfirmation
 
-    private val _step = MutableLiveData(OnboardSteps.AUTHENTICATION_REGISTER.name)
+    private val _step = MutableLiveData(OnboardSteps.OBJECTIVE_SELECTION.name)
     val step: LiveData<String> = _step
 
 //    fun initSignUp(): LiveData<Boolean> {
