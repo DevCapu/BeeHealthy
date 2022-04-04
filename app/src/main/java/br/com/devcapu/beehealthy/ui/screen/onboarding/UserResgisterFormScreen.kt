@@ -46,47 +46,39 @@ fun HealthRegisterContent(
     finishSignUp: () -> Unit,
 ) {
     FormWithBeeHealthIdentity(modifier = Modifier.verticalScroll(state = rememberScrollState())) {
+        val defaultModifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
+
         OutlinedTextField(
             value = name,
             onValueChange = onNameChange,
             placeholder = { Text(text = stringResource(R.string.name_label)) },
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .fillMaxWidth()
+            modifier = defaultModifier
         )
 
         OutlinedTextField(
             value = age,
             onValueChange = onAgeChange,
             placeholder = { Text(text = stringResource(R.string.age_label)) },
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .fillMaxWidth()
+            modifier = defaultModifier
         )
 
         OutlinedTextField(
             value = height,
             onValueChange = onHeightChange,
             placeholder = { Text(text = stringResource(R.string.height_label)) },
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .fillMaxWidth()
+            modifier = defaultModifier
         )
 
         OutlinedTextField(
             value = weight,
             onValueChange = onWeightChange,
             placeholder = { Text(text = stringResource(R.string.weight_label)) },
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .fillMaxWidth()
+            modifier = defaultModifier
         )
 
         Button(
             onClick = finishSignUp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         ) { Text(text = stringResource(id = R.string.next_step)) }
     }
 }
