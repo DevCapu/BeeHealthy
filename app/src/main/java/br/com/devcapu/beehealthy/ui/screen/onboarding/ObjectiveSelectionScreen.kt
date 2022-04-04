@@ -1,17 +1,17 @@
 package br.com.devcapu.beehealthy.ui.screen.onboarding
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -31,70 +31,95 @@ fun ObjectiveSelectionScreen(viewModel: RegisterViewModel) = Column(
         .padding(all = 16.dp)
         .fillMaxSize()
 ) {
-    val objectives = arrayListOf<String>()
-    objectives.add("Perder")
-    objectives.add("Definir")
-    objectives.add("Ganhar")
-
     BeeHealthyTheme {
-        ObjectiveSelectionContent(objectives) {
+        ObjectiveSelectionContent(
+        ) {
             viewModel.objective = it
         }
     }
 }
 
 @Composable
-fun ObjectiveSelectionContent(objectives: List<String>, onClick: (String) -> Unit) = Column(
+fun ObjectiveSelectionContent(
+    onClickToGoToNextStep: (String) -> Unit,
+) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
     modifier = Modifier
         .padding(all = 16.dp)
         .fillMaxSize()
 ) {
+
     SelectionTitle()
 
-    ListOfCards(titles = objectives) { clickedPosition ->
-        onClick(objectives[clickedPosition])
+    var loseWeightSelected by remember { mutableStateOf(false) }
+    var defineBodySelected by remember { mutableStateOf(false) }
+    var gainMassSelected by remember { mutableStateOf(false) }
+
+    val loseWeightLabel = stringResource(R.string.lose_weight_label)
+    val defineBodyLabel = stringResource(R.string.define_body_label)
+    val gainMassLabel = stringResource(R.string.gain_mass_label)
+
+    SelectionCard(objective = loseWeightLabel, selected = loseWeightSelected) {
+        loseWeightSelected = true
+        defineBodySelected = false
+        gainMassSelected = false
+    }
+
+    SelectionCard(objective = defineBodyLabel, selected = defineBodySelected) {
+        loseWeightSelected = false
+        defineBodySelected = true
+        gainMassSelected = false
+    }
+
+    SelectionCard(objective = gainMassLabel, selected = gainMassSelected) {
+        loseWeightSelected = false
+        defineBodySelected = false
+        gainMassSelected = true
     }
 
     Button(
-        onClick = {},
+        onClick = {
+            val objectiveSelected = when {
+                loseWeightSelected -> loseWeightLabel
+                defineBodySelected -> defineBodyLabel
+                else -> gainMassLabel
+            }
+
+            onClickToGoToNextStep(objectiveSelected)
+        },
         shape = RoundedCornerShape(4.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp)
+        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
     ) { Text(text = stringResource(id = R.string.next_step)) }
 }
 
 @Composable
-private fun SelectionCard(title: String, onClick: () -> Unit) {
+private fun SelectionCard(
+    objective: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
     Card(
         backgroundColor = MaterialTheme.colors.primary,
         contentColor = MaterialTheme.colors.onPrimary,
         shape = RoundedCornerShape(4.dp),
+        border = if (selected) {
+            BorderStroke(2.dp, color = Color.Green)
+        } else {
+            null
+        },
         modifier = Modifier
             .padding(top = 16.dp)
             .fillMaxWidth()
             .clickable { onClick() }
     ) {
         Text(
-            text = title,
+            text = objective,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
             fontSize = 18.sp,
             modifier = Modifier.padding(16.dp)
         )
-    }
-}
-
-@Composable
-fun ListOfCards(titles: List<String>, onClick: (Int) -> Unit) {
-    LazyColumn {
-        itemsIndexed(titles) { index, title ->
-            SelectionCard(title) {
-                onClick(index)
-            }
-        }
     }
 }
 
@@ -122,11 +147,7 @@ private fun SelectionTitle() {
 @Preview(showSystemUi = true)
 @Composable
 fun ObjectiveSelectionScreenPreview() {
-    val objectives = arrayListOf<String>()
-    objectives.add("Perder")
-    objectives.add("Definir")
-    objectives.add("Ganhar")
     BeeHealthyTheme {
-        ObjectiveSelectionContent(objectives) { }
+        ObjectiveSelectionContent() { }
     }
 }

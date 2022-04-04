@@ -19,4 +19,7 @@
     <string name="did_not_choose_an_option">Nenhuma opção selecionada</string>
     <string name="enter_label">Entrar</string>
     <string name="create_an_account">Não tem conta ainda? Criar!</string>
+    <string name="lose_weight_label">Perder peso</string>
+    <string name="define_body_label">Definir</string>
+    <string name="gain_mass_label">Ganhar massa</string>
 </resources>
