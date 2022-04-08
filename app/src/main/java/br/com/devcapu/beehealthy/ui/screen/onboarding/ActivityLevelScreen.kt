@@ -25,7 +25,7 @@ fun ActivityLevelScreenSelection(viewModel: RegisterViewModel) = Column(
 ) {
     ActivityLevelContent {
         viewModel.activityLevel = it
-//        viewModel.finishSignUp()
+        viewModel.signUp()
     }
 }
 

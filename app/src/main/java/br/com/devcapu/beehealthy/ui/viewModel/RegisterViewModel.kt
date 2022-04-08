@@ -3,13 +3,18 @@ package br.com.devcapu.beehealthy.ui.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import br.com.devcapu.beehealthy.data.database.dataSource.HealthResultDataSource
 import br.com.devcapu.beehealthy.data.database.dataSource.PatientDataSource
 import br.com.devcapu.beehealthy.ui.screen.onboarding.OnboardSteps
+import br.com.devcapu.domain.model.BiologicalGender
+import br.com.devcapu.domain.model.Patient
+import br.com.devcapu.domain.repository.HealthRepository
+import br.com.devcapu.domain.repository.PatientRepository
+import br.com.devcapu.domain.useCase.SavePatient
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
 class RegisterViewModel(
     private val patientDataSource: PatientDataSource,
@@ -32,43 +37,43 @@ class RegisterViewModel(
     private val _step = MutableLiveData(OnboardSteps.AUTHENTICATION_REGISTER.name)
     val step: LiveData<String> = _step
 
-//    fun initSignUp(): LiveData<Boolean> {
-//        val auth = Firebase.auth
-//        if (passwordsAreTheSame) {
-//            auth.createUserWithEmailAndPassword(email, password)
-//                .addOnSuccessListener {
-//                    _userCreated.value = true
-//                }.addOnFailureListener {
-//                    _userCreated.value = false
-//                }
-//        }
-//        return userCreated
-//    }
-//
-//    fun finishSignUp() {
-//        val patient = Patient(
-//            name = name,
-//            email = email,
-//            age = age.toInt(),
-//            weight = weight.toFloat(),
-//            height = height.toFloat(),
-//            biologicGender = BiologicalGender.valueOf(biologicGender.uppercase()),
-//            activityLevel = activityLevel,
-//            objective = objective
-//        )
-//
-//        val patientRepository = PatientRepository(patientDataSource)
-//        val healthRepository = HealthRepository(healthResultDataSource)
-//        val savePatient = SavePatient(
-//            patientRepository = patientRepository,
-//            healthRepository = healthRepository
-//        )
-//
-//        viewModelScope.launch(Dispatchers.IO) {
-//            savePatient(patient = patient)
-//        }
-//        _userCreated.value = true
-//    }
+    private val _finished = MutableLiveData(false)
+    val finished: LiveData<Boolean> = _finished
+
+    fun signUp() {
+        val auth = Firebase.auth
+        if (!passwordsAreTheSame) {
+//          TODO: Show Snackbar and go to authenticationScreen
+        }
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                val patient = Patient(
+                    name = name,
+                    email = email,
+                    age = age.toInt(),
+                    weight = weight.toFloat(),
+                    height = height.toFloat(),
+                    biologicGender = BiologicalGender.valueOf(biologicGender.uppercase()),
+                    activityLevel = activityLevel,
+                    objective = objective
+                )
+
+                val patientRepository = PatientRepository(patientDataSource)
+                val healthRepository = HealthRepository(healthResultDataSource)
+                val savePatient = SavePatient(
+                    patientRepository = patientRepository,
+                    healthRepository = healthRepository
+                )
+
+                viewModelScope.launch {
+                    savePatient(patient = patient)
+                    _finished.value = true
+                }
+            }
+            .addOnFailureListener {
+//             TODO: Show error on authenticationScreen
+            }
+    }
 
     fun goTo(name: String) {
         _step.value = name

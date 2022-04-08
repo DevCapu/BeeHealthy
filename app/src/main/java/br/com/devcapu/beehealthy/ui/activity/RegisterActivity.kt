@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -30,9 +32,7 @@ class RegisterActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            viewModel.step.observe(this) {
-                navController.navigate(it)
-            }
+            addObservers(navController)
             BeeHealthyTheme {
                 NavHost(
                     navController = navController,
@@ -55,6 +55,16 @@ class RegisterActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun addObservers(navController: NavHostController) {
+        viewModel.step.observe(this) {
+            navController.navigate(it)
+        }
+
+        viewModel.finished.observe(this) {
+            startActivity(MainActivity.getIntent(this))
         }
     }
 

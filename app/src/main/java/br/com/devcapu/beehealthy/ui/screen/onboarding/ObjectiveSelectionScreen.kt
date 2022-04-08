@@ -28,6 +28,7 @@ fun ObjectiveSelectionScreen(viewModel: RegisterViewModel) = Column(
     BeeHealthyTheme {
         ObjectiveSelectionContent {
             viewModel.objective = it
+            viewModel.goTo(OnboardSteps.ACTIVITY_LEVEL_SELECTION.name)
         }
     }
 }
