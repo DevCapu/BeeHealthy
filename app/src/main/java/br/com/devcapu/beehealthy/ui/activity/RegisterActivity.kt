@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.material.Text
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -37,7 +36,7 @@ class RegisterActivity : ComponentActivity() {
             BeeHealthyTheme {
                 NavHost(
                     navController = navController,
-                    startDestination = OnboardSteps.OBJECTIVE_SELECTION.name
+                    startDestination = OnboardSteps.AUTHENTICATION_REGISTER.name
                 ) {
                     composable(OnboardSteps.AUTHENTICATION_REGISTER.name) {
                         AuthenticationLoginScreen(viewModel)
@@ -49,10 +48,10 @@ class RegisterActivity : ComponentActivity() {
                         GenderSelectionScreen(viewModel)
                     }
                     composable(OnboardSteps.OBJECTIVE_SELECTION.name) {
-                       ObjectiveSelectionScreen(viewModel)
+                        ObjectiveSelectionScreen(viewModel)
                     }
                     composable(OnboardSteps.ACTIVITY_LEVEL_SELECTION.name) {
-                        Text("Activity level")
+                        ActivityLevelScreenSelection(viewModel)
                     }
                 }
             }
