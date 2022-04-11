@@ -32,7 +32,8 @@ class RegisterViewModel(
     var activityLevel by mutableStateOf("")
     var objective by mutableStateOf("")
 
-    private val passwordsAreTheSame = password == passwordConfirmation
+    private val passwordsAreTheSame: Boolean
+        get() = password == passwordConfirmation
 
     private val _step = MutableLiveData(OnboardSteps.AUTHENTICATION_REGISTER.name)
     val step: LiveData<String> = _step
@@ -40,39 +41,52 @@ class RegisterViewModel(
     private val _finished = MutableLiveData(false)
     val finished: LiveData<Boolean> = _finished
 
+    private val _snackbar = MutableLiveData("")
+    val snackbar: LiveData<String> = _snackbar
+
     fun signUp() {
+        verifyPasswordAndPasswordAuthentication()
+        savePatientOnFirebase()
+    }
+
+    private fun savePatientOnFirebase() {
         val auth = Firebase.auth
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener { savePatient() }
+            .addOnFailureListener {
+    //             TODO: Show error on authenticationScreen
+            }
+    }
+
+    private fun verifyPasswordAndPasswordAuthentication() {
         if (!passwordsAreTheSame) {
 //          TODO: Show Snackbar and go to authenticationScreen
         }
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                val patient = Patient(
-                    name = name,
-                    email = email,
-                    age = age.toInt(),
-                    weight = weight.toFloat(),
-                    height = height.toFloat(),
-                    biologicGender = BiologicalGender.valueOf(biologicGender.uppercase()),
-                    activityLevel = activityLevel,
-                    objective = objective
-                )
+    }
 
-                val patientRepository = PatientRepository(patientDataSource)
-                val healthRepository = HealthRepository(healthResultDataSource)
-                val savePatient = SavePatient(
-                    patientRepository = patientRepository,
-                    healthRepository = healthRepository
-                )
+    private fun savePatient() {
+        val patient = Patient(
+            name = name,
+            email = email,
+            age = age.toInt(),
+            weight = weight.toFloat(),
+            height = height.toFloat(),
+            biologicGender = BiologicalGender.valueOf(biologicGender.uppercase()),
+            activityLevel = activityLevel,
+            objective = objective
+        )
 
-                viewModelScope.launch {
-                    savePatient(patient = patient)
-                    _finished.value = true
-                }
-            }
-            .addOnFailureListener {
-//             TODO: Show error on authenticationScreen
-            }
+        val patientRepository = PatientRepository(patientDataSource)
+        val healthRepository = HealthRepository(healthResultDataSource)
+        val savePatient = SavePatient(
+            patientRepository = patientRepository,
+            healthRepository = healthRepository
+        )
+
+        viewModelScope.launch {
+            savePatient(patient = patient)
+            _finished.value = true
+        }
     }
 
     fun goTo(name: String) {
