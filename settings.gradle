@@ -14,4 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "BeeHealthy"
 include ':app'
-include ':domain'

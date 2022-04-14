@@ -10,11 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeeHealthy">
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name="br.com.devcapu.beehealthy.app.ui.activity.MainActivity"
             android:theme="@style/Theme.BeeHealthy" />
 
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name="br.com.devcapu.beehealthy.app.ui.activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.RegisterActivity"
+            android:name="br.com.devcapu.beehealthy.app.ui.activity.RegisterActivity"
             android:theme="@style/Theme.BeeHealthy" />
     </application>
 </manifest>
