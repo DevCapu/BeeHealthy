@@ -10,21 +10,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.devcapu.beehealthy.app.database.dataSource.HealthResultDataSource
-import br.com.devcapu.beehealthy.app.database.dataSource.PatientDataSource
+import br.com.devcapu.beehealthy.app.database.BeeHealthyDatabase
 import br.com.devcapu.beehealthy.app.ui.screen.onboarding.*
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
+import br.com.devcapu.beehealthy.domain.repository.HealthRepository
+import br.com.devcapu.beehealthy.domain.repository.PatientRepository
 
 class RegisterActivity : ComponentActivity() {
 
     private val viewModel: RegisterViewModel by viewModels {
-        val patientDataSource = PatientDataSource(this)
-        val healthResultDataSource = HealthResultDataSource(this)
-        RegisterViewModel.Factory(
-            patientDataSource = patientDataSource,
-            healthResultDataSource = healthResultDataSource
-        )
+        val database = BeeHealthyDatabase.getInstance(this)
+        val patientRepository = PatientRepository(database.patientDao())
+        val healthRepository = HealthRepository(database.healthResultDao())
+        RegisterViewModel.Factory(patientRepository = patientRepository, healthRepository = healthRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

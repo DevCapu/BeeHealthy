@@ -11,9 +11,10 @@ class SavePatient(
     private val healthRepository: HealthRepository,
 ) {
     operator fun invoke(patient: Patient) {
-        val healthResult = calculateHealthInfo(patient)
-        val patientId = patientRepository.save(patient)
-        healthRepository.save(healthResult, patientId)
+        patientRepository.save(patient) { id ->
+            val healthResult = calculateHealthInfo(patient)
+            healthRepository.save(healthResult, id)
+        }
     }
 
     private fun calculateHealthInfo(patient: Patient): HealthResult {

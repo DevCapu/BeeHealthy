@@ -4,8 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.*
-import br.com.devcapu.beehealthy.app.database.dataSource.HealthResultDataSource
-import br.com.devcapu.beehealthy.app.database.dataSource.PatientDataSource
 import br.com.devcapu.beehealthy.app.ui.screen.onboarding.OnboardSteps
 import br.com.devcapu.beehealthy.domain.model.BiologicalGender
 import br.com.devcapu.beehealthy.domain.model.Patient
@@ -18,8 +16,8 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(
-    private val patientDataSource: PatientDataSource,
-    private val healthResultDataSource: HealthResultDataSource,
+    private val patientRepository: PatientRepository,
+    private val healthRepository: HealthRepository
 ) : ViewModel() {
 
     var email by mutableStateOf("")
@@ -78,8 +76,6 @@ class RegisterViewModel(
             objective = objective
         )
 
-        val patientRepository = PatientRepository(patientDataSource)
-        val healthRepository = HealthRepository(healthResultDataSource)
         val savePatient = SavePatient(
             patientRepository = patientRepository,
             healthRepository = healthRepository
@@ -91,17 +87,20 @@ class RegisterViewModel(
         }
     }
 
-    fun goTo(name: String) {
-        _step.value = name
+    fun goTo(step: OnboardSteps) {
+        _step.value = step.name
     }
 
     class Factory(
-        private val patientDataSource: PatientDataSource,
-        private val healthResultDataSource: HealthResultDataSource,
+        private val patientRepository: PatientRepository,
+        private val healthRepository: HealthRepository
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return RegisterViewModel(patientDataSource, healthResultDataSource) as T
+            return RegisterViewModel(
+                patientRepository = patientRepository,
+                healthRepository = healthRepository
+            ) as T
         }
     }
 }

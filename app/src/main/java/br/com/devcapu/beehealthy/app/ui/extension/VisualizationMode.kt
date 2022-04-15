@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.extension
+package br.com.devcapu.beehealthy.app.ui.extension
 
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation

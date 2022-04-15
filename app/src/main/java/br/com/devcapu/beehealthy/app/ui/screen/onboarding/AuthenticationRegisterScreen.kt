@@ -14,7 +14,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.app.extension.visualizationMode
+import br.com.devcapu.beehealthy.app.ui.extension.visualizationMode
 import br.com.devcapu.beehealthy.app.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.app.ui.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel

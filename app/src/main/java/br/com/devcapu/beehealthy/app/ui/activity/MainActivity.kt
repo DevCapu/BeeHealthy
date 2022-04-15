@@ -9,18 +9,17 @@ import androidx.activity.viewModels
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.devcapu.beehealthy.app.database.dataSource.HealthResultDataSource
-import br.com.devcapu.beehealthy.app.database.dataSource.PatientDataSource
+import br.com.devcapu.beehealthy.app.database.BeeHealthyDatabase
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.app.ui.viewModel.HomeViewModel
+import br.com.devcapu.beehealthy.domain.repository.PatientRepository
 
 
 class MainActivity : ComponentActivity() {
 
     private val viewModel: HomeViewModel by viewModels {
-        val patientDataSource = PatientDataSource(this)
-        val healthResultDataSource = HealthResultDataSource(this)
-        HomeViewModel.Factory(patientDataSource, healthResultDataSource)
+        val repository = PatientRepository(BeeHealthyDatabase.getInstance(this).patientDao())
+        HomeViewModel.Factory(repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
