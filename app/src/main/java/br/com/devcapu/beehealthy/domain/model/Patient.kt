@@ -12,4 +12,7 @@ data class Patient(
     val biologicGender: BiologicalGender,
     val activityLevel: String,
     val objective: String
-): Serializable
+): Serializable {
+
+    val hasAValidEmail = email.isValid
+}

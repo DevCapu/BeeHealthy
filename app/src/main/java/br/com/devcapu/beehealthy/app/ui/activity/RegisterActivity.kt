@@ -23,7 +23,8 @@ class RegisterActivity : ComponentActivity() {
         val database = BeeHealthyDatabase.getInstance(this)
         val patientRepository = PatientRepository(database.patientDao())
         val healthRepository = HealthRepository(database.healthResultDao())
-        RegisterViewModel.Factory(patientRepository = patientRepository, healthRepository = healthRepository)
+        RegisterViewModel.Factory(patientRepository = patientRepository,
+            healthRepository = healthRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,8 +62,10 @@ class RegisterActivity : ComponentActivity() {
             navController.navigate(it)
         }
 
-        viewModel.finished.observe(this) {
-            startActivity(MainActivity.getIntent(this))
+        viewModel.finished.observe(this) { finished ->
+            if (finished) {
+                startActivity(MainActivity.getIntent(this))
+            }
         }
     }
 

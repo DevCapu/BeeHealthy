@@ -33,7 +33,7 @@ import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
 fun GenderSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
     GenderSelectionContent(
         onClick = { viewModel.biologicGender = it }
-    ) { viewModel.goTo(OnboardSteps.OBJECTIVE_SELECTION.name) }
+    ) { viewModel.goTo(OnboardSteps.OBJECTIVE_SELECTION) }
 }
 
 @Composable

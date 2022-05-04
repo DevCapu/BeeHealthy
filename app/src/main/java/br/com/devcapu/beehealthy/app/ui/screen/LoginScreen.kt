@@ -63,7 +63,7 @@ private fun LoginContent(
         value = email.data,
         onValueChange = onEmailChange,
         placeholder = { Text(text = stringResource(id = R.string.email_label)) },
-        isShowingError = email.errorMessage.isNullOrEmpty(),
+        isShowingError = !email.errorMessage.isNullOrEmpty(),
         errorMessage = email.data,
         modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
     )

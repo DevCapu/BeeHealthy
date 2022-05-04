@@ -28,7 +28,7 @@ fun UserRegisterFormScreen(viewModel: RegisterViewModel) {
         weight = viewModel.weight,
         onWeightChange = { viewModel.weight = it },
         finishSignUp = {
-            viewModel.goTo(OnboardSteps.BIOLOGICAL_GENDER_SELECTION.name)
+            viewModel.goTo(OnboardSteps.BIOLOGICAL_GENDER_SELECTION)
         }
     )
 }
