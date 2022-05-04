@@ -34,7 +34,7 @@ fun AuthenticationLoginScreen(viewModel: RegisterViewModel) {
         showPassword = showPassword,
         passwordVisualizationMode = passwordVisualizationMode,
         onChangePasswordVisualizationMode = { showPassword = !showPassword },
-        onClickRegisterButton = { viewModel.goTo(OnboardSteps.USER_REGISTER_FORM.name) },
+        onClickRegisterButton = { viewModel.goTo(OnboardSteps.USER_REGISTER_FORM) },
         onClickAlreadyHasAnAccount = { }
     )
 }
