@@ -6,12 +6,17 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.font.FontWeight.Companion.Normal
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.sp
 import br.com.devcapu.beehealthy.R
 
 val PrimaryFont = FontFamily(
     Font(resId = R.font.racing_sans_one, style = FontStyle.Normal),
+)
+
+val Carme = FontFamily(
+    Font(resId = R.font.carme, style = FontStyle.Normal),
 )
 
 val Typography = Typography(
@@ -25,5 +30,12 @@ val Typography = Typography(
         fontFamily = PrimaryFont,
         fontSize = 16.sp,
         fontWeight = SemiBold,
+        color = Primary
+    ),
+    h3 = TextStyle(
+        fontFamily = Carme,
+        fontSize = 16.sp,
+        fontWeight = Normal,
+        color = OnBackground
     )
 )

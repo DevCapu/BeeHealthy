@@ -1,8 +1,18 @@
 package br.com.devcapu.beehealthy.app.ui.theme
 
+import android.view.Surface
 import androidx.compose.ui.graphics.Color
 
 val Primary = Color(0XFFD6A95F)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val PrimaryVariant = Color(0xFF62BE6C)
+val OnPrimary = Color(0xFF272727)
+
+val Secondary = Color(0xFF464340)
+val SecondaryVariant = Color(0xFF464340)
+val onSecondary = Color(0xFF464340)
+
+val Background = Color(0xFFE4E4E4)
+val OnBackground = Color(0xFF464340)
+
+val Surface = Color(0xFF464340)
+val OnSurface = Color(0xFF464340)
