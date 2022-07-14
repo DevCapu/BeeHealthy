@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.domain.model
+package br.com.devcapu.beehealthy.domain.model.patient.health
 
 enum class BiologicalGender(
     val coefficient1: Double,

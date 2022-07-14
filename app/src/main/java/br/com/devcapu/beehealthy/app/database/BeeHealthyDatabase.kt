@@ -6,10 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import br.com.devcapu.beehealthy.app.database.dao.HealthResultDAO
 import br.com.devcapu.beehealthy.app.database.dao.PatientDAO
-import br.com.devcapu.beehealthy.app.database.entity.HealthResultEntity
+import br.com.devcapu.beehealthy.app.database.entity.BodyCalorieNeedsEntity
 import br.com.devcapu.beehealthy.app.database.entity.PatientEntity
 
-@Database(entities = [PatientEntity::class, HealthResultEntity::class], version = 1)
+@Database(entities = [PatientEntity::class, BodyCalorieNeedsEntity::class], version = 1)
 abstract class BeeHealthyDatabase : RoomDatabase() {
     companion object {
         private const val DATABASE_NAME = "beeHealthy.db"

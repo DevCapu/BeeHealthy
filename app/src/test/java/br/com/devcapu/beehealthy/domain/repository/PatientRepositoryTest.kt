@@ -2,7 +2,7 @@ package br.com.devcapu.beehealthy.domain.repository
 
 import br.com.devcapu.beehealthy.app.database.dao.PatientDAO
 import br.com.devcapu.beehealthy.app.database.entity.PatientEntity
-import br.com.devcapu.beehealthy.domain.model.BiologicalGender
+import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender
 import br.com.devcapu.beehealthy.domain.model.Patient
 import br.com.devcapu.beehealthy.domain.model.patient.Email
 import io.mockk.*

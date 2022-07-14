@@ -1,6 +1,7 @@
 package br.com.devcapu.beehealthy.domain.model.patient
 
-import br.com.devcapu.beehealthy.domain.model.patient.ActivityLevel.*
+import br.com.devcapu.beehealthy.domain.model.patient.health.ActivityLevel.*
+import br.com.devcapu.beehealthy.domain.model.patient.health.TotalEnergyExpenditure
 import org.junit.Assert
 import org.junit.Test
 

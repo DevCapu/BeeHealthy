@@ -1,10 +1,9 @@
 package br.com.devcapu.beehealthy.domain.useCase
 
-import br.com.devcapu.beehealthy.domain.model.HealthResult
 import br.com.devcapu.beehealthy.domain.model.Patient
+import br.com.devcapu.beehealthy.domain.model.patient.health.*
 import br.com.devcapu.beehealthy.domain.repository.HealthRepository
 import br.com.devcapu.beehealthy.domain.repository.PatientRepository
-import br.com.devcapu.beehealthy.domain.useCase.healthCalculator.CalculateBasalEnergyExpenditure
 
 class SavePatient(
     private val patientRepository: PatientRepository,
@@ -12,18 +11,22 @@ class SavePatient(
 ) {
     operator fun invoke(patient: Patient) {
         patientRepository.save(patient) { id ->
-            val healthResult = calculateHealthInfo(patient)
-            healthRepository.save(healthResult, id)
+            val bodyCaloriesNeeds = calculateHealthInfo(patient)
+            healthRepository.save(bodyCaloriesNeeds, id)
         }
     }
 
-    private fun calculateHealthInfo(patient: Patient): HealthResult {
-        val calculateBasalEnergyExpenditure = CalculateBasalEnergyExpenditure()
-        val basalEnergyExpenditure = calculateBasalEnergyExpenditure(patient)
+    private fun calculateHealthInfo(patient: Patient): BodyCaloriesNeeds {
+        val bmi = BMI.calculate(patient)
+        val basalEnergyExpenditure = BasalEnergyExpenditure.calculate(patient)
+        val totalEnergyExpenditure = TotalEnergyExpenditure.calculate(basalEnergyExpenditure, patient.activityLevel)
+        val caloriesToCommitObjective = CaloriesToCommitObjective.calculate(totalEnergyExpenditure, patient.objective)
 
-        val calculateBMI = CalculateBMI()
-        val bmi = calculateBMI(patient)
-
-        return HealthResult(bmi, basalEnergyExpenditure)
+        return BodyCaloriesNeeds(
+            bmi,
+            basalEnergyExpenditure,
+            totalEnergyExpenditure,
+            caloriesToCommitObjective
+        )
     }
 }

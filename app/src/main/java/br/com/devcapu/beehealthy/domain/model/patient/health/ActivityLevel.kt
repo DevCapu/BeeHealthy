@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.domain.model.patient
+package br.com.devcapu.beehealthy.domain.model.patient.health
 
 enum class ActivityLevel(val coefficient: Double) {
     SEDENTARY(1.2),

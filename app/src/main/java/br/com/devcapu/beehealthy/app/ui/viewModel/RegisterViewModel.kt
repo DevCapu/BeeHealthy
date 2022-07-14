@@ -5,9 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.*
 import br.com.devcapu.beehealthy.app.ui.screen.onboarding.OnboardSteps
-import br.com.devcapu.beehealthy.domain.model.BiologicalGender
+import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender
 import br.com.devcapu.beehealthy.domain.model.Patient
+import br.com.devcapu.beehealthy.domain.model.patient.health.ActivityLevel
 import br.com.devcapu.beehealthy.domain.model.patient.Email
+import br.com.devcapu.beehealthy.domain.model.patient.health.Objective
 import br.com.devcapu.beehealthy.domain.repository.HealthRepository
 import br.com.devcapu.beehealthy.domain.repository.PatientRepository
 import br.com.devcapu.beehealthy.domain.useCase.SavePatient
@@ -17,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class RegisterViewModel(
     private val patientRepository: PatientRepository,
-    private val healthRepository: HealthRepository
+    private val healthRepository: HealthRepository,
 ) : ViewModel() {
 
     var email by mutableStateOf("")
@@ -27,7 +29,7 @@ class RegisterViewModel(
     var age by mutableStateOf("")
     var weight by mutableStateOf("")
     var height by mutableStateOf("")
-    var biologicGender by mutableStateOf("MALE")
+    var biologicGender by mutableStateOf(BiologicalGender.MALE)
     var activityLevel by mutableStateOf("")
     var objective by mutableStateOf("")
 
@@ -53,7 +55,7 @@ class RegisterViewModel(
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener { savePatient() }
             .addOnFailureListener {
-    //             TODO: Show error on authenticationScreen
+                //             TODO: Show error on authenticationScreen
             }
     }
 
@@ -71,9 +73,10 @@ class RegisterViewModel(
             age = age.toInt(),
             weight = weight.toFloat(),
             height = height.toFloat(),
-            biologicGender = BiologicalGender.valueOf(biologicGender.uppercase()),
-            activityLevel = activityLevel,
-            objective = objective
+            biologicGender = biologicGender,
+            activityLevel = ActivityLevel.MODERATE,
+            objective = Objective.LOSE,
+            bodyCaloriesNeeds = null
         )
 
         val savePatient = SavePatient(
@@ -93,7 +96,7 @@ class RegisterViewModel(
 
     class Factory(
         private val patientRepository: PatientRepository,
-        private val healthRepository: HealthRepository
+        private val healthRepository: HealthRepository,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

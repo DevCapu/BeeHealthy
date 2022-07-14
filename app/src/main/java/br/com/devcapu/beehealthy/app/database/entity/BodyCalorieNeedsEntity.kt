@@ -1,0 +1,25 @@
+package br.com.devcapu.beehealthy.app.database.entity
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import br.com.devcapu.beehealthy.domain.model.patient.health.BodyCaloriesNeeds
+
+@Entity(tableName = "bodyCalorieNeeds")
+class BodyCalorieNeedsEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
+    val patientId: Long,
+    val bmi: Double,
+    val basalEnergyExpenditure: Double,
+    val totalEnergyExpenditure: Double,
+    val caloriesToCommitObjective: Double,
+) {
+    companion object {
+        fun from(caloriesNeeds: BodyCaloriesNeeds, patientId: Long) = BodyCalorieNeedsEntity(
+            patientId = patientId,
+            bmi = caloriesNeeds.bmi.value,
+            basalEnergyExpenditure = caloriesNeeds.basalEnergyExpenditure.value,
+            totalEnergyExpenditure = caloriesNeeds.totalEnergyExpenditure.value,
+            caloriesToCommitObjective = caloriesNeeds.caloriesToCommitObjective.value
+        )
+    }
+}

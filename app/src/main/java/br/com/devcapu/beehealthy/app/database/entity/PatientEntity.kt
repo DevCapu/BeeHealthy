@@ -2,7 +2,7 @@ package br.com.devcapu.beehealthy.app.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import br.com.devcapu.beehealthy.domain.model.BiologicalGender
+import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender
 import br.com.devcapu.beehealthy.domain.model.Patient
 
 @Entity(tableName = "patient")
@@ -26,8 +26,8 @@ data class PatientEntity(
                 weight = patient.weight,
                 height = patient.height,
                 biologicGender = patient.biologicGender,
-                activityLevel = patient.activityLevel,
-                objective = patient.objective,
+                activityLevel = patient.activityLevel.name,
+                objective = patient.objective.name,
             )
         }
     }

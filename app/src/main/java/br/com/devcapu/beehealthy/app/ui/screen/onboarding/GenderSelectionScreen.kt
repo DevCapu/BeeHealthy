@@ -28,6 +28,9 @@ import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.app.ui.theme.PrimaryFont
 import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
+import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender
+import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender.FEMALE
+import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender.MALE
 
 @Composable
 fun GenderSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
@@ -38,7 +41,7 @@ fun GenderSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
 
 @Composable
 fun GenderSelectionContent(
-    onClick: (String) -> Unit,
+    onClick: (BiologicalGender) -> Unit,
     onClickGoToNextStep: () -> Unit,
 ) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
@@ -76,7 +79,7 @@ fun GenderSelectionContent(
                 maleCardIsSelected = true
                 femaleCardIsSelected = false
                 showNoGenderSelectedError = false
-                onClick(maleLabel)
+                onClick(MALE)
             }
         )
 
@@ -88,7 +91,7 @@ fun GenderSelectionContent(
                 maleCardIsSelected = false
                 femaleCardIsSelected = true
                 showNoGenderSelectedError = false
-                onClick(femaleLabel)
+                onClick(FEMALE)
             }
         )
     }
