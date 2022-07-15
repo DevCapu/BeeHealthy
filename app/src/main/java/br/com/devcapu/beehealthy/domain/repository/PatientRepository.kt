@@ -6,7 +6,7 @@ import br.com.devcapu.beehealthy.domain.model.Patient
 
 class PatientRepository(private val patientDAO: PatientDAO) {
 
-    fun save(patient: Patient, onComplete: (Long) -> Unit) {
+    suspend fun save(patient: Patient, onComplete: suspend (Long) -> Unit) {
         if (patient.hasAValidEmail) {
             val id = patientDAO.insert(PatientEntity.from(patient))
             onComplete(id)

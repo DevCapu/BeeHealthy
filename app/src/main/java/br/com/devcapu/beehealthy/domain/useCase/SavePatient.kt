@@ -9,7 +9,7 @@ class SavePatient(
     private val patientRepository: PatientRepository,
     private val healthRepository: HealthRepository,
 ) {
-    operator fun invoke(patient: Patient) {
+    suspend operator fun invoke(patient: Patient) {
         patientRepository.save(patient) { id ->
             val bodyCaloriesNeeds = calculateHealthInfo(patient)
             healthRepository.save(bodyCaloriesNeeds, id)

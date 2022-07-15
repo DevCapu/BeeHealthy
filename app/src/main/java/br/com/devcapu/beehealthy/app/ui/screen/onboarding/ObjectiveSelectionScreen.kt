@@ -13,8 +13,11 @@ import androidx.compose.ui.unit.dp
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.app.ui.component.SelectionCard
 import br.com.devcapu.beehealthy.app.ui.component.SelectionTitle
+import br.com.devcapu.beehealthy.app.ui.screen.onboarding.OnboardSteps.ACTIVITY_LEVEL_SELECTION
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
+import br.com.devcapu.beehealthy.domain.model.patient.health.Objective
+import br.com.devcapu.beehealthy.domain.model.patient.health.Objective.*
 
 @Composable
 fun ObjectiveSelectionScreen(viewModel: RegisterViewModel) = Column(
@@ -25,16 +28,17 @@ fun ObjectiveSelectionScreen(viewModel: RegisterViewModel) = Column(
         .fillMaxSize()
 ) {
     BeeHealthyTheme {
-        ObjectiveSelectionContent {
-            viewModel.objective = it
-            viewModel.goTo(OnboardSteps.ACTIVITY_LEVEL_SELECTION)
-        }
+        ObjectiveSelectionContent(
+            onClickToGoToNextStep = {  viewModel.goTo(ACTIVITY_LEVEL_SELECTION)},
+            onSelectCard = { viewModel.objective = it }
+        )
     }
 }
 
 @Composable
 fun ObjectiveSelectionContent(
     onClickToGoToNextStep: (String) -> Unit,
+    onSelectCard: (Objective) -> Unit
 ) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
@@ -57,18 +61,24 @@ fun ObjectiveSelectionContent(
         loseWeightSelected = true
         defineBodySelected = false
         gainMassSelected = false
+
+        onSelectCard(LOSE)
     }
 
     SelectionCard(text = defineBodyLabel, selected = defineBodySelected) {
         loseWeightSelected = false
         defineBodySelected = true
         gainMassSelected = false
+
+        onSelectCard(MAINTAIN)
     }
 
     SelectionCard(text = gainMassLabel, selected = gainMassSelected) {
         loseWeightSelected = false
         defineBodySelected = false
         gainMassSelected = true
+
+        onSelectCard(GAIN)
     }
 
     Button(
@@ -92,6 +102,6 @@ fun ObjectiveSelectionContent(
 @Composable
 fun ObjectiveSelectionScreenPreview() {
     BeeHealthyTheme {
-        ObjectiveSelectionContent { }
+        ObjectiveSelectionContent({}, {})
     }
 }

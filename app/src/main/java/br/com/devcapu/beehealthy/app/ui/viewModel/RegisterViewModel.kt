@@ -30,8 +30,8 @@ class RegisterViewModel(
     var weight by mutableStateOf("")
     var height by mutableStateOf("")
     var biologicGender by mutableStateOf(BiologicalGender.MALE)
-    var activityLevel by mutableStateOf("")
-    var objective by mutableStateOf("")
+    var activityLevel by mutableStateOf(ActivityLevel.MODERATE)
+    var objective by mutableStateOf(Objective.MAINTAIN)
 
     private val passwordsAreTheSame: Boolean
         get() = password == passwordConfirmation
@@ -55,7 +55,7 @@ class RegisterViewModel(
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener { savePatient() }
             .addOnFailureListener {
-                //             TODO: Show error on authenticationScreen
+                //TODO: Show error on authenticationScreen
             }
     }
 
@@ -74,8 +74,8 @@ class RegisterViewModel(
             weight = weight.toFloat(),
             height = height.toFloat(),
             biologicGender = biologicGender,
-            activityLevel = ActivityLevel.MODERATE,
-            objective = Objective.LOSE,
+            activityLevel = activityLevel,
+            objective = objective,
             bodyCaloriesNeeds = null
         )
 
@@ -90,9 +90,7 @@ class RegisterViewModel(
         }
     }
 
-    fun goTo(step: OnboardSteps) {
-        _step.value = step.name
-    }
+    fun goTo(step: OnboardSteps) { _step.value = step.name }
 
     class Factory(
         private val patientRepository: PatientRepository,

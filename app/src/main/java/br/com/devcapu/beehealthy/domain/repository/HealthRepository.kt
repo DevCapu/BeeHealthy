@@ -5,7 +5,7 @@ import br.com.devcapu.beehealthy.app.database.entity.BodyCalorieNeedsEntity
 import br.com.devcapu.beehealthy.domain.model.patient.health.BodyCaloriesNeeds
 
 class HealthRepository(private val dao: HealthResultDAO) {
-    fun save(health: BodyCaloriesNeeds, patientId: Long) {
+    suspend fun save(health: BodyCaloriesNeeds, patientId: Long) {
         val entity = BodyCalorieNeedsEntity.from(health, patientId)
         dao.insert(entity = entity)
     }

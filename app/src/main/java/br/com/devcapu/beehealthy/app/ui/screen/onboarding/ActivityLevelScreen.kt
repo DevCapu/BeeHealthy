@@ -14,6 +14,8 @@ import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.app.ui.component.SelectionCard
 import br.com.devcapu.beehealthy.app.ui.component.SelectionTitle
 import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
+import br.com.devcapu.beehealthy.domain.model.patient.health.ActivityLevel
+import br.com.devcapu.beehealthy.domain.model.patient.health.ActivityLevel.*
 
 @Composable
 fun ActivityLevelScreenSelection(viewModel: RegisterViewModel) = Column(
@@ -23,15 +25,15 @@ fun ActivityLevelScreenSelection(viewModel: RegisterViewModel) = Column(
         .padding(all = 16.dp)
         .fillMaxSize()
 ) {
-    ActivityLevelContent {
+    ActivityLevelContent(onClickToGoToNextStep = { viewModel.signUp() }) {
         viewModel.activityLevel = it
-        viewModel.signUp()
     }
 }
 
 @Composable
 fun ActivityLevelContent(
-    onClickToGoToNextStep: (String) -> Unit,
+    onClickToGoToNextStep: () -> Unit,
+    onSelectCard: (ActivityLevel) -> Unit,
 ) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
@@ -52,6 +54,8 @@ fun ActivityLevelContent(
         lightLevelSelected = false
         moderateLevelSelected = false
         activeLevelSelected = false
+
+        onSelectCard(SEDENTARY)
     }
 
     SelectionCard(text = "Leve", selected = lightLevelSelected) {
@@ -59,6 +63,8 @@ fun ActivityLevelContent(
         lightLevelSelected = true
         moderateLevelSelected = false
         activeLevelSelected = false
+
+        onSelectCard(LOW)
     }
 
     SelectionCard(text = "Moderado", selected = moderateLevelSelected) {
@@ -66,6 +72,8 @@ fun ActivityLevelContent(
         lightLevelSelected = false
         moderateLevelSelected = true
         activeLevelSelected = false
+
+        onSelectCard(MODERATE)
     }
 
     SelectionCard(text = "Ativo", selected = activeLevelSelected) {
@@ -73,23 +81,19 @@ fun ActivityLevelContent(
         lightLevelSelected = false
         moderateLevelSelected = false
         activeLevelSelected = true
+
+        onSelectCard(ACTIVE)
     }
 
     Button(
-        onClick = {
-            val activityLevelSelected = ""
-
-            onClickToGoToNextStep(activityLevelSelected)
-        },
+        onClick = { onClickToGoToNextStep() },
         shape = RoundedCornerShape(4.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp)
+        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
     ) { Text(text = stringResource(id = R.string.next_step)) }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun ActivityLevelScreenPreview() {
-    ActivityLevelContent {}
+    ActivityLevelContent({}, {})
 }

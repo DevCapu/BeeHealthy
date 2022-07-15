@@ -76,6 +76,7 @@ dependencies {
     testImplementation "io.mockk:mockk:1.12.3"
 
     //Room
+    implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 

@@ -34,9 +34,9 @@ import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender.MA
 
 @Composable
 fun GenderSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
-    GenderSelectionContent(
-        onClick = { viewModel.biologicGender = it }
-    ) { viewModel.goTo(OnboardSteps.OBJECTIVE_SELECTION) }
+    GenderSelectionContent(onClick = { viewModel.biologicGender = it }) {
+        viewModel.goTo(OnboardSteps.OBJECTIVE_SELECTION)
+    }
 }
 
 @Composable

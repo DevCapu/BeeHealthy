@@ -9,5 +9,5 @@ import br.com.devcapu.beehealthy.app.database.entity.BodyCalorieNeedsEntity
 interface HealthResultDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(entity: BodyCalorieNeedsEntity): Long
+    suspend fun insert(entity: BodyCalorieNeedsEntity): Long
 }
