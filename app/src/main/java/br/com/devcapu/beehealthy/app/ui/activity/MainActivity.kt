@@ -6,26 +6,26 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.app.database.BeeHealthyDatabase
-import br.com.devcapu.beehealthy.app.ui.component.MealCard
+import br.com.devcapu.beehealthy.app.ui.component.BottomNavItem
+import br.com.devcapu.beehealthy.app.ui.screen.BodyScreen
+import br.com.devcapu.beehealthy.app.ui.screen.HomeScreen
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.app.ui.viewModel.HomeViewModel
-import br.com.devcapu.beehealthy.domain.model.Meal
 import br.com.devcapu.beehealthy.domain.repository.PatientRepository
 
 class MainActivity : ComponentActivity() {
@@ -39,7 +39,26 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BeeHealthyTheme {
-                HomeScreen()
+                val navController = rememberNavController()
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = { Text(text = "Bee Healthy") },
+                            actions = {
+                                IconButton(onClick = { viewModel.logout() }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Logout,
+                                        contentDescription = "Logout"
+                                    )
+                                }
+                            }
+
+                        )
+                    },
+                    bottomBar = { BottomNavigationBar(navController = navController) }
+                ) {
+                    NavigationGraph(navController = navController)
+                }
             }
         }
     }
@@ -52,31 +71,44 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun HomeScreen() {
-    val context = LocalContext.current
-    BeeHealthyTheme {
-        Scaffold(
-            content = {
-                LazyColumn(Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth()
-                ) {
-                    items(listOf(
-                        Meal(name = "Café da manhã", 456),
-                        Meal(name = "Almoço", 456),
-                        Meal(name = "Café da tarde", 456),
-                        Meal(name = "Jantar", 456)
-                    )) {
-                        MealCard(name = it.name, calories = it.calories)
-                    }
-                }
-            }
-        )
+fun NavigationGraph(navController: NavHostController) {
+    NavHost(navController, startDestination = BottomNavItem.Home.screen_route) {
+        composable(BottomNavItem.Home.screen_route) { HomeScreen() }
+        composable(BottomNavItem.Body.screen_route) { BodyScreen() }
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
-fun HomePreview() {
-    HomeScreen()
+fun BottomNavigationBar(navController: NavController) {
+    val items = listOf(
+        BottomNavItem.Home,
+        BottomNavItem.Body,
+    )
+
+    BottomNavigation(contentColor = Color.Black) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+        items.forEach { item ->
+            BottomNavigationItem(
+                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
+                label = { Text(text = item.title, fontSize = 9.sp) },
+                selectedContentColor = Color.Black,
+                unselectedContentColor = Color.Black.copy(0.4f),
+                alwaysShowLabel = true,
+                selected = currentRoute == item.screen_route,
+                onClick = { changeBottomTab(navController, item) }
+            )
+        }
+    }
+}
+
+private fun changeBottomTab(navController: NavController, item: BottomNavItem) {
+    navController.navigate(item.screen_route) {
+
+        navController.graph.startDestinationRoute?.let { screen_route ->
+            popUpTo(screen_route) { saveState = true }
+        }
+        launchSingleTop = true
+        restoreState = true
+    }
 }

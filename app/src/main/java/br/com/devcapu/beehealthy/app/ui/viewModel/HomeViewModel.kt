@@ -6,6 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.devcapu.beehealthy.domain.repository.PatientRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
 
 class HomeViewModel(
     patientRepository: PatientRepository
@@ -16,6 +19,10 @@ class HomeViewModel(
 
     fun calculateBMI() {
 
+    }
+
+    fun logout() {
+        FirebaseAuth.getInstance().signOut()
     }
 
     class Factory(
