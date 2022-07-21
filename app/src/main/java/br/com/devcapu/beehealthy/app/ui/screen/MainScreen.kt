@@ -16,9 +16,10 @@ import br.com.devcapu.beehealthy.app.ui.component.BottomBar
 import br.com.devcapu.beehealthy.app.ui.component.TopBar
 import br.com.devcapu.beehealthy.app.ui.navigation.NavigationGraph
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
+import br.com.devcapu.beehealthy.app.ui.viewModel.HomeViewModel
 
 @Composable
-fun MainScreen(onClickLogout: () -> Unit) {
+fun MainScreen(viewModel: HomeViewModel, onClickLogout: () -> Unit) {
     val navController = rememberNavController()
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
@@ -39,13 +40,8 @@ fun MainScreen(onClickLogout: () -> Unit) {
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
         bottomBar = { BottomBar(navController = navController) }
-    ) { NavigationGraph(navController = navController) }
-}
-
-@Preview
-@Composable
-fun MainScreenPreview() {
-    BeeHealthyTheme {
-        MainScreen { }
-    }
+    ) { NavigationGraph(
+        navController = navController,
+        viewModel = viewModel
+    ) }
 }

@@ -11,23 +11,21 @@ import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.sp
 import br.com.devcapu.beehealthy.R
 
-val PrimaryFont = FontFamily(
-    Font(resId = R.font.racing_sans_one, style = FontStyle.Normal),
-)
-
 val Carme = FontFamily(
     Font(resId = R.font.carme, style = FontStyle.Normal),
 )
 
+val PrimaryFont = Carme
+
 val Typography = Typography(
     h1 = TextStyle(
-        fontFamily = PrimaryFont,
+        fontFamily = Carme,
         fontSize = 32.sp,
         fontWeight = Bold,
         color = Primary
     ),
     h2 = TextStyle(
-        fontFamily = PrimaryFont,
+        fontFamily = Carme,
         fontSize = 16.sp,
         fontWeight = SemiBold,
         color = Primary

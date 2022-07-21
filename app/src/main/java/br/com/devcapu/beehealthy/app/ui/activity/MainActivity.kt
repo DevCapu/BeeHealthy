@@ -6,24 +6,24 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.app.database.BeeHealthyDatabase
 import br.com.devcapu.beehealthy.app.ui.screen.MainScreen
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.app.ui.viewModel.HomeViewModel
+import br.com.devcapu.beehealthy.domain.repository.HealthRepository
 import br.com.devcapu.beehealthy.domain.repository.PatientRepository
 
 class MainActivity : ComponentActivity() {
 
     private val viewModel: HomeViewModel by viewModels {
-        val repository = PatientRepository(BeeHealthyDatabase.getInstance(this).patientDao())
-        HomeViewModel.Factory(repository)
+        val patientRepository = PatientRepository(BeeHealthyDatabase.getInstance(this).patientDao())
+        HomeViewModel.Factory(patientRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BeeHealthyTheme { MainScreen { logout() } }
+            BeeHealthyTheme { MainScreen(viewModel) { logout() } }
         }
     }
 

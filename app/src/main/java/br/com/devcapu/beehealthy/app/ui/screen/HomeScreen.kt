@@ -17,13 +17,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.app.ui.theme.PrimaryFont
+import br.com.devcapu.beehealthy.app.ui.uiState.HomeUIState
 
 @Composable
-fun HomeScreen() = BeeHealthyTheme {
+fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
     Column(Modifier
         .padding(8.dp)
         .fillMaxWidth()) {
-        Greeting()
+        Greeting(name = uiState.name)
 
         Card(
             backgroundColor = Color.White,
@@ -53,7 +54,7 @@ fun HomeScreen() = BeeHealthyTheme {
                     )
                 }
 
-                MacroNutrientsProgressBar()
+                MacroNutrientsProgressBar(caloriesToCommitObjective = uiState.caloriesToCommitObjective)
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -116,7 +117,9 @@ fun HomeScreen() = BeeHealthyTheme {
                     progress = 0.20f,
                     color = MaterialTheme.colors.primary,
                     backgroundColor = MaterialTheme.colors.background,
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
                 )
             }
         }
@@ -124,7 +127,7 @@ fun HomeScreen() = BeeHealthyTheme {
 }
 
 @Composable
-private fun MacroNutrientsProgressBar() {
+private fun MacroNutrientsProgressBar(caloriesToCommitObjective: Double) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.padding(vertical = 8.dp)
@@ -134,7 +137,7 @@ private fun MacroNutrientsProgressBar() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "2312",
+                text = caloriesToCommitObjective.toInt().toString(),
                 fontWeight = FontWeight.Bold,
                 fontSize = 23.sp,
                 fontFamily = PrimaryFont
@@ -169,14 +172,14 @@ private fun MacroNutrientsProgressBar() {
 }
 
 @Composable
-private fun Greeting() {
+private fun Greeting(name: String) {
     Text(
         text = "Bem vindo!",
         fontSize = 18.sp,
         style = MaterialTheme.typography.h3
     )
     Text(
-        text = "Felipe",
+        text = name,
         fontSize = 32.sp,
         style = MaterialTheme.typography.h3,
         fontWeight = FontWeight.Bold
@@ -185,4 +188,4 @@ private fun Greeting() {
 
 @Preview(showSystemUi = true)
 @Composable
-fun HomePreview() = HomeScreen()
+fun HomePreview() = HomeScreen(HomeUIState())

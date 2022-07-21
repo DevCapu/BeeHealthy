@@ -136,7 +136,8 @@ fun GenderCard(icon: ImageVector, title: String, isSelected: Boolean, onClick: (
                 text = title,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = PrimaryFont
+                fontFamily = PrimaryFont,
+                color = Color.White
             )
         }
     }

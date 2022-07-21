@@ -1,6 +1,5 @@
 package br.com.devcapu.beehealthy.app.ui.theme
 
-import android.view.Surface
 import androidx.compose.ui.graphics.Color
 
 val Primary = Color(0XFFD6A95F)
@@ -11,7 +10,7 @@ val Secondary = Color(0xFF464340)
 val SecondaryVariant = Color(0xFF464340)
 val onSecondary = Color(0xFF464340)
 
-val Background = Color(0xFFE4E4E4)
+val Background = Color(0xFFEEEEEE)
 val OnBackground = Color(0xFF464340)
 
 val Surface = Color(0xFF464340)

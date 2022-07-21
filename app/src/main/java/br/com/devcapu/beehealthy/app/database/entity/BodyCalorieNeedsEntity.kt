@@ -7,7 +7,7 @@ import br.com.devcapu.beehealthy.domain.model.patient.health.BodyCaloriesNeeds
 @Entity(tableName = "bodyCalorieNeeds")
 class BodyCalorieNeedsEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
-    val patientId: Long,
+    val patientId: Long = 0,
     val bmi: Double,
     val basalEnergyExpenditure: Double,
     val totalEnergyExpenditure: Double,
@@ -16,6 +16,13 @@ class BodyCalorieNeedsEntity(
     companion object {
         fun from(caloriesNeeds: BodyCaloriesNeeds, patientId: Long) = BodyCalorieNeedsEntity(
             patientId = patientId,
+            bmi = caloriesNeeds.bmi.value,
+            basalEnergyExpenditure = caloriesNeeds.basalEnergyExpenditure.value,
+            totalEnergyExpenditure = caloriesNeeds.totalEnergyExpenditure.value,
+            caloriesToCommitObjective = caloriesNeeds.caloriesToCommitObjective.value
+        )
+
+        fun from(caloriesNeeds: BodyCaloriesNeeds) = BodyCalorieNeedsEntity(
             bmi = caloriesNeeds.bmi.value,
             basalEnergyExpenditure = caloriesNeeds.basalEnergyExpenditure.value,
             totalEnergyExpenditure = caloriesNeeds.totalEnergyExpenditure.value,

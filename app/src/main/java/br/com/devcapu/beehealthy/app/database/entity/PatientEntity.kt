@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.app.database.entity
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender
