@@ -24,11 +24,11 @@ fun HomeScreen() = BeeHealthyTheme {
         .padding(8.dp)
         .fillMaxWidth()) {
         Greeting()
+
         Card(
             backgroundColor = Color.White,
             contentColor = MaterialTheme.colors.onBackground,
-            modifier = Modifier
-                .padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.SpaceAround,
@@ -59,9 +59,9 @@ fun HomeScreen() = BeeHealthyTheme {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Carboidrato", modifier = Modifier.fillMaxWidth(0.33f))
-                    Text(text = "100 g", modifier = Modifier.fillMaxWidth(0.33f))
-                    Text(text = "32%", modifier = Modifier.fillMaxWidth(0.33f))
+                    Text("Carboidrato", modifier = Modifier.fillMaxWidth(0.3f))
+                    Text(text = "100 g", modifier = Modifier.fillMaxWidth(0.3f))
+                    Text(text = "32%", modifier = Modifier.fillMaxWidth(0.3f))
                 }
                 Divider(Modifier.padding(vertical = 2.dp))
                 Row(
@@ -81,6 +81,43 @@ fun HomeScreen() = BeeHealthyTheme {
                     Text(text = "100 g", modifier = Modifier.fillMaxWidth(0.33f))
                     Text(text = "32%", modifier = Modifier.fillMaxWidth(0.33f))
                 }
+            }
+        }
+
+        Card(
+            backgroundColor = Color.White,
+            contentColor = MaterialTheme.colors.onBackground,
+            modifier = Modifier.padding(vertical = 8.dp)
+        ) {
+            Column(
+                verticalArrangement = Arrangement.SpaceAround,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(12.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Refeições",
+                        style = MaterialTheme.typography.h3,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        text = "2 de 5",
+                        style = MaterialTheme.typography.h3,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                }
+
+                LinearProgressIndicator(
+                    progress = 0.20f,
+                    color = MaterialTheme.colors.primary,
+                    backgroundColor = MaterialTheme.colors.background,
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+                )
             }
         }
     }
