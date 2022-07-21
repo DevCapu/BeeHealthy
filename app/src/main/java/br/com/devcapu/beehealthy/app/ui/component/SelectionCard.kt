@@ -13,8 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 
 @Composable
 fun SelectionCard(
@@ -43,5 +45,13 @@ fun SelectionCard(
             fontSize = 18.sp,
             modifier = Modifier.padding(16.dp)
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SelectionCardPreview() {
+    BeeHealthyTheme {
+        SelectionCard(text = "Escolha", selected = false) {}
     }
 }

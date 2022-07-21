@@ -8,6 +8,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 
 @Composable
 fun TopBar(onClickSignOff: () -> Unit) {
@@ -22,6 +24,11 @@ fun TopBar(onClickSignOff: () -> Unit) {
                 )
             }
         }
-
     )
+}
+
+@Preview
+@Composable
+fun TopBarPreview() {
+    BeeHealthyTheme { TopBar { } }
 }

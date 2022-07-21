@@ -58,3 +58,17 @@ fun OutlineInputError() {
             .fillMaxWidth(),
     )
 }
+
+@Preview(showBackground = true)
+@Composable
+fun OutlineInput() {
+    var value by remember { mutableStateOf("") }
+    OutlineInput(
+        value = value,
+        onValueChange = { value = it },
+        isShowingError = false,
+        modifier = Modifier
+            .padding(bottom = 16.dp)
+            .fillMaxWidth(),
+    )
+}
