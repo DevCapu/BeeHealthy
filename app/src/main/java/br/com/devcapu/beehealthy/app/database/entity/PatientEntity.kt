@@ -16,6 +16,7 @@ data class PatientEntity(
     val biologicGender: BiologicalGender,
     val activityLevel: String,
     val objective: String,
+    val idealWeight: Float,
 ) {
     companion object {
         fun from(patient: Patient): PatientEntity {
@@ -28,6 +29,7 @@ data class PatientEntity(
                 biologicGender = patient.biologicGender,
                 activityLevel = patient.activityLevel.name,
                 objective = patient.objective.name,
+                idealWeight = patient.idealWeight
             )
         }
     }
