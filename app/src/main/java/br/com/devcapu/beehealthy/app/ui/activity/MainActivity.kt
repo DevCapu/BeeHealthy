@@ -34,7 +34,12 @@ class MainActivity : ComponentActivity() {
             BeeHealthyTheme {
                 val navController = rememberNavController()
                 Scaffold(
-                    topBar = { TopBar { viewModel.logout() } },
+                    topBar = { TopBar {
+                        viewModel.logout()
+                        val intent = LoginActivity.getIntent(this)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                    } },
                     floatingActionButton = {
                         FloatingActionButton(
                             backgroundColor = Color(0xFF8463E5),
