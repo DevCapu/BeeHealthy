@@ -1,23 +1,25 @@
 package br.com.devcapu.beehealthy.app.ui.screen
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.devcapu.beehealthy.app.ui.component.CompoundCircularProgressBar
-import br.com.devcapu.beehealthy.app.ui.component.TextWithColorSample
+import br.com.devcapu.beehealthy.app.ui.component.RowCell
 import br.com.devcapu.beehealthy.app.ui.component.card.CardHeader
 import br.com.devcapu.beehealthy.app.ui.component.card.PrimaryCard
 import br.com.devcapu.beehealthy.app.ui.theme.*
 import br.com.devcapu.beehealthy.app.ui.uiState.HomeUIState
+import br.com.devcapu.beehealthy.app.ui.uiState.Macro
 import br.com.devcapu.beehealthy.app.ui.uiState.ProgressBar
 
 @Composable
@@ -44,32 +46,11 @@ fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
                 },
                     progressBarList = uiState.progressBar
                 )
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    TextWithColorSample(text = "Carboidratos", color = Carbohyd)
-                    Text(text = "100 g", modifier = Modifier.fillMaxWidth(0.33f))
-                    Text(text = "32%", modifier = Modifier.fillMaxWidth(0.33f))
-                }
-                Divider(Modifier.padding(vertical = 2.dp))
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    TextWithColorSample(text = "Proteína", color = Protein)
-                    Text(text = "90 g", modifier = Modifier.fillMaxWidth(0.33f))
-                    Text(text = "40%", modifier = Modifier.fillMaxWidth(0.33f))
-                }
-                Divider(Modifier.padding(vertical = 2.dp))
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    TextWithColorSample(text = "Gordura", color = Fats)
-                    Text(text = "100 g", modifier = Modifier.fillMaxWidth(0.33f))
-                    Text(text = "32%", modifier = Modifier.fillMaxWidth(0.33f))
+                uiState.macros.forEachIndexed { index, macro ->
+                    RowCell(macro = macro)
+                    if (index != uiState.macros.lastIndex) {
+                        Divider(Modifier.padding(vertical = 2.dp))
+                    }
                 }
             }
         )
@@ -113,6 +94,26 @@ fun HomePreview() = HomeScreen(
             ProgressBar(progress = 0.45f, color = Carbohyd, size = 96.dp),
             ProgressBar(progress = 0.65f, color = Protein, size = 120.dp),
             ProgressBar(progress = 0.79f, color = Fats, size = 144.dp)
+        ),
+        macros = listOf(
+            Macro(
+                color = Carbohyd,
+                name = "Carboidrato",
+                weight = 32,
+                percentage = 0.43f
+            ),
+            Macro(
+                color = Protein,
+                name = "Proteína",
+                weight = 21,
+                percentage = 0.23f
+            ),
+            Macro(
+                color = Fats,
+                name = "Gordura",
+                weight = 56,
+                percentage = 0.31f
+            ),
         )
     )
 )
