@@ -188,4 +188,12 @@ private fun Greeting(name: String) {
 
 @Preview(showSystemUi = true)
 @Composable
-fun HomePreview() = HomeScreen(HomeUIState())
+fun HomePreview() = HomeScreen(
+    HomeUIState(
+        name = "João",
+        caloriesToCommitObjective = 2342.24,
+        carbs = 34,
+        protein = 21,
+        fat = 32
+    )
+)
