@@ -15,3 +15,7 @@ val OnBackground = Color(0xFF464340)
 
 val Surface = Color(0xFF464340)
 val OnSurface = Color(0xFF464340)
+
+val Carbohyd = Color(0XFFFBA26B)
+val Protein = Color(0XFF7363E3)
+val Fats = Color(0XFF3BC3BB)
