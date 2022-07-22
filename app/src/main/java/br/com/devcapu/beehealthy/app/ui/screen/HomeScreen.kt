@@ -1,22 +1,24 @@
 package br.com.devcapu.beehealthy.app.ui.screen
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.devcapu.beehealthy.app.ui.component.CompoundCircularProgressBar
-import br.com.devcapu.beehealthy.app.ui.component.ProgressBar
 import br.com.devcapu.beehealthy.app.ui.component.TextWithColorSample
 import br.com.devcapu.beehealthy.app.ui.component.card.CardHeader
 import br.com.devcapu.beehealthy.app.ui.component.card.PrimaryCard
 import br.com.devcapu.beehealthy.app.ui.theme.*
 import br.com.devcapu.beehealthy.app.ui.uiState.HomeUIState
+import br.com.devcapu.beehealthy.app.ui.uiState.ProgressBar
 
 @Composable
 fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
