@@ -9,7 +9,18 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CircularBar(progress: Float, color: Color, size: Dp) {
+fun CircularBar(
+    progress: Float,
+    color: Color,
+    size: Dp,
+) {
+    CircularProgressIndicator(
+        progress = 1f,
+        color = color.copy(alpha = 0.2f),
+        strokeWidth = 8.dp,
+        modifier = Modifier.then(Modifier.size(size))
+    )
+
     CircularProgressIndicator(
         progress = progress,
         color = color,
