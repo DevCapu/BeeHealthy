@@ -32,24 +32,25 @@ fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
         PrimaryCard(
             header = { CardHeader(title = "Hoje", subtitle = "23 de Junho") },
             body = {
-                CompoundCircularProgressBar(text = {
-                    Text(
-                        text = uiState.caloriesToCommitObjective.toInt().toString(),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 23.sp,
-                        fontFamily = PrimaryFont
-                    )
-                    Text(
-                        text = "calorias",
-                        fontSize = 12.sp
-                    )
-                },
+                CompoundCircularProgressBar(
+                    text = {
+                        Text(
+                            text = uiState.caloriesToCommitObjective.toInt().toString(),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 23.sp,
+                            fontFamily = PrimaryFont
+                        )
+                        Text(
+                            text = "calorias",
+                            fontSize = 12.sp
+                        )
+                    },
                     progressBarList = uiState.progressBar
                 )
                 uiState.macros.forEachIndexed { index, macro ->
                     RowCell(macro = macro)
                     if (index != uiState.macros.lastIndex) {
-                        Divider(Modifier.padding(vertical = 2.dp))
+                        Divider(Modifier.padding(vertical = 6.dp))
                     }
                 }
             }
