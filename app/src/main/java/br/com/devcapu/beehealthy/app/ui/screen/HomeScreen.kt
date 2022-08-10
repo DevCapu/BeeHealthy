@@ -19,7 +19,7 @@ import br.com.devcapu.beehealthy.app.ui.component.card.CardHeader
 import br.com.devcapu.beehealthy.app.ui.component.card.PrimaryCard
 import br.com.devcapu.beehealthy.app.ui.theme.*
 import br.com.devcapu.beehealthy.app.ui.uiState.HomeUIState
-import br.com.devcapu.beehealthy.app.ui.uiState.Macro
+import br.com.devcapu.beehealthy.app.ui.uiState.UIMacro
 import br.com.devcapu.beehealthy.app.ui.uiState.ProgressBar
 
 @Composable
@@ -97,19 +97,19 @@ fun HomePreview() = HomeScreen(
             ProgressBar(progress = 0.79f, color = Fats, size = 144.dp)
         ),
         macros = listOf(
-            Macro(
+            UIMacro(
                 color = Carbohyd,
                 name = "Carboidrato",
                 weight = 32,
                 percentage = 0.43f
             ),
-            Macro(
+            UIMacro(
                 color = Protein,
                 name = "Proteína",
                 weight = 21,
                 percentage = 0.23f
             ),
-            Macro(
+            UIMacro(
                 color = Fats,
                 name = "Gordura",
                 weight = 56,

@@ -8,10 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import br.com.devcapu.beehealthy.app.ui.uiState.Macro
+import br.com.devcapu.beehealthy.app.ui.uiState.UIMacro
 
 @Composable
-fun RowCell(macro: Macro) {
+fun RowCell(macro: UIMacro) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
