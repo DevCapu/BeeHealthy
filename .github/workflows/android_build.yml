@@ -36,8 +36,11 @@ jobs:
           script: ./gradlew connectedAndroidTest
 
   instrumentation_tests:
+    needs: [build]
     runs-on: macos-latest
     steps:
+      - uses: actions/chekout@v2
+
       - name: Run Instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
