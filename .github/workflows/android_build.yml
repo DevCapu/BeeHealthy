@@ -30,7 +30,7 @@ jobs:
         run: ./gradlew test
 
   instrumentation_tests:
-    needs: [build]
+    needs: [unit_tests]
     runs-on: macos-latest
     steps:
       - uses: actions/chekout@v2
