@@ -6,24 +6,30 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle.State.STARTED
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import br.com.devcapu.beehealthy.app.ui.screen.LoginScreen
 import br.com.devcapu.beehealthy.app.ui.viewModel.LoginViewModel
+import kotlinx.coroutines.launch
 
 class LoginActivity : ComponentActivity() {
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel.signedIn.observe(this) { isSignedIn ->
-            if (isSignedIn) {
-                goToHomeActivity()
+        lifecycleScope.launch {
+            repeatOnLifecycle(STARTED) {
+                viewModel.uiState.collect {
+                    if (it.loggedIn) {
+                        goToHomeActivity()
+                    }
+                }
             }
         }
-
-        setContent {
-            LoginScreen(viewModel)
-        }
+       setContent { LoginScreen(viewModel) }
     }
 
     override fun onResume() {

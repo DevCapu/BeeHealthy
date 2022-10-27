@@ -1,47 +1,93 @@
 package br.com.devcapu.beehealthy.app.ui.viewModel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+
+data class LoginUI(
+    val email: String = "",
+    val password: String = "",
+    val onEmailChanged: (String) -> Unit = { },
+    val onPasswordChanged: (String) -> Unit = { },
+    val onClickLogin: () -> Unit = { },
+    val emailErrorMessage: String = "",
+    val showEmailErrorMessage: Boolean = false,
+    val passwordErrorMessage: String = "",
+    val showPasswordErrorMessage: Boolean = false,
+    val loggedIn: Boolean = false,
+)
 
 class LoginViewModel : ViewModel() {
-    var email by mutableStateOf(Resource(""))
-    var password by mutableStateOf(Resource(""))
+    private var _uiState = MutableStateFlow(LoginUI())
+    val uiState: StateFlow<LoginUI> = _uiState
 
-    private val _loggedIn = MutableLiveData<Boolean>(false)
-    var signedIn: LiveData<Boolean> = _loggedIn
-        private set
+    init {
+        _uiState.value = LoginUI(
+            onEmailChanged = {
+                _uiState.value = _uiState.value.copy(
+                    email = it,
+                    showEmailErrorMessage = false
+                )
+            },
+            onPasswordChanged = {
+                _uiState.value = _uiState.value.copy(
+                    password = it,
+                    showPasswordErrorMessage = false
+                )
+            },
+            onClickLogin = {
+                if (_uiState.value.email.isEmpty()) {
+                    _uiState.value = _uiState.value.copy(
+                        emailErrorMessage = "Email vazio",
+                        showEmailErrorMessage = true
+                    )
+                } else if (_uiState.value.password.isEmpty()) {
+                    _uiState.value = _uiState.value.copy(
+                        passwordErrorMessage = "Password vazio",
+                        showPasswordErrorMessage = true
+                    )
+                }
+
+                val auth = Firebase.auth
+                if (!isSignedIn()) {
+                    val createUserWithEmailAndPassword =
+                        auth.signInWithEmailAndPassword(
+                            _uiState.value.email,
+                            _uiState.value.password
+                        )
+                    createUserWithEmailAndPassword.addOnSuccessListener {
+                        _uiState.value = _uiState.value.copy(loggedIn = true)
+                    }
+                    createUserWithEmailAndPassword.addOnFailureListener {
+                        when(it) {
+                            is FirebaseAuthInvalidCredentialsException -> {
+                                _uiState.value = _uiState.value.copy(
+                                    passwordErrorMessage = "Senha inválida",
+                                    showPasswordErrorMessage = true
+                                )
+                            }
+                            is FirebaseAuthInvalidUserException -> {
+                                _uiState.value = _uiState.value.copy(
+                                    emailErrorMessage = "Email ou usuário não existe",
+                                    showEmailErrorMessage = true
+                                )
+                            }
+                        }
+                        Log.e("FIREBASE_ERROR", it.message!!)
+                    }
+                }
+            }
+        )
+    }
 
     fun isSignedIn(): Boolean {
         val auth = FirebaseAuth.getInstance()
         return auth.currentUser != null
-    }
-
-    fun signIn() {
-        if (email.data.isEmpty()) {
-            email = Resource(email.data, "Email está vazio")
-            return
-        } else if (password.data.isEmpty()) {
-            password = Resource(password.data, "Senha está vazia")
-            return
-        }
-
-        val auth = Firebase.auth
-        if (!isSignedIn()) {
-            val createUserWithEmailAndPassword =
-                auth.signInWithEmailAndPassword(email.data, password.data)
-            createUserWithEmailAndPassword.addOnSuccessListener {
-                _loggedIn.value = true
-            }
-            createUserWithEmailAndPassword.addOnFailureListener {
-
-            }
-        }
     }
 }

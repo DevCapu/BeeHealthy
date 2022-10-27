@@ -10,97 +10,76 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.app.ui.extension.visualizationMode
 import br.com.devcapu.beehealthy.app.ui.activity.RegisterActivity
 import br.com.devcapu.beehealthy.app.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.app.ui.component.OutlineInput
 import br.com.devcapu.beehealthy.app.ui.component.PasswordTrailingIcon
+import br.com.devcapu.beehealthy.app.ui.extension.visualizationMode
+import br.com.devcapu.beehealthy.app.ui.viewModel.LoginUI
 import br.com.devcapu.beehealthy.app.ui.viewModel.LoginViewModel
-import br.com.devcapu.beehealthy.app.ui.viewModel.Resource
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel) {
+fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
+    val state by viewModel.uiState.collectAsState(initial = LoginUI())
+    LoginScreen(state = state)
+}
+
+@Composable
+private fun LoginScreen(state: LoginUI) = FormWithBeeHealthIdentity {
     var showPassword by remember { mutableStateOf(false) }
     val passwordVisualizationMode = VisualTransformation.visualizationMode(showPassword)
     val context = LocalContext.current
 
-    LoginContent(
-        email = viewModel.email,
-        onEmailChange = { viewModel.email = Resource(it) },
-        password = viewModel.password,
-        onPasswordChange = { viewModel.password = Resource(it) },
-        showPassword = showPassword,
-        passwordVisualizationMode = passwordVisualizationMode,
-        onChangePasswordVisualizationMode = { showPassword = !showPassword },
-        onClickOnSignIn = { viewModel.signIn() },
-        onClickGoToRegistration = { goToRegisterActivity(context) }
+    OutlineInput(
+        value = state.email,
+        onValueChange = state.onEmailChanged,
+        placeholder = { Text(text = stringResource(id = R.string.email_label)) },
+        isShowingError = state.showEmailErrorMessage,
+        errorMessage = state.emailErrorMessage,
+        modifier = Modifier
+            .padding(bottom = 16.dp)
+            .fillMaxWidth()
     )
+
+    OutlineInput(
+        value = state.password,
+        onValueChange = state.onPasswordChanged,
+        placeholder = { Text(text = stringResource(id = R.string.password_label)) },
+        visualTransformation = passwordVisualizationMode,
+        trailingIcon = { PasswordTrailingIcon(showPassword) { showPassword = !showPassword } },
+        modifier = Modifier
+            .padding(bottom = 32.dp)
+            .fillMaxWidth(),
+        errorMessage = state.passwordErrorMessage,
+        isShowingError = state.showPasswordErrorMessage
+    )
+
+    Button(
+        onClick = state.onClickLogin,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
+    ) {
+        Text(text = stringResource(R.string.enter_label))
+    }
+
+    TextButton(onClick = { goToRegisterActivity(context) }) {
+        Text(text = stringResource(R.string.create_an_account))
+    }
 }
 
 private fun goToRegisterActivity(context: Context) {
     context.startActivity(RegisterActivity.getIntent(context))
 }
 
-@Composable
-private fun LoginContent(
-    email: Resource<String>,
-    onEmailChange: (String) -> Unit,
-    password: Resource<String>,
-    showPassword: Boolean,
-    passwordVisualizationMode: VisualTransformation,
-    onChangePasswordVisualizationMode: () -> Unit,
-    onClickGoToRegistration: () -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onClickOnSignIn: () -> Unit,
-) = FormWithBeeHealthIdentity {
-    email.errorMessage.isNullOrEmpty()
-    OutlineInput(
-        value = email.data,
-        onValueChange = onEmailChange,
-        placeholder = { Text(text = stringResource(id = R.string.email_label)) },
-        isShowingError = !email.errorMessage.isNullOrEmpty(),
-        errorMessage = email.data,
-        modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
-    )
-
-    OutlineInput(
-        value = password.data,
-        onValueChange = onPasswordChange,
-        placeholder = { Text(text = stringResource(id = R.string.password_label)) },
-        visualTransformation = passwordVisualizationMode,
-        trailingIcon = { PasswordTrailingIcon(showPassword) { onChangePasswordVisualizationMode() } },
-        modifier = Modifier.padding(bottom = 32.dp).fillMaxWidth()
-    )
-
-    Button(
-        onClick = onClickOnSignIn,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp)
-    ) { Text(text = stringResource(R.string.enter_label)) }
-
-    TextButton(
-        onClick = onClickGoToRegistration
-    ) { Text(text = stringResource(R.string.create_an_account)) }
-}
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginContent(
-        email = Resource(""),
-        password = Resource(""),
-        onPasswordChange = {},
-        passwordVisualizationMode = PasswordVisualTransformation(),
-        onChangePasswordVisualizationMode = {},
-        onClickGoToRegistration = {},
-        onClickOnSignIn = {},
-        onEmailChange = {},
-        showPassword = false
-    )
+    LoginScreen(state = LoginUI())
 }
