@@ -3,13 +3,19 @@ package br.com.devcapu.beehealthy.app.ui.screen
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,6 +40,7 @@ private fun LoginScreen(state: LoginUI) = FormWithBeeHealthIdentity {
     var showPassword by remember { mutableStateOf(false) }
     val passwordVisualizationMode = VisualTransformation.visualizationMode(showPassword)
     val context = LocalContext.current
+    val manager = LocalFocusManager.current
 
     OutlineInput(
         value = state.email,
@@ -43,7 +50,12 @@ private fun LoginScreen(state: LoginUI) = FormWithBeeHealthIdentity {
         errorMessage = state.emailErrorMessage,
         modifier = Modifier
             .padding(bottom = 16.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        options = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Next
+        ),
+        actions = KeyboardActions(onNext = { manager.moveFocus(FocusDirection.Next) })
     )
 
     OutlineInput(
@@ -56,7 +68,12 @@ private fun LoginScreen(state: LoginUI) = FormWithBeeHealthIdentity {
             .padding(bottom = 32.dp)
             .fillMaxWidth(),
         errorMessage = state.passwordErrorMessage,
-        isShowingError = state.showPasswordErrorMessage
+        isShowingError = state.showPasswordErrorMessage,
+        options = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
+        ),
+        actions = KeyboardActions(onDone = { manager.clearFocus() })
     )
 
     Button(

@@ -3,11 +3,15 @@ package br.com.devcapu.beehealthy.app.ui.component
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,7 +25,9 @@ fun OutlineInput(
     isShowingError: Boolean = false,
     placeholder: @Composable () -> Unit = { },
     trailingIcon: @Composable () -> Unit = { },
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    options: KeyboardOptions = KeyboardOptions.Default,
+    actions: KeyboardActions = KeyboardActions.Default
 ) = Column(
     modifier = modifier
 ) {
@@ -32,7 +38,9 @@ fun OutlineInput(
         isError = isShowingError,
         trailingIcon = trailingIcon,
         visualTransformation = visualTransformation,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        keyboardOptions = options,
+        keyboardActions = actions
     )
 
     if (isShowingError) {
