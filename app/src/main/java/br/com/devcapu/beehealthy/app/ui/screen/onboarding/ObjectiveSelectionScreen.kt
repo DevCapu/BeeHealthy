@@ -10,36 +10,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.app.ui.component.SelectionCard
 import br.com.devcapu.beehealthy.app.ui.component.SelectionTitle
-import br.com.devcapu.beehealthy.app.ui.screen.onboarding.OnboardSteps.ACTIVITY_LEVEL_SELECTION
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
+import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterUI
 import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
-import br.com.devcapu.beehealthy.domain.model.patient.health.Objective
 import br.com.devcapu.beehealthy.domain.model.patient.health.Objective.*
 
 @Composable
-fun ObjectiveSelectionScreen(viewModel: RegisterViewModel) = Column(
-    horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Center,
-    modifier = Modifier
-        .padding(all = 16.dp)
-        .fillMaxSize()
-) {
-    BeeHealthyTheme {
-        ObjectiveSelectionContent(
-            onClickToGoToNextStep = {  viewModel.goTo(ACTIVITY_LEVEL_SELECTION)},
-            onSelectCard = { viewModel.objective = it }
-        )
-    }
+fun ObjectiveSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
+    val state by viewModel.uiState.collectAsState()
+    ObjectiveSelectionContent(state = state)
 }
 
 @Composable
-fun ObjectiveSelectionContent(
-    onClickToGoToNextStep: (String) -> Unit,
-    onSelectCard: (Objective) -> Unit
-) = Column(
+fun ObjectiveSelectionContent(state: RegisterUI) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
     modifier = Modifier
@@ -62,7 +49,7 @@ fun ObjectiveSelectionContent(
         defineBodySelected = false
         gainMassSelected = false
 
-        onSelectCard(LOSE)
+        state.onObjectiveChanged(LOSE)
     }
 
     SelectionCard(text = defineBodyLabel, selected = defineBodySelected) {
@@ -70,7 +57,7 @@ fun ObjectiveSelectionContent(
         defineBodySelected = true
         gainMassSelected = false
 
-        onSelectCard(MAINTAIN)
+        state.onObjectiveChanged(MAINTAIN)
     }
 
     SelectionCard(text = gainMassLabel, selected = gainMassSelected) {
@@ -78,30 +65,24 @@ fun ObjectiveSelectionContent(
         defineBodySelected = false
         gainMassSelected = true
 
-        onSelectCard(GAIN)
+        state.onObjectiveChanged(GAIN)
     }
 
     Button(
-        onClick = {
-            val objectiveSelected = when {
-                loseWeightSelected -> loseWeightLabel
-                defineBodySelected -> defineBodyLabel
-                else -> gainMassLabel
-            }
-
-            onClickToGoToNextStep(objectiveSelected)
-        },
-        shape = RoundedCornerShape(4.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp)
-    ) { Text(text = stringResource(id = R.string.next_step)) }
+            .padding(vertical = 16.dp),
+        onClick = state.onGoToNextStep,
+        shape = RoundedCornerShape(4.dp),
+    ) {
+        Text(text = stringResource(id = R.string.next_step))
+    }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun ObjectiveSelectionScreenPreview() {
     BeeHealthyTheme {
-        ObjectiveSelectionContent({}, {})
+        ObjectiveSelectionContent(RegisterUI())
     }
 }

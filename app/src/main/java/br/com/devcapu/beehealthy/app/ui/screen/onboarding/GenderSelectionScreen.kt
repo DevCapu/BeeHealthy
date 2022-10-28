@@ -27,23 +27,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.app.ui.theme.PrimaryFont
+import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterUI
 import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
-import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender
 import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender.FEMALE
 import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender.MALE
 
 @Composable
 fun GenderSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
-    GenderSelectionContent(onClick = { viewModel.biologicGender = it }) {
-        viewModel.goTo(OnboardSteps.OBJECTIVE_SELECTION)
-    }
+    val state by viewModel.uiState.collectAsState()
+    GenderSelectionScreen(state = state)
 }
 
 @Composable
-fun GenderSelectionContent(
-    onClick: (BiologicalGender) -> Unit,
-    onClickGoToNextStep: () -> Unit,
-) = Column(
+fun GenderSelectionScreen(state: RegisterUI) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
     modifier = Modifier.fillMaxSize()
@@ -69,42 +65,34 @@ fun GenderSelectionContent(
             .fillMaxWidth()
             .padding(vertical = 32.dp)
     ) {
-        val maleLabel = stringResource(R.string.male_label)
-        val femaleLabel = stringResource(R.string.female_label)
         GenderCard(
             icon = Icons.Filled.Male,
-            title = maleLabel,
+            title = stringResource(R.string.male_label),
             isSelected = maleCardIsSelected,
             onClick = {
                 maleCardIsSelected = true
                 femaleCardIsSelected = false
                 showNoGenderSelectedError = false
-                onClick(MALE)
+                state.onBiologicalGenderChanged(MALE)
             }
         )
 
         GenderCard(
             icon = Icons.Filled.Female,
-            title = femaleLabel,
+            title = stringResource(R.string.female_label),
             isSelected = femaleCardIsSelected,
             onClick = {
                 maleCardIsSelected = false
                 femaleCardIsSelected = true
                 showNoGenderSelectedError = false
-                onClick(FEMALE)
+                state.onBiologicalGenderChanged(FEMALE)
             }
         )
     }
 
-    Button(
-        onClick = {
-            if (maleCardIsSelected or femaleCardIsSelected) {
-                onClickGoToNextStep()
-            } else {
-                showNoGenderSelectedError = true
-            }
-        }
-    ) { Text(stringResource(id = R.string.next_step)) }
+    Button(onClick = state.onGoToNextStep) {
+        Text(stringResource(id = R.string.next_step))
+    }
 
     if (showNoGenderSelectedError) {
         Text(
@@ -147,6 +135,6 @@ fun GenderCard(icon: ImageVector, title: String, isSelected: Boolean, onClick: (
 @Composable
 fun SelectGenderPreview() {
     BeeHealthyTheme {
-        GenderSelectionContent({}, {})
+        GenderSelectionScreen(RegisterUI())
     }
 }
