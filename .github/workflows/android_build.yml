@@ -1,7 +1,5 @@
-name: Run tests
-
+name: Android Build
 on: push
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,23 +18,5 @@ jobs:
       - name: Build Project
         run: ./gradlew assemble
 
-  unit_tests:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
       - name: Run Tests
         run: ./gradlew test
-
-  instrumentation_tests:
-    needs: [unit_tests]
-    runs-on: macos-latest
-    steps:
-      - uses: actions/chekout@v2
-
-      - name: Run Instrumentation tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 20
-          script: ./gradlew connectedAndroidTest
