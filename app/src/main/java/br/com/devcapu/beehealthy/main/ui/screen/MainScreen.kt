@@ -16,7 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.common.ui.activity.AddFoodActivity
 import br.com.devcapu.beehealthy.common.ui.component.BottomBar
 import br.com.devcapu.beehealthy.common.ui.component.TopBar
-import br.com.devcapu.beehealthy.main.navigation.NavigationGraph
+import br.com.devcapu.beehealthy.main.ui.navigation.NavigationGraph
 import br.com.devcapu.beehealthy.main.ui.HomeViewModel
 
 @Composable
