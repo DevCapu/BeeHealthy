@@ -26,15 +26,16 @@ import br.com.devcapu.beehealthy.app.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.app.ui.component.OutlineInput
 import br.com.devcapu.beehealthy.app.ui.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.app.ui.extension.visualizationMode
+import br.com.devcapu.beehealthy.login.ui.state.LoginUIState
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
-    val state by viewModel.uiState.collectAsState(initial = LoginUI())
+    val state by viewModel.uiState.collectAsState(initial = LoginUIState())
     LoginScreen(state = state)
 }
 
 @Composable
-private fun LoginScreen(state: LoginUI) = FormWithBeeHealthIdentity {
+private fun LoginScreen(state: LoginUIState) = FormWithBeeHealthIdentity {
     var showPassword by remember { mutableStateOf(false) }
     val passwordVisualizationMode = VisualTransformation.visualizationMode(showPassword)
     val context = LocalContext.current
@@ -92,9 +93,8 @@ private fun goToRegisterActivity(context: Context) {
     context.startActivity(RegisterActivity.getIntent(context))
 }
 
-
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(state = LoginUI())
+    LoginScreen(state = LoginUIState())
 }

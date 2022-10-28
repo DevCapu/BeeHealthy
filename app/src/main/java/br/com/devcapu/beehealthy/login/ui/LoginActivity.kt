@@ -31,7 +31,7 @@ class LoginActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (!viewModel.isSignedIn()) return
+        if (!viewModel.isSignedIn) return
         goToHomeActivity()
     }
 
