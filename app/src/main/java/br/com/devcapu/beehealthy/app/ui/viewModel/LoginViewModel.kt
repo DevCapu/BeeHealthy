@@ -1,6 +1,5 @@
 package br.com.devcapu.beehealthy.app.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -55,7 +54,7 @@ class LoginViewModel : ViewModel() {
                 }
 
                 val auth = Firebase.auth
-                if (!isSignedIn()) {
+                if (!isSignedIn() && authenticationValuesAreNotEmpty()) {
                     val createUserWithEmailAndPassword =
                         auth.signInWithEmailAndPassword(
                             _uiState.value.email,
@@ -65,7 +64,7 @@ class LoginViewModel : ViewModel() {
                         _uiState.value = _uiState.value.copy(loggedIn = true)
                     }
                     createUserWithEmailAndPassword.addOnFailureListener {
-                        when(it) {
+                        when (it) {
                             is FirebaseAuthInvalidCredentialsException -> {
                                 _uiState.value = _uiState.value.copy(
                                     passwordErrorMessage = "Senha inválida",
@@ -79,7 +78,6 @@ class LoginViewModel : ViewModel() {
                                 )
                             }
                         }
-                        Log.e("FIREBASE_ERROR", it.message!!)
                     }
                 }
             }
@@ -89,5 +87,10 @@ class LoginViewModel : ViewModel() {
     fun isSignedIn(): Boolean {
         val auth = FirebaseAuth.getInstance()
         return auth.currentUser != null
+    }
+
+    private fun authenticationValuesAreNotEmpty(): Boolean {
+        val value = _uiState.value
+        return value.email.isNotEmpty() && value.password.isNotEmpty()
     }
 }
