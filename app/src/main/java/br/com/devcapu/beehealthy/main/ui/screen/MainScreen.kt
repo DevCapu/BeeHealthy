@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.register.ui.screen
+package br.com.devcapu.beehealthy.main.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.material.FabPosition

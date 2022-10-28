@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.register.ui.screen
+package br.com.devcapu.beehealthy.main.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,9 +18,9 @@ import br.com.devcapu.beehealthy.common.ui.component.RowCell
 import br.com.devcapu.beehealthy.common.ui.component.card.CardHeader
 import br.com.devcapu.beehealthy.common.ui.component.card.PrimaryCard
 import br.com.devcapu.beehealthy.common.ui.theme.*
-import br.com.devcapu.beehealthy.config.ui.uiState.HomeUIState
-import br.com.devcapu.beehealthy.config.ui.uiState.UIMacro
-import br.com.devcapu.beehealthy.config.ui.uiState.ProgressBar
+import br.com.devcapu.beehealthy.main.ui.HomeUIState
+import br.com.devcapu.beehealthy.main.ui.UIMacro
+import br.com.devcapu.beehealthy.main.ui.ProgressBar
 
 @Composable
 fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {

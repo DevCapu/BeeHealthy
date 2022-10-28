@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.config.ui.uiState
+package br.com.devcapu.beehealthy.main.ui
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp

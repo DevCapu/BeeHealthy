@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.register.ui.screen
+package br.com.devcapu.beehealthy.main.ui.screen
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

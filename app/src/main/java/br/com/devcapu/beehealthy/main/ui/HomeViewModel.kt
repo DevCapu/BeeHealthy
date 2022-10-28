@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import br.com.devcapu.beehealthy.config.ui.uiState.HomeUIState
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch

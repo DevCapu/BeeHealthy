@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
-import br.com.devcapu.beehealthy.register.ui.screen.MainScreen
+import br.com.devcapu.beehealthy.main.ui.screen.MainScreen
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.login.ui.LoginActivity

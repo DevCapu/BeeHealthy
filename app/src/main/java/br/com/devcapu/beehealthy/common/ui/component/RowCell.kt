@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import br.com.devcapu.beehealthy.config.ui.uiState.UIMacro
+import br.com.devcapu.beehealthy.main.ui.UIMacro
 
 @Composable
 fun RowCell(macro: UIMacro) {
