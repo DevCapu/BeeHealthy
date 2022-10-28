@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.ui.screen.onboarding
+package br.com.devcapu.beehealthy.register.ui.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -27,8 +27,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.app.ui.theme.PrimaryFont
-import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterUI
-import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
+import br.com.devcapu.beehealthy.register.ui.state.RegisterUIState
+import br.com.devcapu.beehealthy.register.ui.RegisterViewModel
 import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender.FEMALE
 import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender.MALE
 
@@ -39,7 +39,7 @@ fun GenderSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
 }
 
 @Composable
-fun GenderSelectionScreen(state: RegisterUI) = Column(
+fun GenderSelectionScreen(state: RegisterUIState) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
     modifier = Modifier.fillMaxSize()
@@ -135,6 +135,6 @@ fun GenderCard(icon: ImageVector, title: String, isSelected: Boolean, onClick: (
 @Composable
 fun SelectGenderPreview() {
     BeeHealthyTheme {
-        GenderSelectionScreen(RegisterUI())
+        GenderSelectionScreen(RegisterUIState())
     }
 }

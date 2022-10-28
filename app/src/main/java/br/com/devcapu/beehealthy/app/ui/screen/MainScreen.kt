@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.ui.screen
+package br.com.devcapu.beehealthy.register.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.material.FabPosition
@@ -10,16 +10,21 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import br.com.devcapu.beehealthy.app.ui.activity.AddFoodActivity
 import br.com.devcapu.beehealthy.app.ui.component.BottomBar
 import br.com.devcapu.beehealthy.app.ui.component.TopBar
 import br.com.devcapu.beehealthy.app.ui.navigation.NavigationGraph
-import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.app.ui.viewModel.HomeViewModel
 
 @Composable
-fun MainScreen(viewModel: HomeViewModel, onClickLogout: () -> Unit) {
+fun MainScreen(
+    viewModel: HomeViewModel = viewModel(),
+    onClickLogout: () -> Unit,
+) {
+    val context = LocalContext.current
     val navController = rememberNavController()
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
@@ -28,7 +33,9 @@ fun MainScreen(viewModel: HomeViewModel, onClickLogout: () -> Unit) {
             FloatingActionButton(
                 backgroundColor = Color(0xFF8463E5),
                 contentColor = Color.White,
-                onClick = { /*TODO*/ }
+                onClick = {
+                    context.startActivity(AddFoodActivity.getIntent(context))
+                }
             ) {
                 Image(
                     imageVector = Icons.Default.Add,
@@ -40,8 +47,10 @@ fun MainScreen(viewModel: HomeViewModel, onClickLogout: () -> Unit) {
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
         bottomBar = { BottomBar(navController = navController) }
-    ) { NavigationGraph(
-        navController = navController,
-        viewModel = viewModel
-    ) }
+    ) {
+        NavigationGraph(
+            navController = navController,
+            viewModel = viewModel
+        )
+    }
 }

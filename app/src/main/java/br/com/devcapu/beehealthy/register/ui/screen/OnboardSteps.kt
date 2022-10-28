@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.ui.screen.onboarding
+package br.com.devcapu.beehealthy.register.ui.screen
 
 enum class OnboardSteps {
     AUTHENTICATION_REGISTER,

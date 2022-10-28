@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.ui.screen.onboarding
+package br.com.devcapu.beehealthy.register.ui.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,8 +14,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.app.ui.component.SelectionCard
 import br.com.devcapu.beehealthy.app.ui.component.SelectionTitle
-import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterUI
-import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
+import br.com.devcapu.beehealthy.register.ui.state.RegisterUIState
+import br.com.devcapu.beehealthy.register.ui.RegisterViewModel
 import br.com.devcapu.beehealthy.domain.model.patient.health.ActivityLevel.*
 
 @Composable
@@ -26,7 +25,7 @@ fun ActivityLevelSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
 }
 
 @Composable
-fun ActivityLevelSelectionScreen(state: RegisterUI) = Column(
+fun ActivityLevelSelectionScreen(state: RegisterUIState) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
     modifier = Modifier
@@ -89,5 +88,5 @@ fun ActivityLevelSelectionScreen(state: RegisterUI) = Column(
 @Preview(showSystemUi = true)
 @Composable
 fun ActivityLevelScreenPreview() {
-    ActivityLevelSelectionScreen(RegisterUI())
+    ActivityLevelSelectionScreen(RegisterUIState())
 }

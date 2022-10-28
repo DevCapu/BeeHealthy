@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.ui.screen.onboarding
+package br.com.devcapu.beehealthy.register.ui.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,8 +15,8 @@ import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.app.ui.component.SelectionCard
 import br.com.devcapu.beehealthy.app.ui.component.SelectionTitle
 import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterUI
-import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
+import br.com.devcapu.beehealthy.register.ui.state.RegisterUIState
+import br.com.devcapu.beehealthy.register.ui.RegisterViewModel
 import br.com.devcapu.beehealthy.domain.model.patient.health.Objective.*
 
 @Composable
@@ -26,7 +26,7 @@ fun ObjectiveSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
 }
 
 @Composable
-fun ObjectiveSelectionContent(state: RegisterUI) = Column(
+fun ObjectiveSelectionContent(state: RegisterUIState) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
     modifier = Modifier
@@ -83,6 +83,6 @@ fun ObjectiveSelectionContent(state: RegisterUI) = Column(
 @Composable
 fun ObjectiveSelectionScreenPreview() {
     BeeHealthyTheme {
-        ObjectiveSelectionContent(RegisterUI())
+        ObjectiveSelectionContent(RegisterUIState())
     }
 }

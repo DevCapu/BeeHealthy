@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.ui.activity
+package br.com.devcapu.beehealthy.login.ui
 
 import android.content.Context
 import android.content.Intent
@@ -6,13 +6,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import br.com.devcapu.beehealthy.app.ui.screen.LoginScreen
-import br.com.devcapu.beehealthy.app.ui.viewModel.LoginViewModel
+import br.com.devcapu.beehealthy.app.ui.activity.MainActivity
 import kotlinx.coroutines.launch
 
 class LoginActivity : ComponentActivity() {

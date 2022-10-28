@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.ui.viewModel
+package br.com.devcapu.beehealthy.login.ui
 
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth

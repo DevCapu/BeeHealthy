@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.ui.screen
+package br.com.devcapu.beehealthy.register.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

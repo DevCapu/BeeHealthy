@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.ui.screen
+package br.com.devcapu.beehealthy.login.ui
 
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,13 +21,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.app.ui.activity.RegisterActivity
+import br.com.devcapu.beehealthy.register.ui.RegisterActivity
 import br.com.devcapu.beehealthy.app.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.app.ui.component.OutlineInput
 import br.com.devcapu.beehealthy.app.ui.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.app.ui.extension.visualizationMode
-import br.com.devcapu.beehealthy.app.ui.viewModel.LoginUI
-import br.com.devcapu.beehealthy.app.ui.viewModel.LoginViewModel
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = viewModel()) {

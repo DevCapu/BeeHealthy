@@ -1,9 +1,7 @@
-package br.com.devcapu.beehealthy.app.ui.screen.onboarding
+package br.com.devcapu.beehealthy.register.ui.screen
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -17,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.app.ui.component.FormWithBeeHealthIdentity
-import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterUI
-import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
+import br.com.devcapu.beehealthy.register.ui.state.RegisterUIState
+import br.com.devcapu.beehealthy.register.ui.RegisterViewModel
 
 @Composable
 fun UserRegisterScreen(viewModel: RegisterViewModel = viewModel()) {
@@ -27,8 +25,8 @@ fun UserRegisterScreen(viewModel: RegisterViewModel = viewModel()) {
 }
 
 @Composable
-fun UserRegisterScreen(state: RegisterUI) =
-    FormWithBeeHealthIdentity(modifier = Modifier.verticalScroll(state = rememberScrollState())) {
+fun UserRegisterScreen(state: RegisterUIState) =
+    FormWithBeeHealthIdentity {
         val defaultModifier = Modifier
             .padding(bottom = 16.dp)
             .fillMaxWidth()
@@ -73,5 +71,5 @@ fun UserRegisterScreen(state: RegisterUI) =
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun UserRegisterScreenPreview() {
-    UserRegisterScreen(RegisterUI())
+    UserRegisterScreen(RegisterUIState())
 }

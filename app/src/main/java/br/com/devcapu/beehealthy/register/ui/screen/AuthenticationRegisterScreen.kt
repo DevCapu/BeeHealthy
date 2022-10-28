@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.app.ui.screen.onboarding
+package br.com.devcapu.beehealthy.register.ui.screen
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,13 +21,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.app.ui.activity.LoginActivity
+import br.com.devcapu.beehealthy.login.ui.LoginActivity
 import br.com.devcapu.beehealthy.app.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.app.ui.component.OutlineInput
 import br.com.devcapu.beehealthy.app.ui.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.app.ui.extension.visualizationMode
-import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterUI
-import br.com.devcapu.beehealthy.app.ui.viewModel.RegisterViewModel
+import br.com.devcapu.beehealthy.register.ui.state.RegisterUIState
+import br.com.devcapu.beehealthy.register.ui.RegisterViewModel
 
 @Composable
 fun AuthRegisterScreen(viewModel: RegisterViewModel = viewModel()) {
@@ -36,7 +36,7 @@ fun AuthRegisterScreen(viewModel: RegisterViewModel = viewModel()) {
 }
 
 @Composable
-fun AuthRegisterScreen(state: RegisterUI) = FormWithBeeHealthIdentity {
+fun AuthRegisterScreen(state: RegisterUIState) = FormWithBeeHealthIdentity {
     var showPassword by remember { mutableStateOf(false) }
     val passwordVisualizationMode = VisualTransformation.visualizationMode(showPassword)
     val manager = LocalFocusManager.current
@@ -93,5 +93,5 @@ fun AuthRegisterScreen(state: RegisterUI) = FormWithBeeHealthIdentity {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    AuthRegisterScreen(RegisterUI())
+    AuthRegisterScreen(RegisterUIState())
 }
