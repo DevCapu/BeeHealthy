@@ -7,21 +7,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.LaunchedEffect
-import androidx.lifecycle.Lifecycle.State.STARTED
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.devcapu.beehealthy.app.database.BeeHealthyDatabase
+import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
+import br.com.devcapu.beehealthy.main.ui.MainActivity
+import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
+import br.com.devcapu.beehealthy.common.data.repository.HealthRepository
+import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.login.ui.LoginActivity
-import br.com.devcapu.beehealthy.app.ui.activity.MainActivity
-import br.com.devcapu.beehealthy.register.ui.screen.OnboardSteps.*
-import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.domain.repository.HealthRepository
-import br.com.devcapu.beehealthy.domain.repository.PatientRepository
 import br.com.devcapu.beehealthy.register.ui.screen.*
-import kotlinx.coroutines.flow.sample
+import br.com.devcapu.beehealthy.register.ui.screen.OnboardSteps.*
 import kotlinx.coroutines.launch
 
 class RegisterActivity : ComponentActivity() {

@@ -25,12 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.app.ui.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.app.ui.theme.PrimaryFont
+import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
+import br.com.devcapu.beehealthy.common.ui.theme.PrimaryFont
 import br.com.devcapu.beehealthy.register.ui.state.RegisterUIState
 import br.com.devcapu.beehealthy.register.ui.RegisterViewModel
-import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender.FEMALE
-import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender.MALE
+import br.com.devcapu.beehealthy.common.domain.model.patient.health.BiologicalGender.FEMALE
+import br.com.devcapu.beehealthy.common.domain.model.patient.health.BiologicalGender.MALE
 
 @Composable
 fun GenderSelectionScreen(viewModel: RegisterViewModel = viewModel()) {

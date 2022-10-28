@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import br.com.devcapu.beehealthy.app.ui.activity.MainActivity
+import br.com.devcapu.beehealthy.main.ui.MainActivity
 import kotlinx.coroutines.launch
 
 class LoginActivity : ComponentActivity() {

@@ -1,19 +1,18 @@
 package br.com.devcapu.beehealthy.register.ui
 
-import androidx.lifecycle.*
-import br.com.devcapu.beehealthy.domain.model.Patient
-import br.com.devcapu.beehealthy.domain.model.patient.Email
-import br.com.devcapu.beehealthy.domain.repository.HealthRepository
-import br.com.devcapu.beehealthy.domain.repository.PatientRepository
-import br.com.devcapu.beehealthy.domain.useCase.SavePatient
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import br.com.devcapu.beehealthy.common.domain.model.Patient
+import br.com.devcapu.beehealthy.common.domain.model.patient.Email
+import br.com.devcapu.beehealthy.common.data.repository.HealthRepository
+import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
+import br.com.devcapu.beehealthy.register.domain.useCase.SavePatient
+import br.com.devcapu.beehealthy.register.data.RegisterRepository
 import br.com.devcapu.beehealthy.register.ui.screen.OnboardSteps.*
 import br.com.devcapu.beehealthy.register.ui.state.RegisterUIState
 import br.com.devcapu.beehealthy.register.ui.state.StepUIState
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 class RegisterViewModel(
     private val patientRepository: PatientRepository,
@@ -25,6 +24,8 @@ class RegisterViewModel(
 
     private var _stepState = MutableStateFlow(StepUIState())
     val stepState: StateFlow<StepUIState> = _stepState
+
+    private val registerRepository = RegisterRepository()
 
     init {
         _uiState.value =
@@ -64,7 +65,7 @@ class RegisterViewModel(
 
         _stepState.value = _stepState.value.copy(
             onGoToNextStep = {
-                when(_stepState.value.step) {
+                when (_stepState.value.step) {
                     AUTHENTICATION_REGISTER -> {
                         _stepState.value = _stepState.value.copy(step = USER_REGISTER_FORM)
                     }
@@ -77,42 +78,13 @@ class RegisterViewModel(
                     OBJECTIVE_SELECTION -> {
                         _stepState.value = _stepState.value.copy(step = ACTIVITY_LEVEL_SELECTION)
                     }
-                    ACTIVITY_LEVEL_SELECTION -> {
-                        _uiState.value = _uiState.value.copy(finished = true)
-                    }
+                    ACTIVITY_LEVEL_SELECTION -> savePatient()
                 }
             }
         )
     }
 
-    private val _finished = MutableLiveData(false)
-    val finished: LiveData<Boolean> = _finished
-
-    private val _snackbar = MutableLiveData("")
-    val snackbar: LiveData<String> = _snackbar
-
-    fun signUp() {
-        verifyPasswordAndPasswordAuthentication()
-        savePatientOnFirebase()
-    }
-
-    private fun savePatientOnFirebase() {
-        val auth = Firebase.auth
-        auth.createUserWithEmailAndPassword(_uiState.value.email, _uiState.value.password)
-            .addOnSuccessListener { savePatient() }
-            .addOnFailureListener {
-                //TODO: Show error on authenticationScreen
-            }
-    }
-
-    private fun verifyPasswordAndPasswordAuthentication() {
-//        if (!_uiState.value.passwordsAreTheSame) {
-////          TODO: Show Snackbar and go to authenticationScreen
-//        }
-    }
-
     private fun savePatient() {
-
         val patient = Patient(
             name = _uiState.value.name,
             email = Email(_uiState.value.email),
@@ -127,13 +99,15 @@ class RegisterViewModel(
 
         val savePatient = SavePatient(
             patientRepository = patientRepository,
-            healthRepository = healthRepository
+            healthRepository = healthRepository,
+            registerRepository = registerRepository
         )
 
-        viewModelScope.launch {
-            savePatient(patient = patient)
-            _finished.value = true
-        }
+        savePatient(
+            patient = patient,
+            onSuccess = { _uiState.value = uiState.value.copy(finished = true) },
+            onFailure = { }
+        )
     }
 
     class Factory(

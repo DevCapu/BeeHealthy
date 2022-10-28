@@ -1,8 +1,8 @@
 package br.com.devcapu.beehealthy.register.ui.state
 
-import br.com.devcapu.beehealthy.domain.model.patient.health.ActivityLevel
-import br.com.devcapu.beehealthy.domain.model.patient.health.BiologicalGender
-import br.com.devcapu.beehealthy.domain.model.patient.health.Objective
+import br.com.devcapu.beehealthy.common.domain.model.patient.health.ActivityLevel
+import br.com.devcapu.beehealthy.common.domain.model.patient.health.BiologicalGender
+import br.com.devcapu.beehealthy.common.domain.model.patient.health.Objective
 
 data class RegisterUIState(
     val email: String = "",
@@ -26,7 +26,7 @@ data class RegisterUIState(
     val onActivityLevelChanged: (ActivityLevel) -> Unit = { },
     val onObjectiveChanged: (Objective) -> Unit = { },
     val onGoToNextStep: () -> Unit = { },
-    val finished: Boolean = false
+    val finished: Boolean = false,
 ) {
     val passwordsAreTheSame = password == passwordConfirmation
 }

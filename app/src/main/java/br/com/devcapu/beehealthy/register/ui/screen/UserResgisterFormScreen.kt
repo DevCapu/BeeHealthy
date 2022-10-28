@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.app.ui.component.FormWithBeeHealthIdentity
+import br.com.devcapu.beehealthy.common.ui.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.register.ui.state.RegisterUIState
 import br.com.devcapu.beehealthy.register.ui.RegisterViewModel
 
