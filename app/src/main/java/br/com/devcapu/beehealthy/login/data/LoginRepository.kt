@@ -19,4 +19,9 @@ class LoginRepository {
         login.addOnSuccessListener { onSuccess() }
         login.addOnFailureListener { onFailure(it) }
     }
+
+    fun logout(onSuccess: () -> Unit) {
+        firebaseAuth.signOut()
+        onSuccess()
+    }
 }

@@ -22,4 +22,7 @@
     <string name="lose_weight_label">Perder peso</string>
     <string name="define_body_label">Definir</string>
     <string name="gain_mass_label">Ganhar massa</string>
+    <string name="carbohyd_label">Carboidrato</string>
+    <string name="protein_label">Proteína</string>
+    <string name="fat_label">Gordura</string>
 </resources>

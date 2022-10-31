@@ -6,11 +6,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
+import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
 import br.com.devcapu.beehealthy.main.ui.screen.MainScreen
-import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
-import br.com.devcapu.beehealthy.login.ui.LoginActivity
 
 class MainActivity : ComponentActivity() {
 
@@ -22,15 +21,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BeeHealthyTheme { MainScreen(viewModel) { logout() } }
+            BeeHealthyTheme { MainScreen(viewModel) }
         }
-    }
-
-    private fun logout() {
-        viewModel.logout()
-        val intent = LoginActivity.getIntent(this)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
     }
 
     companion object {

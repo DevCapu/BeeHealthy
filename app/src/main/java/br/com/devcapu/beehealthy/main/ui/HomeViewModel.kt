@@ -1,44 +1,36 @@
 package br.com.devcapu.beehealthy.main.ui
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
+import br.com.devcapu.beehealthy.login.data.LoginRepository
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class HomeViewModel(
-    patientRepository: PatientRepository,
-) : ViewModel() {
+class HomeViewModel(private val patientRepository: PatientRepository) : ViewModel() {
 
-    var height by mutableStateOf("")
-    var weight by mutableStateOf("")
+    private val loginRepository = LoginRepository()
+    private val firebaseAuth = FirebaseAuth.getInstance()
 
-    var homeUIState by mutableStateOf(HomeUIState())
+    private var _state = MutableStateFlow(HomeUIState())
+    val state: StateFlow<HomeUIState> = _state
 
     init {
-        val instance = FirebaseAuth.getInstance()
-        instance.currentUser?.email?.let {
+        firebaseAuth.currentUser?.email?.let {
             viewModelScope.launch {
                 val patient = patientRepository.searchUserWith(email = it)
-                val bodyCaloriesNeeds = patient.bodyCaloriesNeeds
-                bodyCaloriesNeeds.let {
-                    if (bodyCaloriesNeeds != null) {
-                        homeUIState = HomeUIState(
-                            name = patient.name,
-                            caloriesToCommitObjective = bodyCaloriesNeeds.caloriesToCommitObjective.value
-                        )
-                    }
+                patient.bodyCaloriesNeeds?.let {
+                    _state.value = HomeUIState(
+                        name = patient.name,
+                        caloriesToCommitObjective = it.caloriesToCommitObjective.value,
+                        onClickLogout = { loginRepository.logout { it() } }
+                    )
                 }
             }
         }
-    }
-
-    fun logout() {
-        FirebaseAuth.getInstance().signOut()
     }
 
     class Factory(
@@ -46,7 +38,7 @@ class HomeViewModel(
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeViewModel(patientRepository = patientRepository, ) as T
+            return HomeViewModel(patientRepository = patientRepository) as T
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.component.CompoundCircularProgressBar
 import br.com.devcapu.beehealthy.common.ui.component.RowCell
 import br.com.devcapu.beehealthy.common.ui.component.card.CardHeader
@@ -99,19 +100,19 @@ fun HomePreview() = HomeScreen(
         macros = listOf(
             UIMacro(
                 color = Carbohyd,
-                name = "Carboidrato",
+                name = R.string.carbohyd_label,
                 weight = 32,
                 percentage = 0.43f
             ),
             UIMacro(
                 color = Protein,
-                name = "Proteína",
+                name = R.string.protein_label,
                 weight = 21,
                 percentage = 0.23f
             ),
             UIMacro(
                 color = Fats,
-                name = "Gordura",
+                name = R.string.fat_label,
                 weight = 56,
                 percentage = 0.31f
             ),

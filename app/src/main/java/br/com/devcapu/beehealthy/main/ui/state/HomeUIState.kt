@@ -1,8 +1,10 @@
 package br.com.devcapu.beehealthy.main.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.theme.Carbohyd
 import br.com.devcapu.beehealthy.common.ui.theme.Fats
 import br.com.devcapu.beehealthy.common.ui.theme.Protein
@@ -19,23 +21,25 @@ data class HomeUIState(
     val macros: List<UIMacro> = listOf(
         UIMacro(
             color = Carbohyd,
-            name = "Carboidrato",
+            name = R.string.carbohyd_label,
             weight = CARBOHYD.totalToPercentage(caloriesToCommitObjective),
             percentage = 0.50f
         ),
         UIMacro(
             color = Protein,
-            name = "Proteína",
+            name = R.string.protein_label,
             weight = PROTEIN.totalToPercentage(caloriesToCommitObjective),
             percentage = 0.25f
         ),
         UIMacro(
             color = Fats,
-            name = "Gordura",
+            name = R.string.fat_label,
             weight = FAT.totalToPercentage(caloriesToCommitObjective),
             percentage = 0.25f
-        ),
-    )
+        )
+    ),
+    val onClickLogout: (() -> Unit) -> Unit = { },
+    val onClickFAB: () -> Unit = { }
 )
 
 data class ProgressBar(
@@ -46,7 +50,7 @@ data class ProgressBar(
 
 data class UIMacro(
     val color: Color,
-    val name: String,
+    @StringRes val name: Int,
     val weight: Int,
     val percentage: Float
 )
