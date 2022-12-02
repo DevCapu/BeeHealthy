@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.main.ui.screen
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,25 +14,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.component.CompoundCircularProgressBar
 import br.com.devcapu.beehealthy.common.ui.component.RowCell
 import br.com.devcapu.beehealthy.common.ui.component.card.CardHeader
 import br.com.devcapu.beehealthy.common.ui.component.card.PrimaryCard
-import br.com.devcapu.beehealthy.common.ui.theme.*
+import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
+import br.com.devcapu.beehealthy.common.ui.theme.PrimaryFont
 import br.com.devcapu.beehealthy.main.ui.HomeUIState
-import br.com.devcapu.beehealthy.main.ui.UIMacro
-import br.com.devcapu.beehealthy.main.ui.ProgressBar
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
 fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
+    val formatter = SimpleDateFormat("dd/mm/YYYY")
+    val current = formatter.format(Calendar.getInstance().time)
     Column(Modifier
         .padding(8.dp)
         .fillMaxWidth()) {
-        Greeting(name = uiState.name)
-
         PrimaryCard(
-            header = { CardHeader(title = "Hoje", subtitle = "23 de Junho") },
+            header = { CardHeader(title = "Hoje", subtitle = current) },
             body = {
                 CompoundCircularProgressBar(
                     text = {
@@ -59,63 +60,29 @@ fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
 
         PrimaryCard(
             header = { CardHeader(title = "Refeições", subtitle = "2 de 5") },
-            body = {  LinearProgressIndicator(
-                progress = 0.20f,
-                color = MaterialTheme.colors.primary,
-                backgroundColor = MaterialTheme.colors.background,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-            )}
+            body = {
+                LinearProgressIndicator(
+                    progress = 0.20f,
+                    color = MaterialTheme.colors.primary,
+                    backgroundColor = MaterialTheme.colors.background,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                )
+            }
         )
     }
 }
 
-@Composable
-private fun Greeting(name: String) {
-    Text(
-        text = "Bem vindo!",
-        fontSize = 18.sp,
-        style = MaterialTheme.typography.h3
-    )
-    Text(
-        text = name,
-        fontSize = 32.sp,
-        style = MaterialTheme.typography.h3,
-        fontWeight = FontWeight.Bold
-    )
-}
-
 @Preview(showSystemUi = true)
-@Composable
-fun HomePreview() = HomeScreen(
-    HomeUIState(
-        name = "João",
-        caloriesToCommitObjective = 2342.24,
-        progressBar = listOf(
-            ProgressBar(progress = 0.45f, color = Carbohyd, size = 96.dp),
-            ProgressBar(progress = 0.65f, color = Protein, size = 120.dp),
-            ProgressBar(progress = 0.79f, color = Fats, size = 144.dp)
-        ),
-        macros = listOf(
-            UIMacro(
-                color = Carbohyd,
-                name = R.string.carbohyd_label,
-                weight = 32,
-                percentage = 0.43f
-            ),
-            UIMacro(
-                color = Protein,
-                name = R.string.protein_label,
-                weight = 21,
-                percentage = 0.23f
-            ),
-            UIMacro(
-                color = Fats,
-                name = R.string.fat_label,
-                weight = 56,
-                percentage = 0.31f
-            ),
-        )
-    )
+@Preview(
+    uiMode = UI_MODE_NIGHT_YES,
+    showSystemUi = true
 )
+@Composable
+fun HomePreview() {
+    HomeScreen(HomeUIState(
+        name = "Felipe",
+        caloriesToCommitObjective = 2030.00
+    ))
+}

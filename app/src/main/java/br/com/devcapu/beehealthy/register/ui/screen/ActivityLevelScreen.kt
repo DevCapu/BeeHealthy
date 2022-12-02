@@ -12,11 +12,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.devcapu.beehealthy.R
+import br.com.devcapu.beehealthy.common.domain.model.patient.health.ActivityLevel.*
 import br.com.devcapu.beehealthy.common.ui.component.SelectionCard
 import br.com.devcapu.beehealthy.common.ui.component.SelectionTitle
-import br.com.devcapu.beehealthy.register.ui.state.RegisterUIState
+import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.register.ui.RegisterViewModel
-import br.com.devcapu.beehealthy.common.domain.model.patient.health.ActivityLevel.*
+import br.com.devcapu.beehealthy.register.ui.state.RegisterUIState
 
 @Composable
 fun ActivityLevelSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
@@ -88,5 +89,7 @@ fun ActivityLevelSelectionScreen(state: RegisterUIState) = Column(
 @Preview(showSystemUi = true)
 @Composable
 fun ActivityLevelScreenPreview() {
-    ActivityLevelSelectionScreen(RegisterUIState())
+    BeeHealthyTheme {
+        ActivityLevelSelectionScreen(RegisterUIState())
+    }
 }
