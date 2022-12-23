@@ -1,10 +1,10 @@
 package br.com.devcapu.beehealthy.common.ui.component
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -18,7 +18,8 @@ fun BottomBar(navController: NavController) {
 
     BottomAppBar(
         cutoutShape = CircleShape,
-        backgroundColor = Color.White,
+        backgroundColor = MaterialTheme.colors.background,
+        contentColor = MaterialTheme.colors.onBackground
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -26,8 +27,8 @@ fun BottomBar(navController: NavController) {
             BottomNavigationItem(
                 icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
                 label = { Text(text = item.title, fontSize = 9.sp) },
-                selectedContentColor = Color.Black,
-                unselectedContentColor = Color.Black.copy(0.4f),
+                selectedContentColor = MaterialTheme.colors.primary,
+                unselectedContentColor = MaterialTheme.colors.primary.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.screen_route,
                 onClick = { changeBottomTab(navController, item) }
@@ -38,7 +39,6 @@ fun BottomBar(navController: NavController) {
 
 private fun changeBottomTab(navController: NavController, item: BottomNavItem) {
     navController.navigate(item.screen_route) {
-
         navController.graph.startDestinationRoute?.let { screen_route ->
             popUpTo(screen_route) { saveState = true }
         }
@@ -48,6 +48,7 @@ private fun changeBottomTab(navController: NavController, item: BottomNavItem) {
 }
 
 @Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun BottomBarPreview() {
     BottomBar(rememberNavController())
