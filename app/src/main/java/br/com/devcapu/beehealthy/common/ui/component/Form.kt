@@ -63,5 +63,5 @@ fun FormWithBeeHealthIdentity(
 )
 @Composable
 fun FormWithBeeHealthIdentityPreview() {
-    FormWithBeeHealthIdentity(Modifier.fillMaxWidth()) { }
+    FormWithBeeHealthIdentity { }
 }
