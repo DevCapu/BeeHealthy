@@ -22,18 +22,15 @@ val Typography = Typography(
         fontFamily = Carme,
         fontSize = 32.sp,
         fontWeight = Bold,
-        color = Primary
     ),
     h2 = TextStyle(
         fontFamily = Carme,
         fontSize = 16.sp,
         fontWeight = SemiBold,
-        color = Primary
     ),
     h3 = TextStyle(
         fontFamily = Carme,
         fontSize = 16.sp,
         fontWeight = Normal,
-        color = OnBackground
     )
 )
