@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PrimaryCard(
     header: @Composable () -> Unit,
-    body: @Composable () -> Unit
+    body: @Composable () -> Unit,
 ) {
     Card(
         backgroundColor = MaterialTheme.colors.background,
@@ -42,7 +42,9 @@ fun PrimaryCard(
 @Composable
 private fun PrimaryCardPreview() {
     PrimaryCard(
-        header = { Text(text = "Eu sou o header") },
+        header = {
+            CardHeader(title = "Meals", subtitle = "3 of 5")
+        },
         body = { Text(text = "Eu sou o body") }
     )
 }
