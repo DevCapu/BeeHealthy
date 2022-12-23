@@ -25,6 +25,10 @@ fun SelectionCard(
     onClick: () -> Unit,
 ) {
     Card(
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .fillMaxWidth()
+            .clickable { onClick() },
         backgroundColor = MaterialTheme.colors.primary,
         contentColor = MaterialTheme.colors.onPrimary,
         shape = RoundedCornerShape(4.dp),
@@ -33,10 +37,6 @@ fun SelectionCard(
         } else {
             null
         },
-        modifier = Modifier
-            .padding(top = 16.dp)
-            .fillMaxWidth()
-            .clickable { onClick() }
     ) {
         Text(
             text = text,

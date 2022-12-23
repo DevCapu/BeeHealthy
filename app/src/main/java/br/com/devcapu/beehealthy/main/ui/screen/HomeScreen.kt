@@ -1,7 +1,9 @@
 package br.com.devcapu.beehealthy.main.ui.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
@@ -10,10 +12,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.component.CompoundCircularProgressBar
 import br.com.devcapu.beehealthy.common.ui.component.RowCell
 import br.com.devcapu.beehealthy.common.ui.component.card.CardHeader
@@ -21,6 +25,7 @@ import br.com.devcapu.beehealthy.common.ui.component.card.PrimaryCard
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.common.ui.theme.PrimaryFont
 import br.com.devcapu.beehealthy.main.ui.HomeUIState
+import br.com.devcapu.beehealthy.main.ui.UIMacro
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,9 +33,12 @@ import java.util.*
 fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
     val formatter = SimpleDateFormat("dd/mm/YYYY")
     val current = formatter.format(Calendar.getInstance().time)
-    Column(Modifier
+    Column(
+        modifier = Modifier
+        .background(MaterialTheme.colors.background)
         .padding(8.dp)
-        .fillMaxWidth()) {
+        .fillMaxSize()
+    ) {
         PrimaryCard(
             header = { CardHeader(title = "Hoje", subtitle = current) },
             body = {
@@ -70,6 +78,28 @@ fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
                         .fillMaxWidth()
                         .padding(top = 8.dp)
                 )
+            }
+        )
+
+        //Refeições
+            //Com fotos, descrição, data hora e qual refeição foi
+
+        //Aqui vai um card com todas as infos como IMC, GEB, GET
+        //Na outra seção adicionar conteúdo sobre água
+
+        PrimaryCard(
+            header = { CardHeader(title = "Insights") },
+            body = {
+                Column {
+                    RowCell(
+                        macro = UIMacro(
+                            color = Color.Magenta,
+                            name = R.string.carbohyd_label,
+                            weight = 60,
+                            percentage = 0.56f
+                        )
+                    )
+                }
             }
         )
     }

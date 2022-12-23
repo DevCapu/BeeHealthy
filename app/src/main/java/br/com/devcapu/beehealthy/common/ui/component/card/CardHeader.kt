@@ -12,26 +12,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 
 @Composable
 fun CardHeader(title: String, subtitle: String = "") {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)
+        modifier = Modifier
+            .background(MaterialTheme.colors.surface)
+            .fillMaxWidth()
     ) {
         Text(
             text = title,
             style = MaterialTheme.typography.h3,
             fontWeight = FontWeight.SemiBold,
             fontSize = 18.sp,
-            color = MaterialTheme.colors.onBackground
+            color = MaterialTheme.colors.onSurface
         )
         Text(
             text = subtitle,
             style = MaterialTheme.typography.h3,
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colors.onBackground
+            color = MaterialTheme.colors.onSurface
         )
     }
 }
@@ -44,7 +47,9 @@ fun CardHeader(title: String, subtitle: String = "") {
 )
 @Composable
 fun CardHeaderWithTitleAndSubtilePreview() {
-    CardHeader(title = "Refeições", subtitle = "3 de 5")
+    BeeHealthyTheme {
+        CardHeader(title = "Refeições", subtitle = "3 de 5")
+    }
 }
 
 @Preview(name = "With title", showBackground = true)
@@ -55,5 +60,7 @@ fun CardHeaderWithTitleAndSubtilePreview() {
 )
 @Composable
 fun CardHeaderWithTitlePreview() {
-    CardHeader(title = "Refeições")
+    BeeHealthyTheme {
+        CardHeader(title = "Refeições")
+    }
 }

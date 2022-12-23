@@ -3,6 +3,7 @@ package br.com.devcapu.beehealthy.main.ui.screen
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.MaterialTheme
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
@@ -36,6 +38,7 @@ fun MainScreen(state: HomeUIState) {
     val context = LocalContext.current
     val navController = rememberNavController()
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         backgroundColor = MaterialTheme.colors.background,
         topBar = {
             TopBar { state.onClickLogout { logout(context) } }

@@ -1,6 +1,7 @@
 package br.com.devcapu.beehealthy.common.ui.component.card
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -19,14 +20,14 @@ fun PrimaryCard(
     body: @Composable () -> Unit,
 ) {
     Card(
-        backgroundColor = MaterialTheme.colors.background,
-        contentColor = MaterialTheme.colors.onBackground,
+        backgroundColor = MaterialTheme.colors.surface,
+        contentColor = MaterialTheme.colors.onSurface,
         modifier = Modifier.padding(vertical = 8.dp)
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(12.dp)
+            modifier = Modifier.background(MaterialTheme.colors.surface).padding(12.dp)
         ) {
             header()
             body()

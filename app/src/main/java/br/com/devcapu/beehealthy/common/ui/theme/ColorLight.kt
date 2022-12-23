@@ -9,10 +9,11 @@ val SecondaryLight = Color(0xFF464340)
 val SecondaryVariantLight = Color(0xFF464340)
 val onSecondaryLight = Color(0xFF464340)
 
-val BackgroundLight = Color(0xFFEEEEEE)
+
+val BackgroundLight = Color(0xFFDFDDDD)
 val OnBackgroundLight = Color(0xFF464340)
 
-val SurfaceLight = Color(0xFF464340)
+val SurfaceLight = Color(0xFFEEEEEE)
 val OnSurfaceLight = Color(0xFF464340)
 
 val Carbohyd = Color(0XFFFBA26B)
