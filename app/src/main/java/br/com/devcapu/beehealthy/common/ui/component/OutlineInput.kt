@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.common.ui.component
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,10 +26,8 @@ fun OutlineInput(
     trailingIcon: @Composable () -> Unit = { },
     visualTransformation: VisualTransformation = VisualTransformation.None,
     options: KeyboardOptions = KeyboardOptions.Default,
-    actions: KeyboardActions = KeyboardActions.Default
-) = Column(
-    modifier = modifier
-) {
+    actions: KeyboardActions = KeyboardActions.Default,
+) = Column(modifier = modifier) {
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -38,7 +37,7 @@ fun OutlineInput(
         visualTransformation = visualTransformation,
         modifier = Modifier.fillMaxWidth(),
         keyboardOptions = options,
-        keyboardActions = actions
+        keyboardActions = actions,
     )
 
     if (isShowingError) {
@@ -51,6 +50,10 @@ fun OutlineInput(
 }
 
 @Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    uiMode = UI_MODE_NIGHT_YES
+)
 @Composable
 fun OutlineInputError() {
     var value by remember { mutableStateOf("") }
@@ -59,22 +62,18 @@ fun OutlineInputError() {
         onValueChange = { value = it },
         errorMessage = "Cannot be empty",
         isShowingError = true,
-        modifier = Modifier
-            .padding(bottom = 16.dp)
-            .fillMaxWidth(),
     )
 }
 
 @Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    uiMode = UI_MODE_NIGHT_YES
+)
 @Composable
-fun OutlineInput() {
-    var value by remember { mutableStateOf("") }
+private fun OutlineInputPreview() {
     OutlineInput(
-        value = value,
-        onValueChange = { value = it },
-        isShowingError = false,
-        modifier = Modifier
-            .padding(bottom = 16.dp)
-            .fillMaxWidth(),
+        value = "",
+        onValueChange = { },
     )
 }
