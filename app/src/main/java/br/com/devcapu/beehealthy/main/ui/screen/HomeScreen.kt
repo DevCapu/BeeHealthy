@@ -47,7 +47,8 @@ fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
                             fontSize = 12.sp
                         )
                     },
-                    progressBarList = uiState.progressBar
+                    progressBarList = uiState.progressBar,
+                    size = 96.dp
                 )
                 uiState.macros.forEachIndexed { index, macro ->
                     RowCell(macro = macro)
