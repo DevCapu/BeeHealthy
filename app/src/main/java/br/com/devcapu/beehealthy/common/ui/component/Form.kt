@@ -1,8 +1,9 @@
 package br.com.devcapu.beehealthy.common.ui.component
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,45 +17,51 @@ import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 
 @Composable
-fun FormWithBeeHealthIdentity(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+fun FormWithBeeHealthIdentity(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
     BeeHealthyTheme {
-        LazyColumn(
+        Column(
             modifier = modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colors.background)
                 .padding(32.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
-                Image(
-                    painter = painterResource(id = R.drawable.beehealthylogo),
-                    contentDescription = "Bee with a plus sign icon",
-                    modifier = Modifier
-                        .size(128.dp)
-                        .padding(bottom = 16.dp)
-                )
-            }
-            item {
-                Text(text = "Don't worry", style = MaterialTheme.typography.h2)
-            }
-            item {
-                Text(
-                    text = stringResource(id = R.string.app_name),
-                    style = MaterialTheme.typography.h1,
-                    modifier = Modifier.padding(bottom = 32.dp)
-                )
-            }
-            item {
-                content()
-            }
+            Image(
+                painter = painterResource(id = R.drawable.beehealthylogo),
+                contentDescription = "Bee with a plus sign icon",
+                modifier = Modifier
+                    .size(128.dp)
+                    .padding(bottom = 16.dp)
+            )
+
+            Text(
+                text = "Don't worry",
+                style = MaterialTheme.typography.h2,
+                color = MaterialTheme.colors.primary
+            )
+
+            Text(
+                text = stringResource(id = R.string.app_name),
+                style = MaterialTheme.typography.h1,
+                color = MaterialTheme.colors.primary,
+                modifier = Modifier.padding(bottom = 32.dp)
+            )
+
+            content()
         }
     }
 }
 
 @Preview(showSystemUi = true)
+@Preview(
+    showSystemUi = true,
+    uiMode = UI_MODE_NIGHT_YES
+)
 @Composable
-fun FormPreview() {
-    FormWithBeeHealthIdentity(Modifier.fillMaxWidth()) {
-
-    }
+fun FormWithBeeHealthIdentityPreview() {
+    FormWithBeeHealthIdentity(Modifier.fillMaxWidth()) { }
 }
