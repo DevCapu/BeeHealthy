@@ -5,6 +5,7 @@ import br.com.devcapu.beehealthy.common.domain.model.patient.health.*
 import br.com.devcapu.beehealthy.common.data.repository.HealthRepository
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.register.data.RegisterRepository
+import kotlinx.coroutines.*
 
 class SavePatient(
     private val patientRepository: PatientRepository,
@@ -13,18 +14,21 @@ class SavePatient(
 ) {
      operator fun invoke(
         patient: Patient,
+        password: String,
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
         registerRepository.register(
             email = patient.email.address,
-            password = "",
+            password = password,
             onSuccess = {
-                patientRepository.save(patient) { id ->
-                    val bodyCaloriesNeeds = calculateHealthInfo(patient)
-                    healthRepository.save(bodyCaloriesNeeds, id)
+                CoroutineScope(Dispatchers.IO).launch {
+                    patientRepository.save(patient) { id ->
+                        val bodyCaloriesNeeds = calculateHealthInfo(patient)
+                        healthRepository.save(bodyCaloriesNeeds, id)
+                    }
+                    onSuccess()
                 }
-                onSuccess()
             },
             onFailure = { onFailure(it) }
         )

@@ -105,6 +105,7 @@ class RegisterViewModel(
 
         savePatient(
             patient = patient,
+            password = _uiState.value.password,
             onSuccess = { _uiState.value = uiState.value.copy(finished = true) },
             onFailure = { }
         )
