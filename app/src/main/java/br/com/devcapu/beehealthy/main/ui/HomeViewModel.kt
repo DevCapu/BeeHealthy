@@ -7,6 +7,8 @@ import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.login.data.LoginRepository
 import br.com.devcapu.beehealthy.main.ui.state.CaloriesUiState
 import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
+import br.com.devcapu.beehealthy.main.ui.state.MacroUiState
+import br.com.devcapu.beehealthy.main.ui.state.MacrosUiState
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,6 +30,17 @@ class HomeViewModel(private val patientRepository: PatientRepository) : ViewMode
                     _state.value = HomeUIState(
                         CaloriesUiState(
                             caloriesToCommitObjective = it.caloriesToCommitObjective.value.toString(),
+                        ),
+                        macrosUiState = MacrosUiState(
+                            carbohydrateUiState = MacroUiState(
+                                total = it.macros.carbohydrate.toString()
+                            ),
+                            proteinUiState = MacroUiState(
+                                total = it.macros.protein.toString()
+                            ),
+                            fatUiState = MacroUiState(
+                                total = it.macros.fats.toString()
+                            )
                         ),
                         onClickLogout = { loginRepository.logout { it() } }
                     )

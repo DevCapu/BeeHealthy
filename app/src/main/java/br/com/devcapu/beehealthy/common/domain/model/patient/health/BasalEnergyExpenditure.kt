@@ -1,6 +1,6 @@
 package br.com.devcapu.beehealthy.common.domain.model.patient.health
 
-import br.com.devcapu.beehealthy.common.domain.model.Patient
+import br.com.devcapu.beehealthy.common.domain.model.patient.Patient
 
 data class BasalEnergyExpenditure(val value: Double) {
 

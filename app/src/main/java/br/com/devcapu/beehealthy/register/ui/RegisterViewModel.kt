@@ -2,7 +2,7 @@ package br.com.devcapu.beehealthy.register.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import br.com.devcapu.beehealthy.common.domain.model.Patient
+import br.com.devcapu.beehealthy.common.domain.model.patient.Patient
 import br.com.devcapu.beehealthy.common.domain.model.patient.Email
 import br.com.devcapu.beehealthy.common.data.repository.HealthRepository
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository

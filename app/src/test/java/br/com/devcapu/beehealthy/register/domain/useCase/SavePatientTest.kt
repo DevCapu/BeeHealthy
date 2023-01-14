@@ -1,6 +1,6 @@
 package br.com.devcapu.beehealthy.register.domain.useCase
 
-import br.com.devcapu.beehealthy.common.domain.model.Patient
+import br.com.devcapu.beehealthy.common.domain.model.patient.Patient
 import br.com.devcapu.beehealthy.common.data.repository.HealthRepository
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.register.data.RegisterRepository
@@ -31,7 +31,12 @@ class SavePatientTest {
             healthRepository.save(mockk(relaxed = true), 0)
         }
 
-        savePatient(patient, { }, { })
+        savePatient(
+            patient = patient,
+            password = "",
+            onSuccess = { },
+            onFailure = { }
+        )
 
         coVerifySequence {
             registerRepository.register(any(), any(), any(), any())

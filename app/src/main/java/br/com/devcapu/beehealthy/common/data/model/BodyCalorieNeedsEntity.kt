@@ -12,6 +12,9 @@ class BodyCalorieNeedsEntity(
     val basalEnergyExpenditure: Double,
     val totalEnergyExpenditure: Double,
     val caloriesToCommitObjective: Double,
+    val carbohydrate: Int,
+    val protein: Int,
+    val fats: Int,
 ) {
     companion object {
         fun from(caloriesNeeds: BodyCaloriesNeeds, patientId: Long) = BodyCalorieNeedsEntity(
@@ -19,14 +22,20 @@ class BodyCalorieNeedsEntity(
             bmi = caloriesNeeds.bmi.value,
             basalEnergyExpenditure = caloriesNeeds.basalEnergyExpenditure.value,
             totalEnergyExpenditure = caloriesNeeds.totalEnergyExpenditure.value,
-            caloriesToCommitObjective = caloriesNeeds.caloriesToCommitObjective.value
+            caloriesToCommitObjective = caloriesNeeds.caloriesToCommitObjective.value,
+            carbohydrate = caloriesNeeds.macros.carbohydrate,
+            protein = caloriesNeeds.macros.protein,
+            fats = caloriesNeeds.macros.fats,
         )
 
         fun from(caloriesNeeds: BodyCaloriesNeeds) = BodyCalorieNeedsEntity(
             bmi = caloriesNeeds.bmi.value,
             basalEnergyExpenditure = caloriesNeeds.basalEnergyExpenditure.value,
             totalEnergyExpenditure = caloriesNeeds.totalEnergyExpenditure.value,
-            caloriesToCommitObjective = caloriesNeeds.caloriesToCommitObjective.value
+            caloriesToCommitObjective = caloriesNeeds.caloriesToCommitObjective.value,
+            carbohydrate = caloriesNeeds.macros.carbohydrate,
+            protein = caloriesNeeds.macros.protein,
+            fats = caloriesNeeds.macros.fats
         )
     }
 }
