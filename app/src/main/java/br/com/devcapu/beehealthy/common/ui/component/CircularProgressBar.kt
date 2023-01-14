@@ -1,6 +1,7 @@
 package br.com.devcapu.beehealthy.common.ui.component
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -12,34 +13,36 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CircularBar(
+fun CircularProgressIndicatorWithBackground(
     progress: Float,
     color: Color,
     size: Dp,
 ) {
-    CircularProgressIndicator(
-        progress = 1f,
-        color = color.copy(alpha = 0.2f),
-        strokeWidth = 8.dp,
-        modifier = Modifier.then(Modifier.size(size))
-    )
+    Box {
+        CircularProgressIndicator(
+            progress = 1f,
+            color = color.copy(alpha = 0.2f),
+            strokeWidth = 8.dp,
+            modifier = Modifier.then(Modifier.size(size))
+        )
 
-    CircularProgressIndicator(
-        progress = progress,
-        color = color,
-        strokeWidth = 8.dp,
-        modifier = Modifier.then(Modifier.size(size))
-    )
+        CircularProgressIndicator(
+            progress = progress,
+            color = color,
+            strokeWidth = 8.dp,
+            modifier = Modifier.then(Modifier.size(size))
+        )
+    }
 }
 
-@Preview(showBackground = true, )
+@Preview(showBackground = true)
 @Preview(
     showBackground = true,
     uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
-private fun CircularBar() {
-    CircularBar(
+private fun CircularProgressIndicatorWithBackground() {
+    CircularProgressIndicatorWithBackground(
         progress = 0.5f,
         color = MaterialTheme.colors.primary,
         size = 48.dp
