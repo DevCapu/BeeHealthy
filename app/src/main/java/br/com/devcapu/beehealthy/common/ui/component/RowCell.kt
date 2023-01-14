@@ -3,7 +3,6 @@ package br.com.devcapu.beehealthy.common.ui.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -15,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.theme.Carbohyd
-import br.com.devcapu.beehealthy.main.ui.UIMacro
+import br.com.devcapu.beehealthy.main.ui.state.UIMacro
 
 @Composable
 fun RowCell(macro: UIMacro) {
@@ -44,10 +43,12 @@ fun RowCell(macro: UIMacro) {
 @Preview(showBackground = true)
 @Composable
 fun RowCellPreview() {
-    RowCell(macro = UIMacro(
-        color = Carbohyd,
-        name = R.string.carbohyd_label,
-        weight = 234,
-        percentage = 0.5f
-    ))
+    RowCell(
+        macro = UIMacro(
+            color = Carbohyd,
+            name = R.string.carbohyd_label,
+            weight = 234,
+            percentage = 0.5f
+        )
+    )
 }

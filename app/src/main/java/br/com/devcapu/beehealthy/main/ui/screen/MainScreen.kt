@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.common.ui.component.BottomBar
 import br.com.devcapu.beehealthy.common.ui.component.TopBar
+import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.login.ui.LoginActivity
 import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 import br.com.devcapu.beehealthy.main.ui.HomeViewModel
@@ -78,5 +79,7 @@ private fun logout(context: Context) {
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun MainsScreenPreview() {
-    MainScreen(HomeUIState())
+    BeeHealthyTheme {
+        MainScreen(HomeUIState())
+    }
 }

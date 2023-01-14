@@ -1,8 +1,8 @@
-package br.com.devcapu.beehealthy.common.domain.model
+package br.com.devcapu.beehealthy.common.domain.model.patient
 
-import br.com.devcapu.beehealthy.common.domain.model.patient.Email
 import br.com.devcapu.beehealthy.common.domain.model.patient.health.ActivityLevel
 import br.com.devcapu.beehealthy.common.domain.model.patient.health.BiologicalGender
+import br.com.devcapu.beehealthy.common.domain.model.patient.health.BiologicalGender.*
 import br.com.devcapu.beehealthy.common.domain.model.patient.health.BodyCaloriesNeeds
 import br.com.devcapu.beehealthy.common.domain.model.patient.health.Objective
 import java.io.Serializable
@@ -22,7 +22,7 @@ data class Patient(
 
     val idealWeight: Float
         get() = when (biologicGender) {
-            BiologicalGender.MALE -> ((height * 100) - 100) * 0.9f
-            BiologicalGender.FEMALE ->((height * 100) - 100) * 0.85f
+            MALE -> ((height * 100) - 100) * 0.9f
+            FEMALE ->((height * 100) - 100) * 0.85f
         }
 }

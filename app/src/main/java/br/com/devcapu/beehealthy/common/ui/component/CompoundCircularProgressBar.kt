@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import br.com.devcapu.beehealthy.common.ui.theme.Carbohyd
 import br.com.devcapu.beehealthy.common.ui.theme.Fats
 import br.com.devcapu.beehealthy.common.ui.theme.Protein
-import br.com.devcapu.beehealthy.main.ui.ProgressBar
+import br.com.devcapu.beehealthy.main.ui.state.ProgressBar
 
 @Composable
 fun CompoundCircularProgressBar(
@@ -33,7 +33,7 @@ fun CompoundCircularProgressBar(
         ) { text() }
         Box(contentAlignment = Alignment.Center) {
             progressBarList.forEachIndexed { index, item ->
-                CircularBar(
+                CircularProgressIndicatorWithBackground(
                     progress = item.progress,
                     color = item.color,
                     size = size.plus(Dp(index * 24.toFloat()))
