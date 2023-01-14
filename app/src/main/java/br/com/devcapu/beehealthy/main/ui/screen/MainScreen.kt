@@ -2,6 +2,7 @@ package br.com.devcapu.beehealthy.main.ui.screen
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.FabPosition
@@ -23,7 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.common.ui.component.BottomBar
 import br.com.devcapu.beehealthy.common.ui.component.TopBar
 import br.com.devcapu.beehealthy.login.ui.LoginActivity
-import br.com.devcapu.beehealthy.main.ui.HomeUIState
+import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 import br.com.devcapu.beehealthy.main.ui.HomeViewModel
 import br.com.devcapu.beehealthy.main.ui.navigation.NavigationGraph
 
@@ -74,6 +75,7 @@ private fun logout(context: Context) {
 }
 
 @Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun MainsScreenPreview() {
     MainScreen(HomeUIState())

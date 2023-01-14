@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import br.com.devcapu.beehealthy.common.ui.component.BottomNavItem
-import br.com.devcapu.beehealthy.main.ui.HomeUIState
+import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 import br.com.devcapu.beehealthy.main.ui.screen.BodyScreen
 import br.com.devcapu.beehealthy.main.ui.screen.HomeScreen
 

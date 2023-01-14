@@ -2,12 +2,10 @@ package br.com.devcapu.beehealthy.main.ui.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
-import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,91 +15,48 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.common.ui.component.CompoundCircularProgressBar
-import br.com.devcapu.beehealthy.common.ui.component.RowCell
-import br.com.devcapu.beehealthy.common.ui.component.card.CardHeader
-import br.com.devcapu.beehealthy.common.ui.component.card.PrimaryCard
+import br.com.devcapu.beehealthy.common.ui.component.card.BeeCard
+import br.com.devcapu.beehealthy.common.ui.component.card.BeeCardHeader
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.common.ui.theme.PrimaryFont
-import br.com.devcapu.beehealthy.main.ui.HomeUIState
-import br.com.devcapu.beehealthy.main.ui.UIMacro
-import java.text.SimpleDateFormat
-import java.util.*
+import br.com.devcapu.beehealthy.common.ui.theme.Carme
+import br.com.devcapu.beehealthy.main.ui.components.NutritionStats
+import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 
 @Composable
 fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
-    val formatter = SimpleDateFormat("dd/mm/YYYY")
-    val current = formatter.format(Calendar.getInstance().time)
-    Column(
+    LazyColumn(
         modifier = Modifier
-        .background(MaterialTheme.colors.background)
-        .padding(8.dp)
-        .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            .padding(8.dp)
+            .fillMaxSize()
     ) {
-        PrimaryCard(
-            header = { CardHeader(title = "Hoje", subtitle = current) },
-            body = {
-                CompoundCircularProgressBar(
-                    text = {
-                        Text(
-                            text = uiState.caloriesToCommitObjective.toInt().toString(),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 23.sp,
-                            fontFamily = PrimaryFont
-                        )
-                        Text(
-                            text = "calorias",
-                            fontSize = 12.sp
-                        )
-                    },
-                    progressBarList = uiState.progressBar,
-                    size = 96.dp
-                )
-                uiState.macros.forEachIndexed { index, macro ->
-                    RowCell(macro = macro)
-                    if (index != uiState.macros.lastIndex) {
-                        Divider(Modifier.padding(vertical = 6.dp))
-                    }
-                }
-            }
-        )
-
-        PrimaryCard(
-            header = { CardHeader(title = "Refeições", subtitle = "2 de 5") },
-            body = {
-                LinearProgressIndicator(
-                    progress = 0.20f,
-                    color = MaterialTheme.colors.primary,
-                    backgroundColor = MaterialTheme.colors.background,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                )
-            }
-        )
-
-        //Refeições
-            //Com fotos, descrição, data hora e qual refeição foi
-
-        //Aqui vai um card com todas as infos como IMC, GEB, GET
-        //Na outra seção adicionar conteúdo sobre água
-
-        PrimaryCard(
-            header = { CardHeader(title = "Insights") },
-            body = {
-                Column {
-                    RowCell(
-                        macro = UIMacro(
-                            color = Color.Magenta,
-                            name = R.string.carbohyd_label,
-                            weight = 60,
-                            percentage = 0.56f
-                        )
+        item {
+            BeeCard(
+                header = {
+                    BeeCardHeader(
+                        title = {
+                            Text(
+                                text = "Nutrição",
+                                fontWeight = FontWeight.SemiBold,
+                                fontFamily = Carme,
+                                fontSize = 22.sp
+                            )
+                        },
+                        subtitle = {
+                            Text(
+                                modifier = Modifier.clickable { },
+                                text = "Ver detalhes",
+                                color = Color(0xFF2196F3),
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = Carme,
+                                fontSize = 14.sp
+                            )
+                        }
                     )
-                }
-            }
-        )
+                },
+                body = { NutritionStats(uiState = uiState) }
+            )
+        }
     }
 }
 
@@ -112,8 +67,5 @@ fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
 )
 @Composable
 fun HomePreview() {
-    HomeScreen(HomeUIState(
-        name = "Felipe",
-        caloriesToCommitObjective = 2030.00
-    ))
+    HomeScreen(HomeUIState())
 }

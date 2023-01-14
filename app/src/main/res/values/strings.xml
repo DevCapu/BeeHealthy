@@ -19,10 +19,15 @@
     <string name="did_not_choose_an_option">Nenhuma opção selecionada</string>
     <string name="enter_label">Entrar</string>
     <string name="create_an_account">Não tem conta ainda? Criar!</string>
+
     <string name="lose_weight_label">Perder peso</string>
     <string name="define_body_label">Definir</string>
     <string name="gain_mass_label">Ganhar massa</string>
+
     <string name="carbohyd_label">Carboidrato</string>
     <string name="protein_label">Proteína</string>
     <string name="fat_label">Gordura</string>
+    <string name="consumption_label">Consumidas</string>
+    <string name="remaining_label">Restantes</string>
+    <string name="expended_label">Gastas</string>
 </resources>

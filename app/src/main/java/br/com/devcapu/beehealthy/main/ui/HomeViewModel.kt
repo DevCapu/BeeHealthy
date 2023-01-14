@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.login.data.LoginRepository
+import br.com.devcapu.beehealthy.main.ui.state.CaloriesUiState
+import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,8 +26,9 @@ class HomeViewModel(private val patientRepository: PatientRepository) : ViewMode
                 val patient = patientRepository.searchUserWith(email = it)
                 patient.bodyCaloriesNeeds?.let {
                     _state.value = HomeUIState(
-                        name = patient.name,
-                        caloriesToCommitObjective = it.caloriesToCommitObjective.value,
+                        CaloriesUiState(
+                            caloriesToCommitObjective = it.caloriesToCommitObjective.value.toString(),
+                        ),
                         onClickLogout = { loginRepository.logout { it() } }
                     )
                 }
