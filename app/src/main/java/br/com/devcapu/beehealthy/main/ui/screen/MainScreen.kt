@@ -55,9 +55,8 @@ fun MainScreen(state: HomeUIState) {
                 )
             }
         },
-        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButtonPosition = FabPosition.End,
         isFloatingActionButtonDocked = true,
-        bottomBar = { BottomBar(navController = navController) }
     ) {
         NavigationGraph(
             navController = navController,
