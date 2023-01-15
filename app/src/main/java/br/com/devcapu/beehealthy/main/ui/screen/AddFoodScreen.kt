@@ -19,6 +19,7 @@ import androidx.navigation.NavGraphNavigator
 import br.com.devcapu.beehealthy.common.ui.component.OutlineInput
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.common.ui.theme.Carme
+import br.com.devcapu.beehealthy.food.components.Food
 
 @Composable
 fun AddFoodScreen(
@@ -56,6 +57,11 @@ fun AddFoodScreen(
                         Text("Procure por um alimento")
                     },
                 )
+            }
+            repeat(5) {
+                item {
+                    Food()
+                }
             }
         }
     }
@@ -109,9 +115,3 @@ fun AddFoodScreenPreview() {
         AddFoodScreen { }
     }
 }
-
-data class Food(
-    val name: String,
-    val measure: String,
-    val calories: Double,
-)

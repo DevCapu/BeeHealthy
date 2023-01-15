@@ -55,6 +55,7 @@ fun BeeCard(
 fun BeeCardHeader(
     title: @Composable () -> Unit,
     subtitle: @Composable () -> Unit = { },
+    onClick: () -> Unit = { }
 ) {
     Row(
         modifier = Modifier

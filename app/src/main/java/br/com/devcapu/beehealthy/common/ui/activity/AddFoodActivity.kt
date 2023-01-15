@@ -14,7 +14,7 @@ class AddFoodActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BeeHealthyTheme {
-                AddFoodScreen()
+                AddFoodScreen({ })
             }
         }
     }
