@@ -1,95 +1,99 @@
 package br.com.devcapu.beehealthy.main.ui.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement.SpaceBetween
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavGraphNavigator
 import br.com.devcapu.beehealthy.common.ui.component.OutlineInput
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
+import br.com.devcapu.beehealthy.common.ui.theme.Carme
 
 @Composable
-fun AddFoodScreen() {
-    var searchedValue by remember { mutableStateOf("") }
-    var foods by remember { mutableStateOf(emptyList<Food>()) }
-    foods = listOf(
-        Food("Banana", "1 Unidade", 123.00),
+fun AddFoodScreen(
+    navigator: NavGraphNavigator
+) {
+    AddFoodScreen(
+        onClickGoBack = { navigator.popBackStack() }
     )
+}
 
-    BeeHealthyTheme {
-        Column(modifier = Modifier.padding(16.dp)) {
-            OutlineInput(
-                value = searchedValue,
-                placeholder = {
-                    Text(text = "Search...")
-                },
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Search icon",
-                        modifier = Modifier.clickable {
-                            //Search Food
-                        }
-                    )
-                },
-                onValueChange = { searchedValue = it },
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+@Composable
+fun AddFoodScreen(
+    onClickGoBack: () -> Unit
+) {
+    Scaffold(
+        backgroundColor = MaterialTheme.colors.background,
+        contentColor = MaterialTheme.colors.onBackground,
+        topBar = { AddFoodAppBar(onClickGoBack) }
+    ) {
+        LazyColumn(
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            item {
+                OutlineInput(
+                    modifier = Modifier.background(MaterialTheme.colors.background.copy(alpha = 0.4f)),
+                    value = "",
+                    onValueChange = {},
+                    trailingIcon = {
+                        Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                    },
+                    placeholder = {
+                        Text("Procure por um alimento")
+                    },
+                )
+            }
+        }
+    }
+}
 
-            LazyColumn(Modifier.fillMaxWidth()) {
-                items(foods) { food: Food ->
-                    Row(
-                        horizontalArrangement = SpaceBetween,
-                        verticalAlignment = CenterVertically,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column {
-                            Text(
-                                text = food.name,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp
-                            )
-                            Text(
-                                text = food.measure,
-                                fontWeight = FontWeight.ExtraLight,
-                                color = Color.Gray,
-                                fontSize = 12.sp
-                            )
-                        }
-                        Text(
-                            text = food.calories.toString(),
-                            fontWeight = FontWeight.Light,
-                            color = Color.DarkGray,
-                            fontSize = 12.sp
-                        )
-                        Icon(
-                            imageVector = Icons.Filled.Add,
-                            contentDescription = null,
-                            modifier = Modifier.clickable {
-                                //Add food
-                            }
-                        )
-                    }
-                    Divider(modifier = Modifier.padding(vertical = 4.dp))
-                }
+@Composable
+private fun AddFoodAppBar(
+    onClickGoBack: () -> Unit
+) {
+    TopAppBar(
+        backgroundColor = MaterialTheme.colors.background,
+        elevation = 0.dp
+    ) {
+        Box(modifier = Modifier.fillMaxWidth()) {
+            IconButton(
+                modifier = Modifier.align(Alignment.CenterStart),
+                onClick = onClickGoBack
+            ) {
+                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Go Back")
+            }
+            Column(Modifier.align(Alignment.Center)) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Café da manhã",
+                    textAlign = TextAlign.Center,
+                    fontSize = 18.sp,
+                    fontFamily = Carme
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Sexta feira 13",
+                    textAlign = TextAlign.Center,
+                    fontFamily = Carme,
+                    color = contentColorFor(
+                        backgroundColor = MaterialTheme.colors.background
+                    ).copy(alpha = 0.4f),
+                    fontSize = 12.sp,
+                )
             }
         }
     }
@@ -101,7 +105,9 @@ fun AddFoodScreen() {
 )
 @Composable
 fun AddFoodScreenPreview() {
-    AddFoodScreen()
+    BeeHealthyTheme {
+        AddFoodScreen { }
+    }
 }
 
 data class Food(
