@@ -9,9 +9,11 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.component.CircularProgressIndicatorWithBackground
 import br.com.devcapu.beehealthy.common.ui.theme.Carme
 import br.com.devcapu.beehealthy.main.ui.state.MealUiState
@@ -28,22 +30,22 @@ fun Meals(uiState: MealsUiState) {
     ) {
         Meal(
             uiState.breakfastUiState,
-            name = "Café da manhã",
+            name = stringResource(R.string.breakfast_label),
             emoji = "\uD83C\uDF5E"
         )
         Meal(
-            uiState.breakfastUiState,
-            name = "Almoço",
+            uiState.lunchUiState,
+            name = stringResource(R.string.lunch_label),
             emoji = "\uD83C\uDF73"
         )
         Meal(
-            uiState.breakfastUiState,
-            name = "Café da tarde",
+            uiState.snackUiState,
+            name = stringResource(R.string.snack_label),
             emoji = "\uD83E\uDD6A"
         )
         Meal(
-            uiState.breakfastUiState,
-            name = "Janta",
+            uiState.dinnerUiState,
+            name = stringResource(R.string.dinner_label),
             emoji = "\uD83E\uDED4"
         )
     }
@@ -90,7 +92,7 @@ fun Meal(
                     fontSize = 16.sp
                 )
                 Text(
-                    text = "${uiState.ingested} / ${uiState.total} cal",
+                    text = uiState.ingested + " / " + uiState.total + " cal",
                     fontFamily = Carme,
                     fontSize = 12.sp
                 )

@@ -33,4 +33,8 @@
     <string name="nutrition_label">Nutrição</string>
     <string name="see_details_label">Ver detalhes</string>
     <string name="meals_label">Refeição</string>
+    <string name="breakfast_label">Café da manhã</string>
+    <string name="lunch_label">Almoço</string>
+    <string name="snack_label">Café da tarde</string>
+    <string name="dinner_label">Janta</string>
 </resources>
