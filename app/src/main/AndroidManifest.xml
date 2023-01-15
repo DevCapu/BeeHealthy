@@ -14,7 +14,7 @@
             android:theme="@style/Theme.BeeHealthy" />
 
         <activity
-            android:name="br.com.devcapu.beehealthy.login.ui.LoginActivity"
+            android:name="br.com.devcapu.beehealthy.authentication.login.ui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name="br.com.devcapu.beehealthy.register.ui.RegisterActivity"
+            android:name="br.com.devcapu.beehealthy.authentication.register.ui.RegisterActivity"
             android:theme="@style/Theme.BeeHealthy" />
          <activity
             android:name="br.com.devcapu.beehealthy.common.ui.activity.AddFoodActivity"

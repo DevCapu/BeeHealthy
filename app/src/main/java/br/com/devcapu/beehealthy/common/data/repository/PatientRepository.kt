@@ -5,8 +5,8 @@ import br.com.devcapu.beehealthy.common.data.model.BodyCalorieNeedsEntity
 import br.com.devcapu.beehealthy.common.data.model.PatientAndBodyCalorieNeedsEntity
 import br.com.devcapu.beehealthy.common.data.model.PatientEntity
 import br.com.devcapu.beehealthy.common.domain.model.nutrition.Macros
-import br.com.devcapu.beehealthy.common.domain.model.patient.Patient
 import br.com.devcapu.beehealthy.common.domain.model.patient.Email
+import br.com.devcapu.beehealthy.common.domain.model.patient.Patient
 import br.com.devcapu.beehealthy.common.domain.model.patient.health.*
 
 class PatientRepository(private val patientDAO: PatientDAO) {
@@ -36,7 +36,7 @@ class PatientRepository(private val patientDAO: PatientDAO) {
             activityLevel = ActivityLevel.valueOf(patientEntity.activityLevel),
             objective = Objective.valueOf(patientEntity.objective),
             bodyCaloriesNeeds = map(bodyCalorieNeedsEntity)
-        )   
+        )
     }
 
     private fun map(entity: BodyCalorieNeedsEntity) = BodyCaloriesNeeds(

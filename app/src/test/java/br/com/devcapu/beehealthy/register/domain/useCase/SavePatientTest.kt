@@ -3,7 +3,8 @@ package br.com.devcapu.beehealthy.register.domain.useCase
 import br.com.devcapu.beehealthy.common.domain.model.patient.Patient
 import br.com.devcapu.beehealthy.common.data.repository.HealthRepository
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
-import br.com.devcapu.beehealthy.register.data.RegisterRepository
+import br.com.devcapu.beehealthy.authentication.register.data.RegisterRepository
+import br.com.devcapu.beehealthy.authentication.register.useCase.SavePatient
 import io.mockk.coEvery
 import io.mockk.coVerifySequence
 import io.mockk.mockk

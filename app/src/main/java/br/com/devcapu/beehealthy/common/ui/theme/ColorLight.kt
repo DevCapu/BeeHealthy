@@ -1,6 +1,7 @@
 package br.com.devcapu.beehealthy.common.ui.theme
 
 import androidx.compose.ui.graphics.Color
+
 val PrimaryLight = Color(0XFFD6A95F)
 val PrimaryVariantLight = Color(0xFF62BE6C)
 val OnPrimaryLight = Color(0xFF272727)

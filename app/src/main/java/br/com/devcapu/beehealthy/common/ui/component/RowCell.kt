@@ -21,7 +21,9 @@ fun RowCell(macro: UIMacro) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.surface)
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.surface)
     ) {
         TextWithColorSample(
             text = stringResource(id = macro.name),

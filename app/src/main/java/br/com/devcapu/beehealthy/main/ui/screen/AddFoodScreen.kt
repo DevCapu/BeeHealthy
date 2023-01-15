@@ -32,23 +32,6 @@ fun AddFoodScreen() {
     var foods by remember { mutableStateOf(emptyList<Food>()) }
     foods = listOf(
         Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
-        Food("Banana", "1 Unidade", 123.00),
     )
 
     BeeHealthyTheme {

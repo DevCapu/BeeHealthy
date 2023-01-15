@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.common.ui.theme.Carme
-import br.com.devcapu.beehealthy.main.ui.components.NutritionStats
-import br.com.devcapu.beehealthy.main.ui.state.CaloriesUiState
+import br.com.devcapu.beehealthy.food.nutrition.components.NutritionStats
+import br.com.devcapu.beehealthy.food.nutrition.state.CaloriesUiState
 import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 
 @Composable

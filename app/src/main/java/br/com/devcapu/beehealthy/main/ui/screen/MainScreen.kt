@@ -18,13 +18,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import br.com.devcapu.beehealthy.authentication.login.ui.LoginActivity
 import br.com.devcapu.beehealthy.common.ui.component.BottomBar
 import br.com.devcapu.beehealthy.common.ui.component.TopBar
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.login.ui.LoginActivity
-import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 import br.com.devcapu.beehealthy.main.ui.HomeViewModel
 import br.com.devcapu.beehealthy.main.ui.navigation.NavigationGraph
+import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 
 @Composable
 fun MainScreen(viewModel: HomeViewModel = viewModel()) {

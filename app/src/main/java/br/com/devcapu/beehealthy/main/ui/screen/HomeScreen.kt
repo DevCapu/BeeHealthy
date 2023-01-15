@@ -22,8 +22,8 @@ import br.com.devcapu.beehealthy.common.ui.component.card.BeeCard
 import br.com.devcapu.beehealthy.common.ui.component.card.BeeCardHeader
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.common.ui.theme.Carme
-import br.com.devcapu.beehealthy.main.ui.components.Meals
-import br.com.devcapu.beehealthy.main.ui.components.NutritionStats
+import br.com.devcapu.beehealthy.food.meal.components.Meals
+import br.com.devcapu.beehealthy.food.nutrition.components.NutritionStats
 import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 
 @Composable

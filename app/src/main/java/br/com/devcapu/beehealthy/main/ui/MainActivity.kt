@@ -23,7 +23,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launchWhenCreated {
-            viewModel.findAllCategories(JsonUtil.getJsonFromAssets(this@MainActivity, "categoryList.json")!!)
+            viewModel.findAllCategories(JsonUtil.getJsonFromAssets(this@MainActivity,
+                "categoryList.json")!!)
         }
         setContent {
             BeeHealthyTheme { MainScreen(viewModel) }

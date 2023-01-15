@@ -2,8 +2,8 @@ package br.com.devcapu.beehealthy.common.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import br.com.devcapu.beehealthy.common.domain.model.patient.health.BiologicalGender
 import br.com.devcapu.beehealthy.common.domain.model.patient.Patient
+import br.com.devcapu.beehealthy.common.domain.model.patient.health.BiologicalGender
 
 @Entity(tableName = "patient")
 data class PatientEntity(

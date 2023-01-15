@@ -7,5 +7,5 @@ data class BodyCaloriesNeeds(
     val basalEnergyExpenditure: BasalEnergyExpenditure,
     val totalEnergyExpenditure: TotalEnergyExpenditure,
     val caloriesToCommitObjective: CaloriesToCommitObjective,
-    val macros: Macros
+    val macros: Macros,
 )

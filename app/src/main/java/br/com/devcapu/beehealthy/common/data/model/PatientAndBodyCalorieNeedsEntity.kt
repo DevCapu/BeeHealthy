@@ -9,5 +9,5 @@ data class PatientAndBodyCalorieNeedsEntity(
         parentColumn = "id",
         entityColumn = "patientId"
     )
-    val bodyCalorieNeedsEntity: BodyCalorieNeedsEntity
+    val bodyCalorieNeedsEntity: BodyCalorieNeedsEntity,
 )

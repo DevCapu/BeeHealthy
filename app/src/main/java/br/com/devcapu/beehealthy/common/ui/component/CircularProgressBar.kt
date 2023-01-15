@@ -17,7 +17,7 @@ fun CircularProgressIndicatorWithBackground(
     progress: Float,
     color: Color,
     size: Dp,
-    strokeWidth: Dp = 8.dp
+    strokeWidth: Dp = 8.dp,
 ) {
     Box {
         CircularProgressIndicator(
