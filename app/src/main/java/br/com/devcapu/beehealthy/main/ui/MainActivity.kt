@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import br.com.devcapu.beehealthy.common.JsonUtil
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
@@ -20,6 +22,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lifecycleScope.launchWhenCreated {
+            viewModel.findAllCategories(JsonUtil.getJsonFromAssets(this@MainActivity, "categoryList.json")!!)
+        }
         setContent {
             BeeHealthyTheme { MainScreen(viewModel) }
         }

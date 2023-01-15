@@ -54,7 +54,7 @@ fun BeeCard(
 @Composable
 fun BeeCardHeader(
     title: @Composable () -> Unit,
-    subtitle: @Composable () -> Unit,
+    subtitle: @Composable () -> Unit = { },
 ) {
     Row(
         modifier = Modifier

@@ -5,10 +5,7 @@ import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
@@ -47,8 +44,8 @@ fun MainScreen(state: HomeUIState) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                backgroundColor = Color(0xFF8463E5),
-                contentColor = Color.White,
+                backgroundColor = MaterialTheme.colors.primary,
+                contentColor = contentColorFor(backgroundColor = MaterialTheme.colors.primary),
                 onClick = state.onClickFAB
             ) {
                 Image(

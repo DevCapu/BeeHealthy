@@ -3,6 +3,8 @@ package br.com.devcapu.beehealthy.main.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import br.com.devcapu.beehealthy.common.data.datasource.LocalCategoryDataSource
+import br.com.devcapu.beehealthy.common.data.repository.CategoryRepository
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.login.data.LoginRepository
 import br.com.devcapu.beehealthy.main.ui.state.CaloriesUiState
@@ -27,8 +29,8 @@ class HomeViewModel(private val patientRepository: PatientRepository) : ViewMode
             viewModelScope.launch {
                 val patient = patientRepository.searchUserWith(email = it)
                 patient.bodyCaloriesNeeds?.let {
-                    _state.value = HomeUIState(
-                        CaloriesUiState(
+                    _state.value = _state.value.copy(
+                        caloriesUiState = CaloriesUiState(
                             caloriesToCommitObjective = it.caloriesToCommitObjective.value.toString(),
                         ),
                         macrosUiState = MacrosUiState(
@@ -47,6 +49,12 @@ class HomeViewModel(private val patientRepository: PatientRepository) : ViewMode
                 }
             }
         }
+    }
+
+    fun findAllCategories(categoriesAsJSONString: String) {
+        _state.value = _state.value.copy(
+            categories = CategoryRepository(LocalCategoryDataSource()).getAll(categoriesAsJSONString)
+        )
     }
 
     class Factory(

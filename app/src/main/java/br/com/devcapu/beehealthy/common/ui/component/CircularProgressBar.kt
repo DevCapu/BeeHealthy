@@ -17,19 +17,20 @@ fun CircularProgressIndicatorWithBackground(
     progress: Float,
     color: Color,
     size: Dp,
+    strokeWidth: Dp = 8.dp
 ) {
     Box {
         CircularProgressIndicator(
             progress = 1f,
             color = color.copy(alpha = 0.2f),
-            strokeWidth = 8.dp,
+            strokeWidth = strokeWidth,
             modifier = Modifier.then(Modifier.size(size))
         )
 
         CircularProgressIndicator(
             progress = progress,
             color = color,
-            strokeWidth = 8.dp,
+            strokeWidth = strokeWidth,
             modifier = Modifier.then(Modifier.size(size))
         )
     }
