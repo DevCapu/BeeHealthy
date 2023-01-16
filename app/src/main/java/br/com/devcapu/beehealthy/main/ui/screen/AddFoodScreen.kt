@@ -1,110 +1,62 @@
 package br.com.devcapu.beehealthy.main.ui.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.ModalBottomSheetValue.Expanded
+import androidx.compose.material.ModalBottomSheetValue.Hidden
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphNavigator
-import br.com.devcapu.beehealthy.common.ui.component.OutlineInput
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.common.ui.theme.Carme
-import br.com.devcapu.beehealthy.food.components.Food
+import br.com.devcapu.beehealthy.food.add.components.AddFoodBottomSheet
+import br.com.devcapu.beehealthy.food.add.components.AppBar
+import br.com.devcapu.beehealthy.food.add.screen.FoodListWithSearch
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddFoodScreen(
-    navigator: NavGraphNavigator
+    navigator: NavGraphNavigator,
 ) {
     AddFoodScreen(
         onClickGoBack = { navigator.popBackStack() }
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AddFoodScreen(
-    onClickGoBack: () -> Unit
+    onClickGoBack: () -> Unit,
 ) {
-    Scaffold(
-        backgroundColor = MaterialTheme.colors.background,
-        contentColor = MaterialTheme.colors.onBackground,
-        topBar = { AddFoodAppBar(onClickGoBack) }
-    ) {
-        LazyColumn(
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            item {
-                OutlineInput(
-                    modifier = Modifier.background(MaterialTheme.colors.background.copy(alpha = 0.4f)),
-                    value = "",
-                    onValueChange = {},
-                    trailingIcon = {
-                        Icon(imageVector = Icons.Default.Search, contentDescription = null)
-                    },
-                    placeholder = {
-                        Text("Procure por um alimento")
-                    },
-                )
-            }
-            repeat(5) {
-                item {
-                    Food()
+    val sheetState = rememberModalBottomSheetState(initialValue = Hidden)
+    val scope = rememberCoroutineScope()
+    ModalBottomSheetLayout(
+        sheetState = sheetState,
+        sheetElevation = 8.dp,
+        sheetShape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+        sheetContent = { AddFoodBottomSheet() },
+        sheetBackgroundColor = MaterialTheme.colors.surface,
+        sheetContentColor = MaterialTheme.colors.onSurface,
+        content = {
+            Scaffold(
+                backgroundColor = MaterialTheme.colors.background,
+                contentColor = MaterialTheme.colors.onBackground,
+                topBar = { AppBar(onClickGoBack) },
+            ) {
+                FoodListWithSearch {
+                    scope.launch {
+                        sheetState.show()
+                    }
                 }
             }
         }
-    }
+    )
 }
 
-@Composable
-private fun AddFoodAppBar(
-    onClickGoBack: () -> Unit
-) {
-    TopAppBar(
-        backgroundColor = MaterialTheme.colors.background,
-        elevation = 0.dp
-    ) {
-        Box(modifier = Modifier.fillMaxWidth()) {
-            IconButton(
-                modifier = Modifier.align(Alignment.CenterStart),
-                onClick = onClickGoBack
-            ) {
-                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Go Back")
-            }
-            Column(Modifier.align(Alignment.Center)) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Café da manhã",
-                    textAlign = TextAlign.Center,
-                    fontSize = 18.sp,
-                    fontFamily = Carme
-                )
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Sexta feira 13",
-                    textAlign = TextAlign.Center,
-                    fontFamily = Carme,
-                    color = contentColorFor(
-                        backgroundColor = MaterialTheme.colors.background
-                    ).copy(alpha = 0.4f),
-                    fontSize = 12.sp,
-                )
-            }
-        }
-    }
-}
-
+@Preview(showSystemUi = true, )
 @Preview(
     showSystemUi = true,
     uiMode = UI_MODE_NIGHT_YES

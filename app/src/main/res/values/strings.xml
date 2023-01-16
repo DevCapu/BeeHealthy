@@ -37,4 +37,7 @@
     <string name="lunch_label">Almoço</string>
     <string name="snack_label">Café da tarde</string>
     <string name="dinner_label">Janta</string>
+    <string name="calories_label">Calorias</string>
+    <string name="add_label">Adicionar</string>
+    <string name="food_label">Alimento</string>
 </resources>

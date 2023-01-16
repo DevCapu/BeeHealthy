@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.food.components
+package br.com.devcapu.beehealthy.food.add.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.clickable
@@ -25,11 +25,12 @@ import br.com.devcapu.beehealthy.common.ui.theme.Protein
 @Composable
 fun Food(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit,
 ) {
     BeeCard(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { },
+            .clickable { onClick() },
         header = {
             BeeCardHeader(
                 title = { Text(text = "Alimento") },
@@ -103,6 +104,6 @@ private fun Chip(text: String, backgroundColor: Color, contentColor: Color) {
 @Composable
 fun FoodPreview() {
     BeeHealthyTheme {
-        Food()
+        Food(onClick = {  })
     }
 }
