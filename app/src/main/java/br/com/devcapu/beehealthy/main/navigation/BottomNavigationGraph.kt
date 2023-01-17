@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.diary.ui.navigation
+package br.com.devcapu.beehealthy.main.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController

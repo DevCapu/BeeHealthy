@@ -13,6 +13,7 @@ import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
 import br.com.devcapu.beehealthy.diary.ui.DiaryViewModel
 import br.com.devcapu.beehealthy.food.add.AddFoodViewModel
+import br.com.devcapu.beehealthy.main.navigation.MainNavigationGraph
 
 class MainActivity : ComponentActivity() {
 

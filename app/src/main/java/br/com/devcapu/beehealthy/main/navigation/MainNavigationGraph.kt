@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.main
+package br.com.devcapu.beehealthy.main.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.food.add.AddFoodViewModel
 import br.com.devcapu.beehealthy.food.add.screen.AddFoodScreen
 import br.com.devcapu.beehealthy.diary.ui.DiaryViewModel
+import br.com.devcapu.beehealthy.main.MainScreen
 
 sealed class MainScreens(val screen_route: String) {
     object HomeScreen : MainScreens("home_screen")

@@ -19,7 +19,7 @@ import br.com.devcapu.beehealthy.common.ui.component.CircularProgressIndicatorWi
 import br.com.devcapu.beehealthy.common.ui.theme.Carme
 import br.com.devcapu.beehealthy.food.meal.state.MealUiState
 import br.com.devcapu.beehealthy.food.meal.state.MealsUiState
-import br.com.devcapu.beehealthy.main.MainScreens
+import br.com.devcapu.beehealthy.main.navigation.MainScreens
 
 @Composable
 fun Meals(

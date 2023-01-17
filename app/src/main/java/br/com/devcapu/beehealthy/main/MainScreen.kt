@@ -23,7 +23,7 @@ import br.com.devcapu.beehealthy.authentication.login.ui.LoginActivity
 import br.com.devcapu.beehealthy.common.ui.component.TopBar
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.diary.ui.DiaryViewModel
-import br.com.devcapu.beehealthy.diary.ui.navigation.BottomNavigationGraph
+import br.com.devcapu.beehealthy.main.navigation.BottomNavigationGraph
 import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
 
 @Composable
