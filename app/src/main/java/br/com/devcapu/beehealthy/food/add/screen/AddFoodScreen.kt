@@ -8,6 +8,7 @@ import androidx.compose.material.ModalBottomSheetValue.Hidden
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,6 +18,8 @@ import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.food.add.AddFoodViewModel
 import br.com.devcapu.beehealthy.food.add.components.AddFoodBottomSheet
 import br.com.devcapu.beehealthy.food.add.components.AppBar
+import br.com.devcapu.beehealthy.food.add.state.AddFoodUiState
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddFoodScreen(
@@ -37,6 +40,7 @@ fun AddFoodScreen(
     mainNavController: NavController
 ) {
     val sheetState = rememberModalBottomSheetState(initialValue = Hidden)
+    val scope = rememberCoroutineScope()
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetElevation = 8.dp,
@@ -50,7 +54,11 @@ fun AddFoodScreen(
                 contentColor = MaterialTheme.colors.onBackground,
                 topBar = { AppBar { mainNavController.popBackStack() } },
             ) {
-                FoodListWithSearch(uiState = uiState)
+                FoodListWithSearch(uiState = uiState) {
+                    scope.launch {
+                        sheetState.show()
+                    }
+                }
             }
         }
     )

@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -19,31 +20,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.food.add.components.Food
-
-data class AddFoodUiState(
-    val searchedFood: String = "",
-    val onSearchedFood: (String) -> Unit = { },
-    val foodListUiState: List<FoodUiState> = emptyList(),
-    val onClickFood: (FoodUiState) -> Unit = { }
-)
-
-data class FoodUiState(
-    val name: String = "",
-    val measure: String = "",
-    val calories: String = "",
-    val carbohydrates: String = "",
-    val proteins: String = "",
-    val fats: String = ""
-)
+import br.com.devcapu.beehealthy.food.add.state.AddFoodUiState
+import br.com.devcapu.beehealthy.food.add.state.FoodUiState
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 @Composable
-fun FoodListWithSearch(uiState: AddFoodUiState) {
+fun FoodListWithSearch(uiState: AddFoodUiState, onClick: (FoodUiState) -> Unit) {
     LazyColumn(
         Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .padding(top = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         item {
             OutlinedTextField(
@@ -73,7 +62,7 @@ fun FoodListWithSearch(uiState: AddFoodUiState) {
             item {
                 Food(
                     uiState = it,
-                    onClick = { }
+                    onClick = { onClick(it) }
                 )
             }
         }
@@ -87,7 +76,5 @@ fun FoodListWithSearch(uiState: AddFoodUiState) {
 )
 @Composable
 fun FoodListWithSearchPreview() {
-    BeeHealthyTheme {
-        FoodListWithSearch(AddFoodUiState())
-    }
+    BeeHealthyTheme { FoodListWithSearch(AddFoodUiState()) { } }
 }

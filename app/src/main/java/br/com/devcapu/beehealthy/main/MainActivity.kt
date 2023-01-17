@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import br.com.devcapu.beehealthy.common.JsonUtil
+import br.com.devcapu.beehealthy.common.JsonUtil.Companion.getJsonFromAssets
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
@@ -17,7 +17,7 @@ import br.com.devcapu.beehealthy.main.navigation.MainNavigationGraph
 
 class MainActivity : ComponentActivity() {
 
-    private val homeViewModel: DiaryViewModel by viewModels {
+    private val diaryViewModel: DiaryViewModel by viewModels {
         val patientRepository = PatientRepository(BeeHealthyDatabase.getInstance(this).patientDao())
         DiaryViewModel.Factory(patientRepository)
     }
@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BeeHealthyTheme {
                 MainNavigationGraph(
-                    homeViewModel = homeViewModel,
+                    homeViewModel = diaryViewModel,
                     addFoodViewModel = addFoodViewModel
                 )
             }
@@ -42,8 +42,13 @@ class MainActivity : ComponentActivity() {
 
     private fun configureLifecyclerObservers() {
         lifecycleScope.launchWhenCreated {
-            homeViewModel.findAllCategories(JsonUtil.getJsonFromAssets(this@MainActivity,
-                "categoryList.json")!!)
+            diaryViewModel.findAllCategories(
+                getJsonFromAssets(this@MainActivity, "categoryList.json")!!
+            )
+            addFoodViewModel.findAllFoods(
+                getJsonFromAssets(this@MainActivity, "foodList.json")!!
+            )
+
         }
     }
 

@@ -2,7 +2,10 @@ package br.com.devcapu.beehealthy.food.add.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -21,7 +24,7 @@ import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.common.ui.theme.Carbohyd
 import br.com.devcapu.beehealthy.common.ui.theme.Fats
 import br.com.devcapu.beehealthy.common.ui.theme.Protein
-import br.com.devcapu.beehealthy.food.add.screen.FoodUiState
+import br.com.devcapu.beehealthy.food.add.state.FoodUiState
 
 @Composable
 fun Food(
