@@ -17,6 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.component.card.BeeCard
 import br.com.devcapu.beehealthy.common.ui.component.card.BeeCardHeader
@@ -27,7 +29,10 @@ import br.com.devcapu.beehealthy.food.nutrition.components.NutritionStats
 import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 
 @Composable
-fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
+fun HomeScreen(
+    uiState: HomeUIState,
+    mainNavController: NavController
+) = BeeHealthyTheme {
     LazyColumn(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
@@ -36,7 +41,12 @@ fun HomeScreen(uiState: HomeUIState) = BeeHealthyTheme {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item { NutritionCard(uiState) }
-        item { MealCard(uiState) }
+        item {
+            MealCard(
+                uiState = uiState,
+                mainNavController = mainNavController
+            )
+        }
     }
 }
 
@@ -70,7 +80,7 @@ private fun NutritionCard(uiState: HomeUIState) {
 }
 
 @Composable
-private fun MealCard(uiState: HomeUIState) {
+private fun MealCard(uiState: HomeUIState, mainNavController: NavController) {
     BeeCard(
         header = {
             BeeCardHeader(
@@ -84,7 +94,12 @@ private fun MealCard(uiState: HomeUIState) {
                 },
             )
         },
-        body = { Meals(uiState.mealsUiState) }
+        body = {
+            Meals(
+                uiState = uiState.mealsUiState,
+                mainNavController = mainNavController
+            )
+        }
     )
 }
 
@@ -95,5 +110,8 @@ private fun MealCard(uiState: HomeUIState) {
 )
 @Composable
 fun HomePreview() {
-    HomeScreen(HomeUIState())
+    HomeScreen(
+        uiState = HomeUIState(),
+        mainNavController = rememberNavController()
+    )
 }

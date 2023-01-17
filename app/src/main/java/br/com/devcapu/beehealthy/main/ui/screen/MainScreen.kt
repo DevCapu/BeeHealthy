@@ -17,31 +17,38 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.authentication.login.ui.LoginActivity
-import br.com.devcapu.beehealthy.common.ui.component.BottomBar
 import br.com.devcapu.beehealthy.common.ui.component.TopBar
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.main.ui.HomeViewModel
-import br.com.devcapu.beehealthy.main.ui.navigation.NavigationGraph
+import br.com.devcapu.beehealthy.main.ui.navigation.BottomNavigationGraph
 import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
 
 @Composable
-fun MainScreen(viewModel: HomeViewModel = viewModel()) {
+fun MainScreen(
+    viewModel: HomeViewModel = viewModel(),
+    mainNavController: NavHostController,
+) {
     val state by viewModel.state.collectAsState()
-    MainScreen(state = state)
+    MainScreen(
+        state = state,
+        mainNavController = mainNavController
+    )
 }
 
 @Composable
-fun MainScreen(state: HomeUIState) {
+fun MainScreen(
+    state: HomeUIState,
+    mainNavController: NavHostController
+) {
     val context = LocalContext.current
     val navController = rememberNavController()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         backgroundColor = MaterialTheme.colors.background,
-        topBar = {
-            TopBar { state.onClickLogout { logout(context) } }
-        },
+        topBar = { TopBar { state.onClickLogout { logout(context) } } },
         floatingActionButton = {
             FloatingActionButton(
                 backgroundColor = MaterialTheme.colors.primary,
@@ -58,8 +65,9 @@ fun MainScreen(state: HomeUIState) {
         floatingActionButtonPosition = FabPosition.End,
         isFloatingActionButtonDocked = true,
     ) {
-        NavigationGraph(
+        BottomNavigationGraph(
             navController = navController,
+            mainNavController = mainNavController,
             state = state
         )
     }
@@ -76,6 +84,9 @@ private fun logout(context: Context) {
 @Composable
 fun MainsScreenPreview() {
     BeeHealthyTheme {
-        MainScreen(HomeUIState())
+        MainScreen(
+            state = HomeUIState(),
+            mainNavController = rememberNavController()
+        )
     }
 }

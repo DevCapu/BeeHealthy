@@ -10,4 +10,5 @@ data class MealsUiState(
 data class MealUiState(
     val ingested: String = "0",
     val total: String = "0",
+    val addFood: () -> Unit = { }
 )

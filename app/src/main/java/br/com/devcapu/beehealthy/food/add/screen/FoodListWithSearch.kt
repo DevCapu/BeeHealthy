@@ -1,25 +1,43 @@
 package br.com.devcapu.beehealthy.food.add.screen
 
-import androidx.compose.foundation.background
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.devcapu.beehealthy.common.ui.component.OutlineInput
+import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.food.add.components.Food
 
+data class AddFoodUiState(
+    val searchedFood: String = "",
+    val onSearchedFood: (String) -> Unit = { },
+    val foodListUiState: List<FoodUiState> = emptyList(),
+    val onClickFood: (FoodUiState) -> Unit = { }
+)
+
+data class FoodUiState(
+    val name: String = "",
+    val measure: String = "",
+    val calories: String = "",
+    val carbohydrates: String = "",
+    val proteins: String = "",
+    val fats: String = ""
+)
+
 @Composable
-fun FoodListWithSearch(
-    onClickFood: () -> Unit,
-) {
+fun FoodListWithSearch(uiState: AddFoodUiState) {
     LazyColumn(
         Modifier
             .fillMaxWidth()
@@ -28,23 +46,48 @@ fun FoodListWithSearch(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         item {
-            OutlineInput(
-                modifier = Modifier.background(MaterialTheme.colors.background.copy(alpha = 0.4f)),
-                value = "",
-                onValueChange = {},
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = uiState.searchedFood,
+                onValueChange = uiState.onSearchedFood,
                 trailingIcon = {
                     Icon(imageVector = Icons.Default.Search, contentDescription = null)
                 },
                 placeholder = {
-                    Text("Procure por um alimento")
+                    Text(
+                        text = "Procure por um alimento",
+                        fontWeight = FontWeight.SemiBold,
+                    )
                 },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    backgroundColor = MaterialTheme.colors.surface,
+                    unfocusedBorderColor = Color.Transparent,
+                    focusedBorderColor = MaterialTheme.colors.primary,
+                ),
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search)
             )
         }
 
-        repeat(12) {
+        uiState.foodListUiState.forEach {
             item {
-                Food(onClick = onClickFood)
+                Food(
+                    uiState = it,
+                    onClick = { }
+                )
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Preview(
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+fun FoodListWithSearchPreview() {
+    BeeHealthyTheme {
+        FoodListWithSearch(AddFoodUiState())
     }
 }

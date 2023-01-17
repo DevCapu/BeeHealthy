@@ -11,23 +11,38 @@ import br.com.devcapu.beehealthy.common.JsonUtil
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
-import br.com.devcapu.beehealthy.main.ui.screen.MainScreen
+import br.com.devcapu.beehealthy.food.add.AddFoodViewModel
+import br.com.devcapu.beehealthy.main.ui.navigation.MainNavigationGraph
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: HomeViewModel by viewModels {
+    private val homeViewModel: HomeViewModel by viewModels {
         val patientRepository = PatientRepository(BeeHealthyDatabase.getInstance(this).patientDao())
         HomeViewModel.Factory(patientRepository)
     }
 
+    private val addFoodViewModel: AddFoodViewModel by viewModels {
+        AddFoodViewModel.Factory()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycleScope.launchWhenCreated {
-            viewModel.findAllCategories(JsonUtil.getJsonFromAssets(this@MainActivity,
-                "categoryList.json")!!)
-        }
+        configureLifecyclerObservers()
+
         setContent {
-            BeeHealthyTheme { MainScreen(viewModel) }
+            BeeHealthyTheme {
+                MainNavigationGraph(
+                    homeViewModel = homeViewModel,
+                    addFoodViewModel = addFoodViewModel
+                )
+            }
+        }
+    }
+
+    private fun configureLifecyclerObservers() {
+        lifecycleScope.launchWhenCreated {
+            homeViewModel.findAllCategories(JsonUtil.getJsonFromAssets(this@MainActivity,
+                "categoryList.json")!!)
         }
     }
 

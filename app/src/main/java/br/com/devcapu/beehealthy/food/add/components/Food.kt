@@ -21,19 +21,21 @@ import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.common.ui.theme.Carbohyd
 import br.com.devcapu.beehealthy.common.ui.theme.Fats
 import br.com.devcapu.beehealthy.common.ui.theme.Protein
+import br.com.devcapu.beehealthy.food.add.screen.FoodUiState
 
 @Composable
 fun Food(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    uiState: FoodUiState,
+    onClick: (FoodUiState) -> Unit
 ) {
     BeeCard(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onClick() },
+            .clickable { onClick(uiState) },
         header = {
             BeeCardHeader(
-                title = { Text(text = "Alimento") },
+                title = { Text(text = uiState.name) },
                 subtitle = {
                     Icon(
                         imageVector = Icons.Filled.Star,
@@ -53,25 +55,25 @@ fun Food(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Chip(
-                    text = "120 kcal",
+                    text = "${uiState.calories} kcal",
                     backgroundColor = MaterialTheme.colors.primary,
                     contentColor = contentColorFor(backgroundColor = MaterialTheme.colors.primary)
                 )
 
                 Chip(
-                    text = "0.5g",
+                    text = "${uiState.carbohydrates}g",
                     backgroundColor = Carbohyd,
                     contentColor = contentColorFor(backgroundColor = Carbohyd)
                 )
 
                 Chip(
-                    text = "0.2g",
+                    text = "${uiState.proteins}g",
                     backgroundColor = Protein,
                     contentColor = contentColorFor(backgroundColor = Protein)
                 )
 
                 Chip(
-                    text = "0.1g",
+                    text = "${uiState.fats}g",
                     backgroundColor = Fats,
                     contentColor = contentColorFor(backgroundColor = Fats)
                 )
@@ -104,6 +106,9 @@ private fun Chip(text: String, backgroundColor: Color, contentColor: Color) {
 @Composable
 fun FoodPreview() {
     BeeHealthyTheme {
-        Food(onClick = {  })
+        Food(
+            uiState = FoodUiState(),
+            onClick = { }
+        )
     }
 }

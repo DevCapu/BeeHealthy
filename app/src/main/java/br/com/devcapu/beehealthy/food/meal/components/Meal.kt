@@ -13,14 +13,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.component.CircularProgressIndicatorWithBackground
 import br.com.devcapu.beehealthy.common.ui.theme.Carme
 import br.com.devcapu.beehealthy.food.meal.state.MealUiState
 import br.com.devcapu.beehealthy.food.meal.state.MealsUiState
+import br.com.devcapu.beehealthy.main.ui.navigation.MainScreens
 
 @Composable
-fun Meals(uiState: MealsUiState) {
+fun Meals(
+    uiState: MealsUiState,
+    mainNavController: NavController
+) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -32,22 +37,22 @@ fun Meals(uiState: MealsUiState) {
             uiState.breakfastUiState,
             name = stringResource(R.string.breakfast_label),
             emoji = "\uD83C\uDF5E"
-        )
+        ) { mainNavController.navigate(MainScreens.AddFoodScreen.screen_route) }
         Meal(
             uiState.lunchUiState,
             name = stringResource(R.string.lunch_label),
             emoji = "\uD83C\uDF73"
-        )
+        ) { mainNavController.navigate(MainScreens.AddFoodScreen.screen_route) }
         Meal(
             uiState.snackUiState,
             name = stringResource(R.string.snack_label),
             emoji = "\uD83E\uDD6A"
-        )
+        ) { mainNavController.navigate(MainScreens.AddFoodScreen.screen_route) }
         Meal(
             uiState.dinnerUiState,
             name = stringResource(R.string.dinner_label),
             emoji = "\uD83E\uDED4"
-        )
+        ) { mainNavController.navigate(MainScreens.AddFoodScreen.screen_route) }
     }
 }
 
@@ -56,6 +61,7 @@ fun Meal(
     uiState: MealUiState,
     name: String,
     emoji: String,
+    onClick: () -> Unit,
 ) {
     val progress = if (uiState.ingested.toFloat() <= 0f || uiState.total.toFloat() <= 0f) {
         0f
@@ -63,9 +69,7 @@ fun Meal(
         uiState.ingested.toFloat().div(uiState.total.toFloat())
     }
 
-    Surface(
-        modifier = Modifier.fillMaxWidth()
-    ) {
+    Surface(modifier = Modifier.fillMaxWidth()) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -99,7 +103,7 @@ fun Meal(
 
             }
             Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = { }) {
+            IconButton(onClick = onClick) {
                 Icon(
                     modifier = Modifier
                         .border(

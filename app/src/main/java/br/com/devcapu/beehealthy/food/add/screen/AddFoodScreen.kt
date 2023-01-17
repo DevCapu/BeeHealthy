@@ -1,38 +1,42 @@
-package br.com.devcapu.beehealthy.main.ui.screen
+package br.com.devcapu.beehealthy.food.add.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.ModalBottomSheetValue.Expanded
 import androidx.compose.material.ModalBottomSheetValue.Hidden
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraphNavigator
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
+import br.com.devcapu.beehealthy.food.add.AddFoodViewModel
 import br.com.devcapu.beehealthy.food.add.components.AddFoodBottomSheet
 import br.com.devcapu.beehealthy.food.add.components.AppBar
-import br.com.devcapu.beehealthy.food.add.screen.FoodListWithSearch
-import kotlinx.coroutines.launch
 
 @Composable
 fun AddFoodScreen(
-    navigator: NavGraphNavigator,
+    viewModel: AddFoodViewModel = viewModel(),
+    mainNavController: NavController
 ) {
+    val uiState by viewModel.state.collectAsState()
     AddFoodScreen(
-        onClickGoBack = { navigator.popBackStack() }
+        uiState = uiState,
+        mainNavController = mainNavController
     )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AddFoodScreen(
-    onClickGoBack: () -> Unit,
+    uiState: AddFoodUiState,
+    mainNavController: NavController
 ) {
     val sheetState = rememberModalBottomSheetState(initialValue = Hidden)
-    val scope = rememberCoroutineScope()
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetElevation = 8.dp,
@@ -44,13 +48,9 @@ fun AddFoodScreen(
             Scaffold(
                 backgroundColor = MaterialTheme.colors.background,
                 contentColor = MaterialTheme.colors.onBackground,
-                topBar = { AppBar(onClickGoBack) },
+                topBar = { AppBar { mainNavController.popBackStack() } },
             ) {
-                FoodListWithSearch {
-                    scope.launch {
-                        sheetState.show()
-                    }
-                }
+                FoodListWithSearch(uiState = uiState)
             }
         }
     )
@@ -64,6 +64,9 @@ fun AddFoodScreen(
 @Composable
 fun AddFoodScreenPreview() {
     BeeHealthyTheme {
-        AddFoodScreen { }
+        AddFoodScreen(
+            uiState = AddFoodUiState(),
+            mainNavController = rememberNavController()
+        )
     }
 }
