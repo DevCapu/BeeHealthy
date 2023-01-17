@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.main.ui.state
+package br.com.devcapu.beehealthy.diary.ui.state
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
@@ -7,7 +7,7 @@ import br.com.devcapu.beehealthy.food.meal.state.MealsUiState
 import br.com.devcapu.beehealthy.food.nutrition.state.CaloriesUiState
 import br.com.devcapu.beehealthy.food.nutrition.state.MacrosUiState
 
-data class HomeUIState(
+data class DiaryUiState(
     val caloriesUiState: CaloriesUiState = CaloriesUiState(),
     val macrosUiState: MacrosUiState = MacrosUiState(),
     val mealsUiState: MealsUiState = MealsUiState(),

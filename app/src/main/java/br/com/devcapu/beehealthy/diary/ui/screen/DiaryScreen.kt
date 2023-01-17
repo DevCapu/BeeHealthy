@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.main.ui.screen
+package br.com.devcapu.beehealthy.diary.ui.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
@@ -26,11 +26,11 @@ import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.common.ui.theme.Carme
 import br.com.devcapu.beehealthy.food.meal.components.Meals
 import br.com.devcapu.beehealthy.food.nutrition.components.NutritionStats
-import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
+import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
 
 @Composable
-fun HomeScreen(
-    uiState: HomeUIState,
+fun DiaryScreen(
+    uiState: DiaryUiState,
     mainNavController: NavController
 ) = BeeHealthyTheme {
     LazyColumn(
@@ -51,7 +51,7 @@ fun HomeScreen(
 }
 
 @Composable
-private fun NutritionCard(uiState: HomeUIState) {
+private fun NutritionCard(uiState: DiaryUiState) {
     BeeCard(
         header = {
             BeeCardHeader(
@@ -80,7 +80,7 @@ private fun NutritionCard(uiState: HomeUIState) {
 }
 
 @Composable
-private fun MealCard(uiState: HomeUIState, mainNavController: NavController) {
+private fun MealCard(uiState: DiaryUiState, mainNavController: NavController) {
     BeeCard(
         header = {
             BeeCardHeader(
@@ -109,9 +109,9 @@ private fun MealCard(uiState: HomeUIState, mainNavController: NavController) {
     showSystemUi = true
 )
 @Composable
-fun HomePreview() {
-    HomeScreen(
-        uiState = HomeUIState(),
+fun DiaryScreePreview() {
+    DiaryScreen(
+        uiState = DiaryUiState(),
         mainNavController = rememberNavController()
     )
 }

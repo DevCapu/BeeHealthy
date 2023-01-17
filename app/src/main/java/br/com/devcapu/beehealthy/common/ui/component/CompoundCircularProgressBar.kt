@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import br.com.devcapu.beehealthy.common.ui.theme.Carbohyd
 import br.com.devcapu.beehealthy.common.ui.theme.Fats
 import br.com.devcapu.beehealthy.common.ui.theme.Protein
-import br.com.devcapu.beehealthy.main.ui.state.ProgressBar
+import br.com.devcapu.beehealthy.diary.ui.state.ProgressBar
 
 @Composable
 fun CompoundCircularProgressBar(

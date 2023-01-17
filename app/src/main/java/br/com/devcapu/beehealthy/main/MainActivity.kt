@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.main.ui
+package br.com.devcapu.beehealthy.main
 
 import android.content.Context
 import android.content.Intent
@@ -11,14 +11,14 @@ import br.com.devcapu.beehealthy.common.JsonUtil
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
+import br.com.devcapu.beehealthy.diary.ui.DiaryViewModel
 import br.com.devcapu.beehealthy.food.add.AddFoodViewModel
-import br.com.devcapu.beehealthy.main.ui.navigation.MainNavigationGraph
 
 class MainActivity : ComponentActivity() {
 
-    private val homeViewModel: HomeViewModel by viewModels {
+    private val homeViewModel: DiaryViewModel by viewModels {
         val patientRepository = PatientRepository(BeeHealthyDatabase.getInstance(this).patientDao())
-        HomeViewModel.Factory(patientRepository)
+        DiaryViewModel.Factory(patientRepository)
     }
 
     private val addFoodViewModel: AddFoodViewModel by viewModels {

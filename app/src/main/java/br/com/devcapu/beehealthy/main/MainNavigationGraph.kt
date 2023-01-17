@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.main.ui.navigation
+package br.com.devcapu.beehealthy.main
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -6,8 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.food.add.AddFoodViewModel
 import br.com.devcapu.beehealthy.food.add.screen.AddFoodScreen
-import br.com.devcapu.beehealthy.main.ui.HomeViewModel
-import br.com.devcapu.beehealthy.main.ui.screen.MainScreen
+import br.com.devcapu.beehealthy.diary.ui.DiaryViewModel
 
 sealed class MainScreens(val screen_route: String) {
     object HomeScreen : MainScreens("home_screen")
@@ -16,7 +15,7 @@ sealed class MainScreens(val screen_route: String) {
 
 @Composable
 fun MainNavigationGraph(
-    homeViewModel: HomeViewModel,
+    homeViewModel: DiaryViewModel,
     addFoodViewModel: AddFoodViewModel,
 ) {
     val mainNavController = rememberNavController()

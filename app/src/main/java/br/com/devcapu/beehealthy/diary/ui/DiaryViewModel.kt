@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.main.ui
+package br.com.devcapu.beehealthy.diary.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,19 +10,19 @@ import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.food.nutrition.state.CaloriesUiState
 import br.com.devcapu.beehealthy.food.nutrition.state.MacroUiState
 import br.com.devcapu.beehealthy.food.nutrition.state.MacrosUiState
-import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
+import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val patientRepository: PatientRepository) : ViewModel() {
+class DiaryViewModel(private val patientRepository: PatientRepository) : ViewModel() {
 
     private val loginRepository = LoginRepository()
     private val firebaseAuth = FirebaseAuth.getInstance()
 
-    private var _state = MutableStateFlow(HomeUIState())
-    val state: StateFlow<HomeUIState> = _state
+    private var _state = MutableStateFlow(DiaryUiState())
+    val state: StateFlow<DiaryUiState> = _state
 
     init {
         firebaseAuth.currentUser?.email?.let {
@@ -62,7 +62,7 @@ class HomeViewModel(private val patientRepository: PatientRepository) : ViewMode
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeViewModel(patientRepository = patientRepository) as T
+            return DiaryViewModel(patientRepository = patientRepository) as T
         }
     }
 }

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeeHealthy">
         <activity
-            android:name="br.com.devcapu.beehealthy.main.ui.MainActivity"
+            android:name="br.com.devcapu.beehealthy.main.MainActivity"
             android:theme="@style/Theme.BeeHealthy" />
 
         <activity

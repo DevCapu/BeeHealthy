@@ -26,7 +26,7 @@ import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.common.ui.theme.Carme
 import br.com.devcapu.beehealthy.food.nutrition.components.NutritionStats
 import br.com.devcapu.beehealthy.food.nutrition.state.CaloriesUiState
-import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
+import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
 
 @Composable
 fun BeeCard(
@@ -99,7 +99,7 @@ fun CardPreview() {
             },
             body = {
                 NutritionStats(
-                    uiState = HomeUIState(
+                    uiState = DiaryUiState(
                         caloriesUiState = CaloriesUiState(
                             consumedCalories = "659",
                             remainingCalories = "1245",

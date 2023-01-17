@@ -17,7 +17,7 @@ import br.com.devcapu.beehealthy.common.data.repository.HealthRepository
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
-import br.com.devcapu.beehealthy.main.ui.MainActivity
+import br.com.devcapu.beehealthy.main.MainActivity
 import kotlinx.coroutines.launch
 
 class RegisterActivity : ComponentActivity() {

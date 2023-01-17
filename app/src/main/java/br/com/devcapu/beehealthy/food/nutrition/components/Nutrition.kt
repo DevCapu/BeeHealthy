@@ -24,11 +24,11 @@ import br.com.devcapu.beehealthy.common.ui.theme.Protein
 import br.com.devcapu.beehealthy.food.nutrition.state.CaloriesUiState
 import br.com.devcapu.beehealthy.food.nutrition.state.MacroUiState
 import br.com.devcapu.beehealthy.food.nutrition.state.MacrosUiState
-import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
+import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
 
 
 @Composable
-fun NutritionStats(uiState: HomeUIState) {
+fun NutritionStats(uiState: DiaryUiState) {
     Column(Modifier.fillMaxWidth()) {
         CaloriesConsumption(uiState = uiState.caloriesUiState)
         MacroRow(uiState.macrosUiState)

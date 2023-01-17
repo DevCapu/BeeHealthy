@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.main.ui.screen
+package br.com.devcapu.beehealthy.main
 
 import android.content.Context
 import android.content.Intent
@@ -22,13 +22,13 @@ import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.authentication.login.ui.LoginActivity
 import br.com.devcapu.beehealthy.common.ui.component.TopBar
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.main.ui.HomeViewModel
-import br.com.devcapu.beehealthy.main.ui.navigation.BottomNavigationGraph
-import br.com.devcapu.beehealthy.main.ui.state.HomeUIState
+import br.com.devcapu.beehealthy.diary.ui.DiaryViewModel
+import br.com.devcapu.beehealthy.diary.ui.navigation.BottomNavigationGraph
+import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
 
 @Composable
 fun MainScreen(
-    viewModel: HomeViewModel = viewModel(),
+    viewModel: DiaryViewModel = viewModel(),
     mainNavController: NavHostController,
 ) {
     val state by viewModel.state.collectAsState()
@@ -40,7 +40,7 @@ fun MainScreen(
 
 @Composable
 fun MainScreen(
-    state: HomeUIState,
+    state: DiaryUiState,
     mainNavController: NavHostController
 ) {
     val context = LocalContext.current
@@ -85,7 +85,7 @@ private fun logout(context: Context) {
 fun MainsScreenPreview() {
     BeeHealthyTheme {
         MainScreen(
-            state = HomeUIState(),
+            state = DiaryUiState(),
             mainNavController = rememberNavController()
         )
     }
