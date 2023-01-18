@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.ModalBottomSheetValue.Expanded
 import androidx.compose.material.ModalBottomSheetValue.Hidden
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,33 +22,17 @@ import br.com.devcapu.beehealthy.food.add.components.AppBar
 import br.com.devcapu.beehealthy.food.add.state.AddFoodUiState
 import kotlinx.coroutines.launch
 
-@Composable
-fun AddFoodScreen(
-    viewModel: AddFoodViewModel = viewModel(),
-    mainNavController: NavController
-) {
-    val uiState by viewModel.state.collectAsState()
-    AddFoodScreen(
-        uiState = uiState,
-        mainNavController = mainNavController
-    )
-}
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AddFoodScreen(
-    uiState: AddFoodUiState,
-    mainNavController: NavController
+    viewModel: AddFoodViewModel = viewModel(),
+    mainNavController: NavController,
 ) {
+    val uiState by viewModel.state.collectAsState()
     val sheetState = rememberModalBottomSheetState(initialValue = Hidden)
     val scope = rememberCoroutineScope()
-    ModalBottomSheetLayout(
-        sheetState = sheetState,
-        sheetElevation = 8.dp,
-        sheetShape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-        sheetContent = { AddFoodBottomSheet() },
-        sheetBackgroundColor = MaterialTheme.colors.surface,
-        sheetContentColor = MaterialTheme.colors.onSurface,
+
+    AddFoodScreen(
         content = {
             Scaffold(
                 backgroundColor = MaterialTheme.colors.background,
@@ -55,26 +40,57 @@ fun AddFoodScreen(
                 topBar = { AppBar { mainNavController.popBackStack() } },
             ) {
                 FoodListWithSearch(uiState = uiState) {
-                    scope.launch {
-                        sheetState.show()
-                    }
+                    scope.launch { sheetState.show() }
                 }
             }
-        }
+        },
+        bottomSheet = { AddFoodBottomSheet { } },
+        sheetState = sheetState
     )
 }
 
-@Preview(showSystemUi = true, )
-@Preview(
-    showSystemUi = true,
-    uiMode = UI_MODE_NIGHT_YES
-)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AddFoodScreenPreview() {
+fun AddFoodScreen(
+    content: @Composable () -> Unit,
+    bottomSheet: @Composable () -> Unit,
+    sheetState: ModalBottomSheetState,
+) {
+    ModalBottomSheetLayout(
+        sheetState = sheetState,
+        sheetElevation = 8.dp,
+        sheetShape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+        sheetContent = { bottomSheet() },
+        sheetBackgroundColor = MaterialTheme.colors.surface,
+        sheetContentColor = MaterialTheme.colors.onSurface,
+        content = { content() }
+    )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun AddFoodScreenWithouthBottomSheetPreview() {
     BeeHealthyTheme {
         AddFoodScreen(
-            uiState = AddFoodUiState(),
-            mainNavController = rememberNavController()
+            content = { FoodListWithSearch(uiState = AddFoodUiState()) { } },
+            bottomSheet = { AddFoodBottomSheet { } },
+            sheetState = rememberModalBottomSheetState(initialValue = Hidden)
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun AddFoodScreenWithBottomSheetPreview() {
+    BeeHealthyTheme {
+        AddFoodScreen(
+            content = { FoodListWithSearch(uiState = AddFoodUiState()) { } },
+            bottomSheet = { AddFoodBottomSheet { } },
+            sheetState = rememberModalBottomSheetState(initialValue = Expanded)
         )
     }
 }

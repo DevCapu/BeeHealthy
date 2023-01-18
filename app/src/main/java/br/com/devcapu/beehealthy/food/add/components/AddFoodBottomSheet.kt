@@ -26,7 +26,9 @@ import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.theme.*
 
 @Composable
-fun AddFoodBottomSheet() {
+fun AddFoodBottomSheet(
+    onClickAdd: () -> Unit
+) {
     Column(
         modifier = Modifier
             .background(MaterialTheme.colors.surface)
@@ -41,7 +43,7 @@ fun AddFoodBottomSheet() {
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),
             elevation = ButtonDefaults.elevation(8.dp),
-            onClick = { /*TODO*/ }
+            onClick = onClickAdd
         ) {
             Text(
                 modifier = Modifier.padding(4.dp),
@@ -182,6 +184,6 @@ private fun FoodProperty(
 @Composable
 fun AddFoodBottomSheetPreview() {
     BeeHealthyTheme {
-        AddFoodBottomSheet()
+        AddFoodBottomSheet { }
     }
 }
