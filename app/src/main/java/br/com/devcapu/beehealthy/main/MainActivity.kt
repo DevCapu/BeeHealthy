@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        configureLifecyclerObservers()
+        configureLifecycleObservers()
 
         setContent {
             BeeHealthyTheme {
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun configureLifecyclerObservers() {
+    private fun configureLifecycleObservers() {
         lifecycleScope.launchWhenCreated {
             diaryViewModel.findAllCategories(
                 getJsonFromAssets(this@MainActivity, "categoryList.json")!!
