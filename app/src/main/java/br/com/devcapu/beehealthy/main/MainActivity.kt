@@ -8,6 +8,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import br.com.devcapu.beehealthy.common.JsonUtil.Companion.getJsonFromAssets
+import br.com.devcapu.beehealthy.common.data.datasource.LocalFoodDataSource
+import br.com.devcapu.beehealthy.common.data.repository.FoodRepository
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
@@ -18,12 +20,18 @@ import br.com.devcapu.beehealthy.main.navigation.MainNavigationGraph
 class MainActivity : ComponentActivity() {
 
     private val diaryViewModel: DiaryViewModel by viewModels {
-        val patientRepository = PatientRepository(BeeHealthyDatabase.getInstance(this).patientDao())
+        val database = BeeHealthyDatabase.getInstance(this)
+        val patientRepository = PatientRepository(database.patientDao())
         DiaryViewModel.Factory(patientRepository)
     }
 
     private val addFoodViewModel: AddFoodViewModel by viewModels {
-        AddFoodViewModel.Factory()
+        val database = BeeHealthyDatabase.getInstance(this)
+        val foodRepository = FoodRepository(
+            databaseFoodDataSource = database.ingestedFoodDao(),
+            localFoodDataSource = LocalFoodDataSource()
+        )
+        AddFoodViewModel.Factory(foodRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

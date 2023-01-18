@@ -11,7 +11,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -22,8 +21,6 @@ import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.food.add.components.Food
 import br.com.devcapu.beehealthy.food.add.state.AddFoodUiState
 import br.com.devcapu.beehealthy.food.add.state.FoodUiState
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 @Composable
 fun FoodListWithSearch(uiState: AddFoodUiState, onClick: (FoodUiState) -> Unit) {
@@ -38,7 +35,7 @@ fun FoodListWithSearch(uiState: AddFoodUiState, onClick: (FoodUiState) -> Unit) 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = uiState.searchedFood,
-                onValueChange = uiState.onSearchedFood,
+                onValueChange = uiState.onSearchedFoodChange,
                 trailingIcon = {
                     Icon(imageVector = Icons.Default.Search, contentDescription = null)
                 },

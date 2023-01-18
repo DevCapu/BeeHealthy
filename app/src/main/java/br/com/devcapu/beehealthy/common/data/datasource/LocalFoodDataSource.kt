@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.common.data.datasource
 
+import br.com.devcapu.beehealthy.common.domain.model.Food
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -11,10 +12,4 @@ class LocalFoodDataSource {
         return gson.fromJson(foodAsJSONString, foodListType)
     }
 
-    data class Food(
-        val id: String,
-        val description: String,
-        val base_qty: String,
-        val base_unit: String,
-    )
 }

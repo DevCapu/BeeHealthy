@@ -4,12 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import br.com.devcapu.beehealthy.common.data.datasource.DatabaseFoodDataSource
 import br.com.devcapu.beehealthy.common.data.datasource.HealthResultDAO
 import br.com.devcapu.beehealthy.common.data.datasource.PatientDAO
 import br.com.devcapu.beehealthy.common.data.model.BodyCalorieNeedsEntity
+import br.com.devcapu.beehealthy.common.data.model.IngestedFoodEntity
 import br.com.devcapu.beehealthy.common.data.model.PatientEntity
 
-@Database(entities = [PatientEntity::class, BodyCalorieNeedsEntity::class], version = 1)
+@Database(entities = [
+    PatientEntity::class,
+    BodyCalorieNeedsEntity::class,
+    IngestedFoodEntity::class
+], version = 1)
 abstract class BeeHealthyDatabase : RoomDatabase() {
     companion object {
         private const val DATABASE_NAME = "beeHealthy.db"
@@ -26,4 +32,5 @@ abstract class BeeHealthyDatabase : RoomDatabase() {
 
     abstract fun patientDao(): PatientDAO
     abstract fun healthResultDao(): HealthResultDAO
+    abstract fun ingestedFoodDao(): DatabaseFoodDataSource
 }

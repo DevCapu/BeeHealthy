@@ -4,7 +4,6 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.ModalBottomSheetValue.Expanded
 import androidx.compose.material.ModalBottomSheetValue.Hidden
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,12 +13,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import br.com.devcapu.beehealthy.common.domain.model.Food
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.food.add.AddFoodViewModel
 import br.com.devcapu.beehealthy.food.add.components.AddFoodBottomSheet
 import br.com.devcapu.beehealthy.food.add.components.AppBar
 import br.com.devcapu.beehealthy.food.add.state.AddFoodUiState
+import br.com.devcapu.beehealthy.food.add.state.FoodUiState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -35,16 +35,14 @@ fun AddFoodScreen(
     AddFoodScreen(
         content = {
             Scaffold(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.onBackground,
-                topBar = { AppBar { mainNavController.popBackStack() } },
+                topBar = { AppBar { mainNavController.popBackStack() } }
             ) {
                 FoodListWithSearch(uiState = uiState) {
                     scope.launch { sheetState.show() }
                 }
             }
         },
-        bottomSheet = { AddFoodBottomSheet { } },
+        bottomSheet = { AddFoodBottomSheet { viewModel.addFood(FoodUiState()) } },
         sheetState = sheetState
     )
 }
@@ -77,20 +75,6 @@ fun AddFoodScreenWithouthBottomSheetPreview() {
             content = { FoodListWithSearch(uiState = AddFoodUiState()) { } },
             bottomSheet = { AddFoodBottomSheet { } },
             sheetState = rememberModalBottomSheetState(initialValue = Hidden)
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Preview(showSystemUi = true)
-@Preview(showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun AddFoodScreenWithBottomSheetPreview() {
-    BeeHealthyTheme {
-        AddFoodScreen(
-            content = { FoodListWithSearch(uiState = AddFoodUiState()) { } },
-            bottomSheet = { AddFoodBottomSheet { } },
-            sheetState = rememberModalBottomSheetState(initialValue = Expanded)
         )
     }
 }
