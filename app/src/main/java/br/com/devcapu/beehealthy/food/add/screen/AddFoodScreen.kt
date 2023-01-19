@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import br.com.devcapu.beehealthy.common.domain.model.Food
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.food.add.AddFoodViewModel
 import br.com.devcapu.beehealthy.food.add.components.AddFoodBottomSheet
@@ -38,11 +37,19 @@ fun AddFoodScreen(
                 topBar = { AppBar { mainNavController.popBackStack() } }
             ) {
                 FoodListWithSearch(uiState = uiState) {
+                    viewModel.selectedFood(it)
                     scope.launch { sheetState.show() }
                 }
             }
         },
-        bottomSheet = { AddFoodBottomSheet { viewModel.addFood(FoodUiState()) } },
+        bottomSheet = {
+            AddFoodBottomSheet(uiState = uiState.selectedFood) {
+                viewModel.addFood(uiState.selectedFood)
+                scope.launch {
+                    sheetState.hide()
+                }
+            }
+        },
         sheetState = sheetState
     )
 }
@@ -73,7 +80,7 @@ fun AddFoodScreenWithouthBottomSheetPreview() {
     BeeHealthyTheme {
         AddFoodScreen(
             content = { FoodListWithSearch(uiState = AddFoodUiState()) { } },
-            bottomSheet = { AddFoodBottomSheet { } },
+            bottomSheet = { AddFoodBottomSheet(uiState = FoodUiState()) { } },
             sheetState = rememberModalBottomSheetState(initialValue = Hidden)
         )
     }

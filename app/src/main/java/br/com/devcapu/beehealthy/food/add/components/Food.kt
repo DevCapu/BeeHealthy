@@ -25,6 +25,7 @@ import br.com.devcapu.beehealthy.common.ui.theme.Carbohyd
 import br.com.devcapu.beehealthy.common.ui.theme.Fats
 import br.com.devcapu.beehealthy.common.ui.theme.Protein
 import br.com.devcapu.beehealthy.food.add.state.FoodUiState
+import kotlin.math.roundToInt
 
 @Composable
 fun Food(
@@ -58,25 +59,25 @@ fun Food(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Chip(
-                    text = "${uiState.calories} kcal",
+                    text = "${uiState.calories.toDouble().roundToInt()} kcal",
                     backgroundColor = MaterialTheme.colors.primary,
                     contentColor = contentColorFor(backgroundColor = MaterialTheme.colors.primary)
                 )
 
                 Chip(
-                    text = "${uiState.carbohydrates}g",
+                    text = "${uiState.carbohydrates.toDouble().roundToInt()}g",
                     backgroundColor = Carbohyd,
                     contentColor = contentColorFor(backgroundColor = Carbohyd)
                 )
 
                 Chip(
-                    text = "${uiState.proteins}g",
+                    text = "${uiState.proteins.toDouble().roundToInt()}g",
                     backgroundColor = Protein,
                     contentColor = contentColorFor(backgroundColor = Protein)
                 )
 
                 Chip(
-                    text = "${uiState.fats}g",
+                    text = "${uiState.fats.toDouble().roundToInt()}g",
                     backgroundColor = Fats,
                     contentColor = contentColorFor(backgroundColor = Fats)
                 )

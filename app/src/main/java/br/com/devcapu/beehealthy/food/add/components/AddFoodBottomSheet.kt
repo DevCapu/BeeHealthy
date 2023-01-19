@@ -1,6 +1,7 @@
 package br.com.devcapu.beehealthy.food.add.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -24,9 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.theme.*
+import br.com.devcapu.beehealthy.food.add.state.FoodUiState
+import kotlin.math.roundToInt
 
 @Composable
 fun AddFoodBottomSheet(
+    uiState: FoodUiState,
     onClickAdd: () -> Unit
 ) {
     Column(
@@ -35,9 +39,21 @@ fun AddFoodBottomSheet(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        FoodNameWithStar()
+        FoodNameWithStar(name = uiState.name)
         QuantityIngested()
-        FoodPropertiesGrid()
+        if (uiState.calories.isEmpty()) {
+            Log.e("EMPTY_CALORIE", uiState.name)
+            println(uiState)
+            println()
+            println()
+            println()
+        }
+        FoodPropertiesGrid(
+            calories = uiState.calories,
+            carbohydrate = uiState.carbohydrates,
+            protein = uiState.proteins,
+            fats = uiState.fats
+        )
 
         Button(
             modifier = Modifier.fillMaxWidth(),
@@ -58,11 +74,11 @@ fun AddFoodBottomSheet(
 }
 
 @Composable
-private fun FoodNameWithStar() {
+private fun FoodNameWithStar(name: String) {
     Box(modifier = Modifier.fillMaxWidth()) {
         Text(
             modifier = Modifier.align(Alignment.Center),
-            text = stringResource(R.string.food_label),
+            text = name,
             fontSize = 22.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = Carme,
@@ -90,7 +106,12 @@ private fun QuantityIngested() {
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
-private fun FoodPropertiesGrid() {
+private fun FoodPropertiesGrid(
+    calories: String,
+    carbohydrate: String,
+    protein: String,
+    fats: String
+) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -100,7 +121,7 @@ private fun FoodPropertiesGrid() {
             FoodProperty(
                 icon = painterResource(id = R.drawable.calories),
                 label = stringResource(id = R.string.calories_label),
-                value = "150 kcal",
+                value = "${calories.toDouble().roundToInt()} kcal",
                 tintColor = MaterialTheme.colors.primary
             )
         }
@@ -108,7 +129,7 @@ private fun FoodPropertiesGrid() {
             FoodProperty(
                 icon = painterResource(id = R.drawable.carbs),
                 label = stringResource(id = R.string.carbohyd_label),
-                value = "4g",
+                value = "${carbohydrate.toDouble().roundToInt()}g",
                 tintColor = Carbohyd
             )
         }
@@ -117,7 +138,7 @@ private fun FoodPropertiesGrid() {
             FoodProperty(
                 icon = painterResource(id = R.drawable.fat),
                 label = stringResource(id = R.string.fat_label),
-                value = "7g",
+                value = "${fats.toDouble().roundToInt()}g",
                 tintColor = Fats
             )
         }
@@ -126,7 +147,7 @@ private fun FoodPropertiesGrid() {
             FoodProperty(
                 icon = painterResource(id = R.drawable.protein),
                 label = stringResource(id = R.string.protein_label),
-                value = "12g",
+                value = "${protein.toDouble().roundToInt()}g",
                 tintColor = Protein
             )
         }
@@ -184,6 +205,6 @@ private fun FoodProperty(
 @Composable
 fun AddFoodBottomSheetPreview() {
     BeeHealthyTheme {
-        AddFoodBottomSheet { }
+        AddFoodBottomSheet(uiState = FoodUiState()) { }
     }
 }

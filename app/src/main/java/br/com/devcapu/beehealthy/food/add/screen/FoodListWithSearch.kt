@@ -55,7 +55,7 @@ fun FoodListWithSearch(uiState: AddFoodUiState, onClick: (FoodUiState) -> Unit) 
             )
         }
 
-        uiState.foodListUiState.forEach {
+        uiState.searchedFoodUiState.forEach {
             item {
                 Food(
                     uiState = it,
