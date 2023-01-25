@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import br.com.devcapu.beehealthy.authentication.register.data.RegisterRepository
 import br.com.devcapu.beehealthy.authentication.register.ui.screen.OnboardSteps.*
 import br.com.devcapu.beehealthy.authentication.register.ui.state.RegisterUIState
-import br.com.devcapu.beehealthy.authentication.register.ui.state.StepUIState
 import br.com.devcapu.beehealthy.authentication.register.useCase.SavePatient
 import br.com.devcapu.beehealthy.common.data.repository.HealthRepository
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
@@ -21,9 +20,6 @@ class RegisterViewModel(
 
     private var _uiState = MutableStateFlow(RegisterUIState())
     val uiState: StateFlow<RegisterUIState> = _uiState
-
-    private var _stepState = MutableStateFlow(StepUIState())
-    val stepState: StateFlow<StepUIState> = _stepState
 
     private val registerRepository = RegisterRepository()
 
@@ -60,31 +56,10 @@ class RegisterViewModel(
                 onObjectiveChanged = {
                     _uiState.value = _uiState.value.copy(objective = it)
                 },
-                onGoToNextStep = { _stepState.value.onGoToNextStep() }
             )
-
-        _stepState.value = _stepState.value.copy(
-            onGoToNextStep = {
-                when (_stepState.value.step) {
-                    AUTHENTICATION_REGISTER -> {
-                        _stepState.value = _stepState.value.copy(step = USER_REGISTER_FORM)
-                    }
-                    USER_REGISTER_FORM -> {
-                        _stepState.value = _stepState.value.copy(step = BIOLOGICAL_GENDER_SELECTION)
-                    }
-                    BIOLOGICAL_GENDER_SELECTION -> {
-                        _stepState.value = _stepState.value.copy(step = OBJECTIVE_SELECTION)
-                    }
-                    OBJECTIVE_SELECTION -> {
-                        _stepState.value = _stepState.value.copy(step = ACTIVITY_LEVEL_SELECTION)
-                    }
-                    ACTIVITY_LEVEL_SELECTION -> savePatient()
-                }
-            }
-        )
     }
 
-    private fun savePatient() {
+    fun savePatient() {
         val patient = Patient(
             name = _uiState.value.name,
             email = Email(_uiState.value.email),

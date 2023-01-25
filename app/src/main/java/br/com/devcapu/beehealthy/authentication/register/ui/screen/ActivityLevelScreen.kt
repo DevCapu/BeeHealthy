@@ -20,13 +20,22 @@ import br.com.devcapu.beehealthy.common.ui.component.SelectionTitle
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 
 @Composable
-fun ActivityLevelSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
+fun ActivityLevelSelectionScreen(
+    viewModel: RegisterViewModel = viewModel(),
+    onClickNextStep: () -> Unit
+) {
     val state by viewModel.uiState.collectAsState()
-    ActivityLevelSelectionScreen(state = state)
+    ActivityLevelSelectionScreen(
+        state = state,
+        onClickNextStep = onClickNextStep
+    )
 }
 
 @Composable
-fun ActivityLevelSelectionScreen(state: RegisterUIState) = Column(
+fun ActivityLevelSelectionScreen(
+    state: RegisterUIState,
+    onClickNextStep: () -> Unit
+)= Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
     modifier = Modifier
@@ -81,7 +90,7 @@ fun ActivityLevelSelectionScreen(state: RegisterUIState) = Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 16.dp),
-        onClick = state.onGoToNextStep,
+        onClick = onClickNextStep,
         shape = RoundedCornerShape(4.dp),
     ) { Text(text = stringResource(id = R.string.next_step)) }
 }
@@ -90,6 +99,6 @@ fun ActivityLevelSelectionScreen(state: RegisterUIState) = Column(
 @Composable
 fun ActivityLevelScreenPreview() {
     BeeHealthyTheme {
-        ActivityLevelSelectionScreen(RegisterUIState())
+        ActivityLevelSelectionScreen(RegisterUIState()) { }
     }
 }

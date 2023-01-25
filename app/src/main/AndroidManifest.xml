@@ -15,7 +15,8 @@
 
         <activity
             android:name="br.com.devcapu.beehealthy.authentication.login.ui.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +26,8 @@
 
         <activity
             android:name="br.com.devcapu.beehealthy.authentication.register.ui.RegisterActivity"
-            android:theme="@style/Theme.BeeHealthy" />
+            android:theme="@style/Theme.BeeHealthy"
+            android:windowSoftInputMode="adjustResize"
+            />
     </application>
 </manifest>

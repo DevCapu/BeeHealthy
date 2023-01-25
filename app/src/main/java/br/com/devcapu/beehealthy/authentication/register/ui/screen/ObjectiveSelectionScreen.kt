@@ -20,13 +20,22 @@ import br.com.devcapu.beehealthy.common.ui.component.SelectionTitle
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 
 @Composable
-fun ObjectiveSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
+fun ObjectiveSelectionScreen(
+    viewModel: RegisterViewModel = viewModel(),
+    onClickNextStep: () -> Unit
+) {
     val state by viewModel.uiState.collectAsState()
-    ObjectiveSelectionContent(state = state)
+    ObjectiveSelectionContent(
+        state = state,
+        onClickNextStep = onClickNextStep
+    )
 }
 
 @Composable
-fun ObjectiveSelectionContent(state: RegisterUIState) = Column(
+fun ObjectiveSelectionContent(
+    state: RegisterUIState,
+    onClickNextStep: () -> Unit
+) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
     modifier = Modifier
@@ -72,7 +81,7 @@ fun ObjectiveSelectionContent(state: RegisterUIState) = Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 16.dp),
-        onClick = state.onGoToNextStep,
+        onClick = onClickNextStep,
         shape = RoundedCornerShape(4.dp),
     ) {
         Text(text = stringResource(id = R.string.next_step))
@@ -83,6 +92,6 @@ fun ObjectiveSelectionContent(state: RegisterUIState) = Column(
 @Composable
 fun ObjectiveSelectionScreenPreview() {
     BeeHealthyTheme {
-        ObjectiveSelectionContent(RegisterUIState())
+        ObjectiveSelectionContent(RegisterUIState()) { }
     }
 }

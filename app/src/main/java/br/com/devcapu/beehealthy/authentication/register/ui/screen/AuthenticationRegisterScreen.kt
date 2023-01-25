@@ -30,13 +30,19 @@ import br.com.devcapu.beehealthy.common.ui.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.common.ui.extension.visualizationMode
 
 @Composable
-fun AuthRegisterScreen(viewModel: RegisterViewModel = viewModel()) {
+fun AuthRegisterScreen(
+    viewModel: RegisterViewModel = viewModel(),
+    onClickNextStep: () -> Unit
+) {
     val state by viewModel.uiState.collectAsState()
-    AuthRegisterScreen(state = state)
+    AuthRegisterScreen(state = state, onClickNextStep = onClickNextStep)
 }
 
 @Composable
-fun AuthRegisterScreen(state: RegisterUIState) = FormWithBeeHealthIdentity {
+fun AuthRegisterScreen(
+    state: RegisterUIState,
+    onClickNextStep: () -> Unit
+) = FormWithBeeHealthIdentity {
     var showPassword by remember { mutableStateOf(false) }
     val passwordVisualizationMode = VisualTransformation.visualizationMode(showPassword)
     val manager = LocalFocusManager.current
@@ -80,7 +86,7 @@ fun AuthRegisterScreen(state: RegisterUIState) = FormWithBeeHealthIdentity {
 
     Button(
         modifier = modifier,
-        onClick = state.onGoToNextStep,
+        onClick = onClickNextStep,
     ) {
         Text(text = stringResource(R.string.next_step))
     }
@@ -93,5 +99,5 @@ fun AuthRegisterScreen(state: RegisterUIState) = FormWithBeeHealthIdentity {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    AuthRegisterScreen(RegisterUIState())
+    AuthRegisterScreen(RegisterUIState()) { }
 }

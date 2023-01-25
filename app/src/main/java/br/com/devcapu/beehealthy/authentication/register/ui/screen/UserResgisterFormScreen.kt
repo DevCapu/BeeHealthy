@@ -19,13 +19,22 @@ import br.com.devcapu.beehealthy.authentication.register.ui.state.RegisterUIStat
 import br.com.devcapu.beehealthy.common.ui.component.FormWithBeeHealthIdentity
 
 @Composable
-fun UserRegisterScreen(viewModel: RegisterViewModel = viewModel()) {
+fun UserRegisterScreen(
+    viewModel: RegisterViewModel = viewModel(),
+    onClickNextStep: () -> Unit
+) {
     val state by viewModel.uiState.collectAsState()
-    UserRegisterScreen(state)
+    UserRegisterScreen(
+        state,
+        onClickNextStep = onClickNextStep
+    )
 }
 
 @Composable
-fun UserRegisterScreen(state: RegisterUIState) =
+fun UserRegisterScreen(
+    state: RegisterUIState,
+    onClickNextStep: () -> Unit
+) =
     FormWithBeeHealthIdentity {
         val defaultModifier = Modifier
             .padding(bottom = 16.dp)
@@ -60,7 +69,7 @@ fun UserRegisterScreen(state: RegisterUIState) =
         )
 
         Button(
-            onClick = state.onGoToNextStep,
+            onClick = onClickNextStep,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)
@@ -71,5 +80,5 @@ fun UserRegisterScreen(state: RegisterUIState) =
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun UserRegisterScreenPreview() {
-    UserRegisterScreen(RegisterUIState())
+    UserRegisterScreen(RegisterUIState()) { }
 }

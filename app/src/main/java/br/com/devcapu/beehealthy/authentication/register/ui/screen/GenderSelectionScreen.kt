@@ -33,13 +33,22 @@ import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.common.ui.theme.PrimaryFont
 
 @Composable
-fun GenderSelectionScreen(viewModel: RegisterViewModel = viewModel()) {
+fun GenderSelectionScreen(
+    viewModel: RegisterViewModel = viewModel(),
+    onClickNextStep: () -> Unit
+) {
     val state by viewModel.uiState.collectAsState()
-    GenderSelectionScreen(state = state)
+    GenderSelectionScreen(
+        state = state,
+        onClickNextStep = onClickNextStep
+    )
 }
 
 @Composable
-fun GenderSelectionScreen(state: RegisterUIState) = Column(
+fun GenderSelectionScreen(
+    state: RegisterUIState,
+    onClickNextStep: () -> Unit
+) = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
     modifier = Modifier.fillMaxSize()
@@ -90,7 +99,7 @@ fun GenderSelectionScreen(state: RegisterUIState) = Column(
         )
     }
 
-    Button(onClick = state.onGoToNextStep) {
+    Button(onClick = onClickNextStep) {
         Text(stringResource(id = R.string.next_step))
     }
 
@@ -135,6 +144,6 @@ fun GenderCard(icon: ImageVector, title: String, isSelected: Boolean, onClick: (
 @Composable
 fun SelectGenderPreview() {
     BeeHealthyTheme {
-        GenderSelectionScreen(RegisterUIState())
+        GenderSelectionScreen(RegisterUIState()) { }
     }
 }

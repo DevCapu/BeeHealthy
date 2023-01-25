@@ -7,12 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.LaunchedEffect
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.authentication.login.ui.LoginActivity
-import br.com.devcapu.beehealthy.authentication.register.ui.screen.*
-import br.com.devcapu.beehealthy.authentication.register.ui.screen.OnboardSteps.*
 import br.com.devcapu.beehealthy.common.data.repository.HealthRepository
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
@@ -31,45 +26,18 @@ class RegisterActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
-            val navController = rememberNavController()
-            LaunchedEffect(key1 = Unit) {
-                launch {
-                    viewModel.uiState.collect {
-                        if (it.finished) {
-                            goToHomeActivity()
+            BeeHealthyTheme {
+                LaunchedEffect(key1 = Unit) {
+                    launch {
+                        viewModel.uiState.collect {
+                            if (it.finished) {
+                                goToHomeActivity()
+                            }
                         }
                     }
                 }
-
-                launch {
-                    viewModel.stepState.collect {
-                        navController.navigate(it.step.name)
-                    }
-                }
-            }
-            BeeHealthyTheme {
-                NavHost(
-                    navController = navController,
-                    startDestination = AUTHENTICATION_REGISTER.name
-                ) {
-                    composable(AUTHENTICATION_REGISTER.name) {
-                        AuthRegisterScreen(viewModel)
-                    }
-                    composable(USER_REGISTER_FORM.name) {
-                        UserRegisterScreen(viewModel)
-                    }
-                    composable(BIOLOGICAL_GENDER_SELECTION.name) {
-                        GenderSelectionScreen(viewModel)
-                    }
-                    composable(OBJECTIVE_SELECTION.name) {
-                        ObjectiveSelectionScreen(viewModel)
-                    }
-                    composable(ACTIVITY_LEVEL_SELECTION.name) {
-                        ActivityLevelSelectionScreen(viewModel)
-                    }
-                }
+                RegistrationNavGraph(viewModel)
             }
         }
     }
