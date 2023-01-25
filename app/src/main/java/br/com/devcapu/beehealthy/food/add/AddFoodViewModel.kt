@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import br.com.devcapu.beehealthy.common.data.repository.FoodRepository
+import br.com.devcapu.beehealthy.common.data.repository.MealRepository
 import br.com.devcapu.beehealthy.common.domain.model.Food
 import br.com.devcapu.beehealthy.food.add.state.AddFoodUiState
 import br.com.devcapu.beehealthy.food.add.state.FoodUiState
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 
 class AddFoodViewModel(
     private val foodRepository: FoodRepository,
+    private val mealRepository: MealRepository,
 ) : ViewModel() {
 
     private var _state = MutableStateFlow(AddFoodUiState())
@@ -77,12 +79,20 @@ class AddFoodViewModel(
         }
     }
 
+    fun findMeal(mealId: String) {
+
+    }
+
     class Factory(
         private val foodRepository: FoodRepository,
+        private val mealRepository: MealRepository
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddFoodViewModel(foodRepository = foodRepository) as T
+            return AddFoodViewModel(
+                foodRepository = foodRepository,
+                mealRepository = mealRepository
+            ) as T
         }
     }
 }

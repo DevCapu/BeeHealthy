@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import br.com.devcapu.beehealthy.common.JsonUtil.Companion.getJsonFromAssets
 import br.com.devcapu.beehealthy.common.data.datasource.LocalFoodDataSource
 import br.com.devcapu.beehealthy.common.data.repository.FoodRepository
+import br.com.devcapu.beehealthy.common.data.repository.MealRepository
 import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
 import br.com.devcapu.beehealthy.common.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.config.BeeHealthyDatabase
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
             databaseFoodDataSource = database.ingestedFoodDao(),
             localFoodDataSource = LocalFoodDataSource()
         )
-        AddFoodViewModel.Factory(foodRepository)
+        AddFoodViewModel.Factory(foodRepository, MealRepository())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

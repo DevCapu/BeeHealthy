@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 fun AddFoodScreen(
     viewModel: AddFoodViewModel = viewModel(),
     mainNavController: NavController,
+    mealId: String,
 ) {
     val uiState by viewModel.state.collectAsState()
     val sheetState = rememberModalBottomSheetState(initialValue = Hidden)
