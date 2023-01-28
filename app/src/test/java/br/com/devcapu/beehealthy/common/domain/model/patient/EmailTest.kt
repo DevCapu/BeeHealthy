@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.common.domain.model.patient
 
+import br.com.devcapu.beehealthy.model.patient.Email
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test

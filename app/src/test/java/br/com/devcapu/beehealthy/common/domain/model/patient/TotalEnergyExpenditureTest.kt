@@ -1,8 +1,8 @@
 package br.com.devcapu.beehealthy.common.domain.model.patient
 
-import br.com.devcapu.beehealthy.common.domain.model.patient.health.ActivityLevel.*
-import br.com.devcapu.beehealthy.common.domain.model.patient.health.BasalEnergyExpenditure
-import br.com.devcapu.beehealthy.common.domain.model.patient.health.TotalEnergyExpenditure
+import br.com.devcapu.beehealthy.model.patient.health.ActivityLevel.*
+import br.com.devcapu.beehealthy.model.patient.health.BasalEnergyExpenditure
+import br.com.devcapu.beehealthy.model.patient.health.TotalEnergyExpenditure
 import org.junit.Assert
 import org.junit.Test
 

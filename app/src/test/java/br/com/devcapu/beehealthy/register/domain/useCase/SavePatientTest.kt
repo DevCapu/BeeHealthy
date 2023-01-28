@@ -1,10 +1,10 @@
 package br.com.devcapu.beehealthy.register.domain.useCase
 
-import br.com.devcapu.beehealthy.common.domain.model.patient.Patient
-import br.com.devcapu.beehealthy.common.data.repository.HealthRepository
-import br.com.devcapu.beehealthy.common.data.repository.PatientRepository
-import br.com.devcapu.beehealthy.authentication.register.data.RegisterRepository
-import br.com.devcapu.beehealthy.authentication.register.useCase.SavePatient
+import br.com.devcapu.beehealthy.model.patient.Patient
+import br.com.devcapu.beehealthy.repository.HealthRepository
+import br.com.devcapu.beehealthy.repository.PatientRepository
+import br.com.devcapu.beehealthy.repository.RegisterRepository
+import br.com.devcapu.beehealthy.usecase.SavePatient
 import io.mockk.coEvery
 import io.mockk.coVerifySequence
 import io.mockk.mockk
