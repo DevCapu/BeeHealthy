@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.food.add.components
+package br.com.devcapu.beehealthy.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +17,7 @@ import br.com.devcapu.beehealthy.theme.Carme
 @Composable
 fun AppBar(
     title: String,
+    date: String,
     onClickGoBack: () -> Unit
 ) {
     TopAppBar(
@@ -40,7 +41,7 @@ fun AppBar(
                 )
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Sexta feira 13",
+                    text = date,
                     textAlign = TextAlign.Center,
                     fontFamily = Carme,
                     color = contentColorFor(

@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.graph
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,6 +16,7 @@ sealed class RegistrationScreen(val route: String) {
     object ActivityLevelScreen : RegistrationScreen("activity_level_selection_screen")
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun RegistrationNavGraph(
     viewModel: RegisterViewModel

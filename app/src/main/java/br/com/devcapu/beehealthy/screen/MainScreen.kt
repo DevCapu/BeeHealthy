@@ -26,6 +26,7 @@ import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
 import br.com.devcapu.beehealthy.main.navigation.BottomNavigationGraph
 import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
 
+@ExperimentalMaterialApi
 @Composable
 fun MainScreen(
     viewModel: DiaryViewModel = viewModel(),
@@ -38,6 +39,7 @@ fun MainScreen(
     )
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun MainScreen(
     state: DiaryUiState,
@@ -73,12 +75,14 @@ fun MainScreen(
     }
 }
 
+@ExperimentalMaterialApi
 private fun logout(context: Context) {
     val intent = LoginActivity.getIntent(context)
     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
     context.startActivity(intent)
 }
 
+@ExperimentalMaterialApi
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable

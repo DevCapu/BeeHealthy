@@ -1,7 +1,6 @@
-package br.com.devcapu.beehealthy.food.add.screen
+package br.com.devcapu.beehealthy.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -11,16 +10,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import br.com.devcapu.beehealthy.uistate.UiState
 import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.viewmodel.AddFoodViewModel
 import br.com.devcapu.beehealthy.food.add.components.AddFoodBottomSheet
-import br.com.devcapu.beehealthy.food.add.components.AppBar
-import br.com.devcapu.beehealthy.food.add.state.AddFoodUiState
-import br.com.devcapu.beehealthy.food.add.state.FoodUiState
+import br.com.devcapu.beehealthy.component.AppBar
+import br.com.devcapu.beehealthy.component.FoodListWithSearch
+import br.com.devcapu.beehealthy.uistate.AddFoodUiState
+import br.com.devcapu.beehealthy.uistate.FoodUiState
+import br.com.devcapu.beehealthy.uistate.UiState.Loading
+import br.com.devcapu.beehealthy.uistate.UiState.Success
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
+@ExperimentalMaterialApi
 @Composable
 fun AddFoodScreen(
     viewModel: AddFoodViewModel = viewModel(),
@@ -31,26 +32,21 @@ fun AddFoodScreen(
     val scope = rememberCoroutineScope()
 
     when (uiState) {
-        is UiState.Loading -> {
-            val progress by remember { mutableStateOf(0.1f) }
-            val animatedProgress = animateFloatAsState(
-                targetValue = progress,
-                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
-            ).value
-
-            CircularProgressIndicator(progress = animatedProgress)
-        }
-        is UiState.Success -> {
-            val addFoodUiState = (uiState as UiState.Success).data
+        is Loading -> { LoadingScreen() }
+        is Success -> {
+            val addFoodUiState = (uiState as Success).data
             AddFoodScreen(
+                topBar = {
+                    AppBar(
+                        title = addFoodUiState.topBarTitle,
+                        date = addFoodUiState.topBarDate,
+                        onClickGoBack = { mainNavController.popBackStack() }
+                    )
+                },
                 content = {
-                    Scaffold(
-                        topBar = { AppBar(addFoodUiState.meal) { mainNavController.popBackStack() } }
-                    ) {
-                        FoodListWithSearch(uiState = addFoodUiState) {
-                            viewModel.selectedFood(it)
-                            scope.launch { sheetState.show() }
-                        }
+                    FoodListWithSearch(uiState = addFoodUiState) {
+                        viewModel.selectedFood(FoodUiState())
+                        scope.launch { sheetState.show() }
                     }
                 },
                 bottomSheet = {
@@ -64,15 +60,14 @@ fun AddFoodScreen(
                 sheetState = sheetState
             )
         }
-        is Error -> {
-            // Show error message
-        }
+        else -> { }
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@ExperimentalMaterialApi
 @Composable
 fun AddFoodScreen(
+    topBar: @Composable () -> Unit,
     content: @Composable () -> Unit,
     bottomSheet: @Composable () -> Unit,
     sheetState: ModalBottomSheetState,
@@ -84,17 +79,23 @@ fun AddFoodScreen(
         sheetContent = { bottomSheet() },
         sheetBackgroundColor = MaterialTheme.colors.surface,
         sheetContentColor = MaterialTheme.colors.onSurface,
-        content = { content() }
+        content = {
+            Scaffold(
+                topBar = { topBar() },
+                content = { content() }
+            )
+        }
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@ExperimentalMaterialApi
 @Preview(showSystemUi = true)
 @Preview(showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun AddFoodScreenWithouthBottomSheetPreview() {
     BeeHealthyTheme {
         AddFoodScreen(
+            topBar = { AppBar("Almoço", date = "Sexta-feira 13") { } },
             content = { FoodListWithSearch(uiState = AddFoodUiState()) { } },
             bottomSheet = { AddFoodBottomSheet(uiState = FoodUiState()) { } },
             sheetState = rememberModalBottomSheetState(initialValue = Hidden)

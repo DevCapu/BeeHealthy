@@ -24,7 +24,7 @@ import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.theme.Carbohyd
 import br.com.devcapu.beehealthy.theme.Fats
 import br.com.devcapu.beehealthy.theme.Protein
-import br.com.devcapu.beehealthy.food.add.state.FoodUiState
+import br.com.devcapu.beehealthy.uistate.FoodUiState
 import kotlin.math.roundToInt
 
 @Composable
@@ -111,7 +111,15 @@ private fun Chip(text: String, backgroundColor: Color, contentColor: Color) {
 fun FoodPreview() {
     BeeHealthyTheme {
         Food(
-            uiState = FoodUiState(),
+            uiState = FoodUiState(
+                id = 0,
+                name = "Avocado",
+                measure = "g",
+                calories = "136",
+                carbohydrates = "78",
+                proteins = "55",
+                fats = "16"
+            ),
             onClick = { }
         )
     }

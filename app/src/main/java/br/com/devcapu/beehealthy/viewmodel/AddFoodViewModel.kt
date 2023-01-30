@@ -7,8 +7,8 @@ import br.com.devcapu.beehealthy.repository.FoodRepository
 import br.com.devcapu.beehealthy.repository.MealRepository
 import br.com.devcapu.beehealthy.model.Food
 import br.com.devcapu.beehealthy.uistate.UiState
-import br.com.devcapu.beehealthy.food.add.state.AddFoodUiState
-import br.com.devcapu.beehealthy.food.add.state.FoodUiState
+import br.com.devcapu.beehealthy.uistate.AddFoodUiState
+import br.com.devcapu.beehealthy.uistate.FoodUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -91,7 +91,7 @@ class AddFoodViewModel(
             _uiState.value = UiState.Loading
             try {
                 val meal = mealRepository.findMeal(id = mealId)
-                _state.value = _state.value.copy(meal = meal.name)
+                _state.value = _state.value.copy(topBarTitle = meal.name)
                 _uiState.value = UiState.Success(_state.value)
             } catch (e: Exception) {
                 _uiState.value = UiState.Error(e.message)

@@ -1,9 +1,15 @@
-package br.com.devcapu.beehealthy.food.add.state
+package br.com.devcapu.beehealthy.uistate
+
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 data class AddFoodUiState(
-    val meal: String = "",
+    val topBarTitle: String = "",
+    val topBarDate: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEEE DD")).toString(),
+
     val searchedFood: String = "",
     val onSearchedFoodChange: (String) -> Unit = { },
+
     val allFoodsUiState: List<FoodUiState> = emptyList(),
     val searchedFoodUiState: List<FoodUiState> = emptyList(),
     val addFoodBottomSheetUiState: AddFoodBottomSheetUiState = AddFoodBottomSheetUiState(),

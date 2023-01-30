@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.LaunchedEffect
 import br.com.devcapu.beehealthy.dao.BeeHealthyDatabase
 import br.com.devcapu.beehealthy.graph.RegistrationNavGraph
@@ -15,6 +16,7 @@ import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
 import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 class RegisterActivity : ComponentActivity() {
     private val viewModel: RegisterViewModel by viewModels {
         val database = BeeHealthyDatabase.getInstance(this)

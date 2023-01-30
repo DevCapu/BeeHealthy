@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
@@ -29,12 +30,14 @@ import br.com.devcapu.beehealthy.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.common.ui.extension.visualizationMode
 import br.com.devcapu.beehealthy.viewmodel.LoginViewModel
 
+@ExperimentalMaterialApi
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
     val state by viewModel.uiState.collectAsState(initial = LoginUIState())
     LoginScreen(state = state)
 }
 
+@ExperimentalMaterialApi
 @Composable
 private fun LoginScreen(state: LoginUIState) = FormWithBeeHealthIdentity {
     var showPassword by remember { mutableStateOf(false) }
@@ -90,10 +93,12 @@ private fun LoginScreen(state: LoginUIState) = FormWithBeeHealthIdentity {
     }
 }
 
+@ExperimentalMaterialApi
 private fun goToRegisterActivity(context: Context) {
     context.startActivity(RegisterActivity.getIntent(context))
 }
 
+@ExperimentalMaterialApi
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun LoginScreenPreview() {

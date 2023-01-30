@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.lifecycleScope
 import br.com.devcapu.beehealthy.local.JsonUtil.Companion.getJsonFromAssets
 import br.com.devcapu.beehealthy.local.LocalFoodDataSource
@@ -18,6 +19,7 @@ import br.com.devcapu.beehealthy.graph.MainNavigationGraph
 import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
 import br.com.devcapu.beehealthy.viewmodel.AddFoodViewModel
 
+@ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
 
     private val diaryViewModel: DiaryViewModel by viewModels {

@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.food.add.state.FoodUiState
+import br.com.devcapu.beehealthy.uistate.FoodUiState
 import br.com.devcapu.beehealthy.theme.*
 import kotlin.math.roundToInt
 

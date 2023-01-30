@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.graph
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -10,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
 import br.com.devcapu.beehealthy.viewmodel.AddFoodViewModel
-import br.com.devcapu.beehealthy.food.add.screen.AddFoodScreen
+import br.com.devcapu.beehealthy.screen.AddFoodScreen
 import br.com.devcapu.beehealthy.main.MainScreen
 
 sealed class MainScreens(val screen_route: String) {
@@ -18,6 +19,7 @@ sealed class MainScreens(val screen_route: String) {
     object AddFoodScreen : MainScreens("add_food_screen")
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun MainNavigationGraph(
     homeViewModel: DiaryViewModel,

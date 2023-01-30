@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
@@ -29,6 +30,7 @@ import br.com.devcapu.beehealthy.component.OutlineInput
 import br.com.devcapu.beehealthy.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.common.ui.extension.visualizationMode
 
+@ExperimentalMaterialApi
 @Composable
 fun AuthRegisterScreen(
     viewModel: RegisterViewModel = viewModel(),
@@ -38,6 +40,7 @@ fun AuthRegisterScreen(
     AuthRegisterScreen(state = state, onClickNextStep = onClickNextStep)
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun AuthRegisterScreen(
     state: RegisterUIState,
@@ -96,6 +99,7 @@ fun AuthRegisterScreen(
     }
 }
 
+@ExperimentalMaterialApi
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
