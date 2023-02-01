@@ -24,6 +24,7 @@ fun OutlineInput(
     errorMessage: String = "",
     isShowingError: Boolean = false,
     placeholder: @Composable () -> Unit = { },
+    label: @Composable ()  -> Unit = { },
     trailingIcon: @Composable () -> Unit = { },
     visualTransformation: VisualTransformation = VisualTransformation.None,
     options: KeyboardOptions = KeyboardOptions.Default,
@@ -33,13 +34,14 @@ fun OutlineInput(
         value = value,
         onValueChange = onValueChange,
         placeholder = placeholder,
+        label = label,
         isError = isShowingError,
         trailingIcon = trailingIcon,
         visualTransformation = visualTransformation,
         modifier = Modifier.fillMaxWidth(),
         keyboardOptions = options,
         keyboardActions = actions,
-        textStyle = TextStyle(color = MaterialTheme.colors.onBackground)
+        textStyle = TextStyle(color = MaterialTheme.colors.onBackground),
     )
 
     if (isShowingError) {

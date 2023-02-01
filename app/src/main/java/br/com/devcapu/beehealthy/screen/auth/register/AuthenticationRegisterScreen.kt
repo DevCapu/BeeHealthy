@@ -1,17 +1,19 @@
 package br.com.devcapu.beehealthy.screen.auth.register
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection.Companion.Down
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.ImeAction.Companion.Next
@@ -23,12 +25,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
-import br.com.devcapu.beehealthy.uistate.RegisterUIState
-import br.com.devcapu.beehealthy.component.FormWithBeeHealthIdentity
+import br.com.devcapu.beehealthy.common.ui.extension.visualizationMode
 import br.com.devcapu.beehealthy.component.OutlineInput
 import br.com.devcapu.beehealthy.component.PasswordTrailingIcon
-import br.com.devcapu.beehealthy.common.ui.extension.visualizationMode
+import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
+import br.com.devcapu.beehealthy.uistate.RegisterUIState
+import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
 
 const val credentialScreenRoute = "credentialsRegistrationScreen"
 fun NavGraphBuilder.credentialsScreen(
@@ -38,7 +40,7 @@ fun NavGraphBuilder.credentialsScreen(
     composable(
         route = credentialScreenRoute
     ) {
-        val viewModel: RegisterViewModel = viewModel()
+        val viewModel: RegisterViewModel = viewModel(factory = RegisterViewModel.Factory)
         val uiState by viewModel.uiState.collectAsState()
         AuthRegisterScreen(
             state = uiState,
@@ -59,55 +61,74 @@ fun AuthRegisterScreen(
     onPasswordConfirmationChange: (String) -> Unit,
     onClickNextStep: () -> Unit,
     goToLogin: () -> Unit
-) = FormWithBeeHealthIdentity {
-    var showPassword by remember { mutableStateOf(false) }
-    val passwordVisualizationMode = VisualTransformation.visualizationMode(showPassword)
-    val manager = LocalFocusManager.current
-    val modifier = Modifier
-        .padding(bottom = 16.dp)
-        .fillMaxWidth()
-
-    OutlineInput(
-        modifier = modifier,
-        value = state.email,
-        onValueChange = onEmailChange,
-        placeholder = { Text(text = stringResource(R.string.email_label)) },
-        options = KeyboardOptions(keyboardType = Email, imeAction = Next),
-        actions = KeyboardActions(onNext = { manager.moveFocus(Down) })
-    )
-
-    OutlineInput(
-        modifier = modifier,
-        value = state.password,
-        onValueChange = onPasswordChange,
-        placeholder = { Text(text = stringResource(R.string.password_label)) },
-        visualTransformation = passwordVisualizationMode,
-        trailingIcon = { PasswordTrailingIcon(showPassword) { showPassword = !showPassword } },
-        options = KeyboardOptions(keyboardType = Email, imeAction = Next),
-        actions = KeyboardActions(onNext = { manager.moveFocus(Down) })
-    )
-
-    OutlineInput(
-        modifier = modifier,
-        value = state.passwordConfirmation,
-        onValueChange = onPasswordConfirmationChange,
-        placeholder = { Text(text = stringResource(R.string.confirm_password_label)) },
-        visualTransformation = passwordVisualizationMode,
-        options = KeyboardOptions(
-            keyboardType = Email, imeAction = ImeAction.Done
-        ),
-        actions = KeyboardActions(onNext = { manager.clearFocus() })
-    )
-
-    Button(
-        modifier = modifier,
-        onClick = onClickNextStep,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            .padding(32.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(R.string.next_step))
-    }
+        var showPassword by remember { mutableStateOf(false) }
+        val passwordVisualizationMode = VisualTransformation.visualizationMode(showPassword)
+        val manager = LocalFocusManager.current
+        val modifier = Modifier
+            .padding(bottom = 16.dp)
+            .fillMaxWidth()
 
-    TextButton(onClick = goToLogin) {
-        Text(text = stringResource(R.string.already_have_an_account))
+        Image(
+            painter = painterResource(id = R.drawable.beehealthylogo),
+            contentDescription = "Bee with a plus sign icon",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 16.dp)
+        )
+
+        OutlineInput(
+            modifier = modifier,
+            value = state.email,
+            onValueChange = onEmailChange,
+            placeholder = { Text(text = "example@mail.com") },
+            label = {  Text(text = stringResource(R.string.email_label)) },
+            trailingIcon = { Icon(imageVector = Icons.Default.MailOutline, contentDescription = null) },
+            options = KeyboardOptions(keyboardType = Email, imeAction = Next),
+            actions = KeyboardActions(onNext = { manager.moveFocus(Down) })
+        )
+
+        OutlineInput(
+            modifier = modifier,
+            value = state.password,
+            onValueChange = onPasswordChange,
+            label =  { Text(text = stringResource(R.string.password_label)) },
+            visualTransformation = passwordVisualizationMode,
+            trailingIcon = { PasswordTrailingIcon(showPassword) { showPassword = !showPassword } },
+            options = KeyboardOptions(keyboardType = Email, imeAction = Next),
+            actions = KeyboardActions(onNext = { manager.moveFocus(Down) })
+        )
+
+        OutlineInput(
+            modifier = modifier,
+            value = state.passwordConfirmation,
+            onValueChange = onPasswordConfirmationChange,
+            label =  { Text(text = stringResource(R.string.confirm_password_label)) },
+            visualTransformation = passwordVisualizationMode,
+            options = KeyboardOptions(
+                keyboardType = Email, imeAction = ImeAction.Done
+            ),
+            actions = KeyboardActions(onNext = { manager.clearFocus() })
+        )
+
+        Button(
+            modifier = modifier,
+            onClick = onClickNextStep,
+        ) {
+            Text(text = stringResource(R.string.next_step))
+        }
+
+        TextButton(onClick = goToLogin) {
+            Text(text = stringResource(R.string.already_have_an_account))
+        }
     }
 }
 
@@ -115,12 +136,14 @@ fun AuthRegisterScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    AuthRegisterScreen(
-        state = RegisterUIState(),
-        onEmailChange = { },
-        onPasswordChange = { },
-        onPasswordConfirmationChange = { },
-        onClickNextStep = { },
-        goToLogin = { }
-    )
+    BeeHealthyTheme {
+        AuthRegisterScreen(
+            state = RegisterUIState(),
+            onEmailChange = { },
+            onPasswordChange = { },
+            onPasswordConfirmationChange = { },
+            onClickNextStep = { },
+            goToLogin = { }
+        )
+    }
 }

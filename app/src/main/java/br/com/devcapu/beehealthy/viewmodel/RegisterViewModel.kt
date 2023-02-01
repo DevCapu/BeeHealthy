@@ -1,18 +1,21 @@
 package br.com.devcapu.beehealthy.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import br.com.devcapu.beehealthy.dao.BeeHealthyDatabase
+import br.com.devcapu.beehealthy.model.patient.Email
+import br.com.devcapu.beehealthy.model.patient.Patient
+import br.com.devcapu.beehealthy.repository.HealthRepository
+import br.com.devcapu.beehealthy.repository.PatientRepository
 import br.com.devcapu.beehealthy.repository.RegisterRepository
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.usecase.SavePatient
-import br.com.devcapu.beehealthy.repository.HealthRepository
-import br.com.devcapu.beehealthy.repository.PatientRepository
-import br.com.devcapu.beehealthy.model.patient.Email
-import br.com.devcapu.beehealthy.model.patient.Patient
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
 
 class RegisterViewModel(
     private val patientRepository: PatientRepository,
@@ -87,16 +90,16 @@ class RegisterViewModel(
         )
     }
 
-    class Factory(
-        private val patientRepository: PatientRepository,
-        private val healthRepository: HealthRepository,
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return RegisterViewModel(
-                patientRepository = patientRepository,
-                healthRepository = healthRepository
-            ) as T
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val context = (this[APPLICATION_KEY] as Context)
+                val database = BeeHealthyDatabase.getInstance(context)
+                RegisterViewModel(
+                    patientRepository = PatientRepository(database.patientDao()),
+                    healthRepository = HealthRepository(database.healthResultDao())
+                )
+            }
         }
     }
 }
