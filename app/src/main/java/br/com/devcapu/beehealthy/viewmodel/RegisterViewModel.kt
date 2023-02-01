@@ -3,15 +3,16 @@ package br.com.devcapu.beehealthy.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.devcapu.beehealthy.repository.RegisterRepository
-import br.com.devcapu.beehealthy.screen.OnboardSteps.*
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.usecase.SavePatient
 import br.com.devcapu.beehealthy.repository.HealthRepository
 import br.com.devcapu.beehealthy.repository.PatientRepository
 import br.com.devcapu.beehealthy.model.patient.Email
 import br.com.devcapu.beehealthy.model.patient.Patient
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
 class RegisterViewModel(
     private val patientRepository: PatientRepository,

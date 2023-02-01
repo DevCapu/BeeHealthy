@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.screen
+package br.com.devcapu.beehealthy.screen.auth.register
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,7 +11,6 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection.Companion.Down
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -21,8 +20,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.activity.LoginActivity
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.component.FormWithBeeHealthIdentity
@@ -30,26 +30,39 @@ import br.com.devcapu.beehealthy.component.OutlineInput
 import br.com.devcapu.beehealthy.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.common.ui.extension.visualizationMode
 
-@ExperimentalMaterialApi
-@Composable
-fun AuthRegisterScreen(
-    viewModel: RegisterViewModel = viewModel(),
-    onClickNextStep: () -> Unit
+const val credentialScreenRoute = "credentialsRegistrationScreen"
+fun NavGraphBuilder.credentialsScreen(
+    onGoToNextScreen: () ->Unit,
+    onGoToLogin: () -> Unit
 ) {
-    val state by viewModel.uiState.collectAsState()
-    AuthRegisterScreen(state = state, onClickNextStep = onClickNextStep)
+    composable(
+        route = credentialScreenRoute
+    ) {
+        val viewModel: RegisterViewModel = viewModel()
+        val uiState by viewModel.uiState.collectAsState()
+        AuthRegisterScreen(
+            state = uiState,
+            onEmailChange = uiState.onEmailChanged,
+            onPasswordChange = uiState.onPasswordChanged,
+            onPasswordConfirmationChange = uiState.onPasswordConfirmationChanged,
+            onClickNextStep = onGoToNextScreen,
+            goToLogin = onGoToLogin
+        )
+    }
 }
 
-@ExperimentalMaterialApi
 @Composable
 fun AuthRegisterScreen(
     state: RegisterUIState,
-    onClickNextStep: () -> Unit
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onPasswordConfirmationChange: (String) -> Unit,
+    onClickNextStep: () -> Unit,
+    goToLogin: () -> Unit
 ) = FormWithBeeHealthIdentity {
     var showPassword by remember { mutableStateOf(false) }
     val passwordVisualizationMode = VisualTransformation.visualizationMode(showPassword)
     val manager = LocalFocusManager.current
-    val context = LocalContext.current
     val modifier = Modifier
         .padding(bottom = 16.dp)
         .fillMaxWidth()
@@ -57,7 +70,7 @@ fun AuthRegisterScreen(
     OutlineInput(
         modifier = modifier,
         value = state.email,
-        onValueChange = state.onEmailChanged,
+        onValueChange = onEmailChange,
         placeholder = { Text(text = stringResource(R.string.email_label)) },
         options = KeyboardOptions(keyboardType = Email, imeAction = Next),
         actions = KeyboardActions(onNext = { manager.moveFocus(Down) })
@@ -66,7 +79,7 @@ fun AuthRegisterScreen(
     OutlineInput(
         modifier = modifier,
         value = state.password,
-        onValueChange = state.onPasswordChanged,
+        onValueChange = onPasswordChange,
         placeholder = { Text(text = stringResource(R.string.password_label)) },
         visualTransformation = passwordVisualizationMode,
         trailingIcon = { PasswordTrailingIcon(showPassword) { showPassword = !showPassword } },
@@ -77,12 +90,11 @@ fun AuthRegisterScreen(
     OutlineInput(
         modifier = modifier,
         value = state.passwordConfirmation,
-        onValueChange = state.onPasswordConfirmationChanged,
+        onValueChange = onPasswordConfirmationChange,
         placeholder = { Text(text = stringResource(R.string.confirm_password_label)) },
         visualTransformation = passwordVisualizationMode,
         options = KeyboardOptions(
-            keyboardType = Email,
-            imeAction = ImeAction.Done
+            keyboardType = Email, imeAction = ImeAction.Done
         ),
         actions = KeyboardActions(onNext = { manager.clearFocus() })
     )
@@ -94,7 +106,7 @@ fun AuthRegisterScreen(
         Text(text = stringResource(R.string.next_step))
     }
 
-    TextButton(onClick = { context.startActivity(LoginActivity.getIntent(context)) }) {
+    TextButton(onClick = goToLogin) {
         Text(text = stringResource(R.string.already_have_an_account))
     }
 }
@@ -103,5 +115,12 @@ fun AuthRegisterScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    AuthRegisterScreen(RegisterUIState()) { }
+    AuthRegisterScreen(
+        state = RegisterUIState(),
+        onEmailChange = { },
+        onPasswordChange = { },
+        onPasswordConfirmationChange = { },
+        onClickNextStep = { },
+        goToLogin = { }
+    )
 }

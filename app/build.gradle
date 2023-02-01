@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
     def room_version = "2.4.2"
     def nav_version = "2.5.3"
 
@@ -87,5 +88,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
 
     implementation 'com.google.code.gson:gson:2.9.0'
+
+    //Hilt
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
 }
 apply plugin: 'com.google.gms.google-services'

@@ -10,7 +10,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import br.com.devcapu.beehealthy.authentication.login.ui.LoginScreen
+import br.com.devcapu.beehealthy.screen.LoginScreen
 import br.com.devcapu.beehealthy.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
 
@@ -29,7 +29,7 @@ class LoginActivity : ComponentActivity() {
                 }
             }
         }
-        setContent { LoginScreen(viewModel) }
+//        setContent { LoginScreen(viewModel) }
     }
 
     override fun onResume() {

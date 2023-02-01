@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.main
+package br.com.devcapu.beehealthy.screen.main
 
 import android.content.Context
 import android.content.Intent

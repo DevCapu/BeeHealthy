@@ -9,10 +9,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
-import br.com.devcapu.beehealthy.viewmodel.AddFoodViewModel
+import br.com.devcapu.beehealthy.screen.main.MainScreen
 import br.com.devcapu.beehealthy.screen.AddFoodScreen
-import br.com.devcapu.beehealthy.main.MainScreen
+import br.com.devcapu.beehealthy.viewmodel.AddFoodViewModel
+import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
 
 sealed class MainScreens(val screen_route: String) {
     object HomeScreen : MainScreens("home_screen")
