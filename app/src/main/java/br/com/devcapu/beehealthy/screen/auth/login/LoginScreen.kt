@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.screen
+package br.com.devcapu.beehealthy.screen.auth.login
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,8 +18,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import br.com.devcapu.beehealthy.R
@@ -46,6 +46,10 @@ fun NavGraphBuilder.loginScreen(onNavigateToRegisterScreen: () -> Unit) {
     }
 }
 
+fun NavController.navigateToLogin() {
+    navigate(loginGraphRoute)
+}
+
 @Composable
 fun LoginScreen(
     loginState: LoginUIState,
@@ -62,7 +66,7 @@ fun LoginScreen(
         OutlineInput(
             value = loginState.email,
             onValueChange = onEmailChange,
-            placeholder = { Text(text = stringResource(id = R.string.email_label)) },
+            label = { Text(text = stringResource(id = R.string.email_label)) },
             isShowingError = loginState.showEmailErrorMessage,
             errorMessage = loginState.emailErrorMessage,
             modifier = Modifier
@@ -72,13 +76,13 @@ fun LoginScreen(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
             ),
-            actions = KeyboardActions(onNext = { manager.moveFocus(FocusDirection.Next) })
+            actions = KeyboardActions(onNext = { manager.moveFocus(FocusDirection.Next) }),
         )
 
         OutlineInput(
             value = loginState.password,
             onValueChange = onPasswordChange,
-            placeholder = { Text(text = stringResource(id = R.string.password_label)) },
+            label = { Text(text = stringResource(id = R.string.password_label)) },
             visualTransformation = passwordVisualizationMode,
             trailingIcon = { PasswordTrailingIcon(showPassword) { showPassword = !showPassword } },
             modifier = Modifier

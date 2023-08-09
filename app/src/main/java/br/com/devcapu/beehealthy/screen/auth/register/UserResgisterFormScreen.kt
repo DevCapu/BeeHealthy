@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.screen
+package br.com.devcapu.beehealthy.screen.auth.register
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,21 +13,34 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.component.FormWithBeeHealthIdentity
+import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
 
-@Composable
-fun UserRegisterScreen(
-    viewModel: RegisterViewModel = viewModel(),
-    onClickNextStep: () -> Unit
+const val userBasicInfoScreen = "userBasicInfoScreen"
+
+fun NavGraphBuilder.userBasicInfoScreen(
+    onGoToNextScreen: () -> Unit
 ) {
-    val state by viewModel.uiState.collectAsState()
-    UserRegisterScreen(
-        state,
-        onClickNextStep = onClickNextStep
-    )
+    composable(
+        route = userBasicInfoScreen
+    ) {
+        val viewModel: RegisterViewModel = viewModel(factory = RegisterViewModel.Factory)
+        val uiState by viewModel.uiState.collectAsState()
+
+        UserRegisterScreen(
+            state = uiState,
+            onClickNextStep = onGoToNextScreen
+        )
+    }
+}
+
+fun NavController.navigateToBasicInfoScreen() {
+    navigate(userBasicInfoScreen)
 }
 
 @Composable

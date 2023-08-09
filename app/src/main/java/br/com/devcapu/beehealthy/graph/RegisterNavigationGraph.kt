@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import br.com.devcapu.beehealthy.screen.auth.register.credentialScreenRoute
 import br.com.devcapu.beehealthy.screen.auth.register.credentialsScreen
+import br.com.devcapu.beehealthy.screen.auth.register.userBasicInfoScreen
 
 const val registerGraphRoute = "register"
 
@@ -20,6 +21,8 @@ fun NavGraphBuilder.registerGraph(
             onGoToNextScreen = onGoToUserInfoRegistration,
             onGoToLogin = onGoToLogin
         )
+
+        userBasicInfoScreen(onGoToLogin)
     }
 }
 

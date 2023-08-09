@@ -10,6 +10,7 @@ import br.com.devcapu.beehealthy.uistate.UiState
 import br.com.devcapu.beehealthy.uistate.AddFoodUiState
 import br.com.devcapu.beehealthy.uistate.FoodUiState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -67,7 +68,7 @@ class AddFoodViewModel(
     }
 
     fun addFood(food: FoodUiState) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(IO) {
             foodRepository.addFood(
                 food = Food(
                     id = food.id.toString(),
@@ -87,7 +88,7 @@ class AddFoodViewModel(
     }
 
     fun find(mealId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(IO) {
             _uiState.value = UiState.Loading
             try {
                 val meal = mealRepository.findMeal(id = mealId)

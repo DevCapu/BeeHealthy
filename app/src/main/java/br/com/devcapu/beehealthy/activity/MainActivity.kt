@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
-    }
+    } 
 
     private fun configureLifecycleObservers() {
         lifecycleScope.launchWhenCreated {
