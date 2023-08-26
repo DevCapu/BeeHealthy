@@ -1,38 +1,57 @@
-package br.com.devcapu.beehealthy.screen
+package br.com.devcapu.beehealthy.screen.auth.register
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
-import br.com.devcapu.beehealthy.uistate.RegisterUIState
-import br.com.devcapu.beehealthy.model.patient.health.Objective.*
 import br.com.devcapu.beehealthy.component.SelectionCard
 import br.com.devcapu.beehealthy.component.SelectionTitle
+import br.com.devcapu.beehealthy.model.patient.health.Objective.GAIN
+import br.com.devcapu.beehealthy.model.patient.health.Objective.LOSE
+import br.com.devcapu.beehealthy.model.patient.health.Objective.MAINTAIN
 import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
+import br.com.devcapu.beehealthy.uistate.RegisterUIState
+import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
+import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel.Companion.Factory
 
-@Composable
-fun ObjectiveSelectionScreen(
-    viewModel: RegisterViewModel = viewModel(),
-    onClickNextStep: () -> Unit
-) {
-    val state by viewModel.uiState.collectAsState()
-    ObjectiveSelectionContent(
-        state = state,
-        onClickNextStep = onClickNextStep
-    )
+private const val OBJECTIVE_SELECTION_SCREEN_ROUTE = "OBJECTIVE_SELECTION_SCREEN_ROUTE"
+
+fun NavController.navigateToObjectiveSelection() = navigate(OBJECTIVE_SELECTION_SCREEN_ROUTE)
+
+fun NavGraphBuilder.objectiveSelectionScreen(onClickNextStep: () -> Unit) {
+    composable(route = OBJECTIVE_SELECTION_SCREEN_ROUTE) {
+        val viewModel: RegisterViewModel = viewModel(factory = Factory)
+        val uiState by viewModel.uiState.collectAsState()
+
+        ObjectiveSelectionScreen(
+            state = uiState,
+            onClickNextStep = onClickNextStep
+        )
+    }
 }
 
 @Composable
-fun ObjectiveSelectionContent(
+fun ObjectiveSelectionScreen(
     state: RegisterUIState,
     onClickNextStep: () -> Unit
 ) = Column(
@@ -92,6 +111,6 @@ fun ObjectiveSelectionContent(
 @Composable
 fun ObjectiveSelectionScreenPreview() {
     BeeHealthyTheme {
-        ObjectiveSelectionContent(RegisterUIState()) { }
+        ObjectiveSelectionScreen(RegisterUIState()) { }
     }
 }

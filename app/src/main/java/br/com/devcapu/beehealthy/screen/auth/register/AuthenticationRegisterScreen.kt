@@ -32,22 +32,21 @@ import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
 
-const val credentialScreenRoute = "credentialsRegistrationScreen"
+const val CREDENTIALS_SCREEN_ROUTE = "CREDENTIALS_SCREEN_ROUTE"
 fun NavGraphBuilder.credentialsScreen(
-    onGoToNextScreen: () ->Unit,
+    onClickNextStep: () ->Unit,
     onGoToLogin: () -> Unit
 ) {
-    composable(
-        route = credentialScreenRoute
-    ) {
+    composable(route = CREDENTIALS_SCREEN_ROUTE) {
         val viewModel: RegisterViewModel = viewModel(factory = RegisterViewModel.Factory)
         val uiState by viewModel.uiState.collectAsState()
+
         AuthRegisterScreen(
             state = uiState,
             onEmailChange = uiState.onEmailChanged,
             onPasswordChange = uiState.onPasswordChanged,
             onPasswordConfirmationChange = uiState.onPasswordConfirmationChanged,
-            onClickNextStep = onGoToNextScreen,
+            onClickNextStep = onClickNextStep,
             goToLogin = onGoToLogin
         )
     }

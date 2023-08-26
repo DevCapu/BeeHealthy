@@ -17,30 +17,25 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.component.FormWithBeeHealthIdentity
+import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
+import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel.Companion.Factory
 
-const val userBasicInfoScreen = "userBasicInfoScreen"
+private const val USER_BASIC_INFO_SCREEN_ROUTE = "USER_BASIC_INFO_SCREEN_ROUTE"
 
-fun NavGraphBuilder.userBasicInfoScreen(
-    onGoToNextScreen: () -> Unit
-) {
-    composable(
-        route = userBasicInfoScreen
-    ) {
-        val viewModel: RegisterViewModel = viewModel(factory = RegisterViewModel.Factory)
+fun NavController.navigateToBasicInfo() = navigate(USER_BASIC_INFO_SCREEN_ROUTE)
+
+fun NavGraphBuilder.userBasicInfoScreen(onClickNextStep: () -> Unit) {
+    composable(route = USER_BASIC_INFO_SCREEN_ROUTE) {
+        val viewModel: RegisterViewModel = viewModel(factory = Factory)
         val uiState by viewModel.uiState.collectAsState()
 
         UserRegisterScreen(
             state = uiState,
-            onClickNextStep = onGoToNextScreen
+            onClickNextStep = onClickNextStep
         )
     }
-}
-
-fun NavController.navigateToBasicInfoScreen() {
-    navigate(userBasicInfoScreen)
 }
 
 @Composable
