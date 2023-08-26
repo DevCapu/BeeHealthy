@@ -26,7 +26,7 @@ import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.theme.Carme
 import br.com.devcapu.beehealthy.food.nutrition.components.NutritionStats
 import br.com.devcapu.beehealthy.uistate.CaloriesUiState
-import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
+import br.com.devcapu.beehealthy.usecase.DiaryUiState
 
 @Composable
 fun BeeCard(

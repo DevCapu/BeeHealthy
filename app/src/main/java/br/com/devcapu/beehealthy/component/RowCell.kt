@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.theme.Carbohyd
-import br.com.devcapu.beehealthy.diary.ui.state.UIMacro
+import br.com.devcapu.beehealthy.usecase.UIMacro
 
 @Composable
 fun RowCell(macro: UIMacro) {

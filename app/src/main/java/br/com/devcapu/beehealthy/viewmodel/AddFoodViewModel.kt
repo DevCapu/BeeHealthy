@@ -20,84 +20,84 @@ class AddFoodViewModel(
     private val mealRepository: MealRepository,
 ) : ViewModel() {
 
-    private var _state = MutableStateFlow(AddFoodUiState())
-    val state: StateFlow<AddFoodUiState> = _state
+//    private var _state = MutableStateFlow(AddFoodUiState())
+//    val state: StateFlow<AddFoodUiState> = _state
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
-    val uiState: StateFlow<UiState>
-        get() = _uiState
+//    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+//    val uiState: StateFlow<UiState>
+//        get() = _uiState
 
-    init {
-        _state.value = _state.value.copy(
-            onSearchedFoodChange = { searchingFood ->
-                _uiState.value = UiState.Success(
-                    _state.value.copy(
-                        searchedFood = searchingFood,
-                        searchedFoodUiState = _state.value.allFoodsUiState.filter {
-                            it.name.contains(
-                                searchingFood,
-                                ignoreCase = true
-                            )
-                        }
-                    )
-                )
-            },
-        )
-    }
+//    init {
+//        _state.value = _state.value.copy(
+//            onSearchedFoodChange = { searchingFood ->
+//                _uiState.value = UiState.Success(
+//                    _state.value.copy(
+//                        searchedFood = searchingFood,
+//                        searchedFoodUiState = _state.value.allFoodsUiState.filter {
+//                            it.name.contains(
+//                                searchingFood,
+//                                ignoreCase = true
+//                            )
+//                        }
+//                    )
+//                )
+//            },
+//        )
+//    }
 
     fun findAllFoods(jsonFromAssets: String) {
-        _state.value = _state.value.copy(
-            allFoodsUiState = foodRepository.getAll(jsonFromAssets).map {
-                FoodUiState(
-                    id = it.id.toInt(),
-                    name = it.description,
-                    measure = "${it.base_qty} + ${it.base_unit}",
-                    calories = it.attributes.calories,
-                    carbohydrates = it.attributes.carbohydrate?.qty ?: "0",
-                    proteins = it.attributes.protein?.qty ?: "0",
-                    fats = it.attributes.lipid?.qty ?: "0"
-                )
-            }
-        )
+//        _state.value = _state.value.copy(
+//            allFoodsUiState = foodRepository.getAll(jsonFromAssets).map {
+//                FoodUiState(
+//                    id = it.id.toInt(),
+//                    name = it.description,
+//                    measure = "${it.base_qty} + ${it.base_unit}",
+//                    calories = it.attributes.calories,
+//                    carbohydrates = it.attributes.carbohydrate?.qty ?: "0",
+//                    proteins = it.attributes.protein?.qty ?: "0",
+//                    fats = it.attributes.lipid?.qty ?: "0"
+//                )
+//            }
+//        )
     }
 
     fun selectedFood(it: FoodUiState) {
-        _state.value = _state.value.copy(
-            selectedFood = it
-        )
+//        _state.value = _state.value.copy(
+//            selectedFood = it
+//        )
     }
 
     fun addFood(food: FoodUiState) {
-        viewModelScope.launch(IO) {
-            foodRepository.addFood(
-                food = Food(
-                    id = food.id.toString(),
-                    description = food.name,
-                    base_qty = "100",
-                    base_unit = "g",
-                    attributes = Food.Attributes(
-                        carbohydrate = Food.Attributes.Bla(food.carbohydrates),
-                        protein = Food.Attributes.Bla(food.carbohydrates),
-                        lipid = Food.Attributes.Bla(food.carbohydrates),
-                        energy = Food.Attributes.Energy(food.calories),
-                    )
-                ),
-                quantity = _state.value.addFoodBottomSheetUiState.quantity.toInt()
-            )
-        }
+//        viewModelScope.launch(IO) {
+//            foodRepository.addFood(
+//                food = Food(
+//                    id = food.id.toString(),
+//                    description = food.name,
+//                    base_qty = "100",
+//                    base_unit = "g",
+//                    attributes = Food.Attributes(
+//                        carbohydrate = Food.Attributes.Bla(food.carbohydrates),
+//                        protein = Food.Attributes.Bla(food.carbohydrates),
+//                        lipid = Food.Attributes.Bla(food.carbohydrates),
+//                        energy = Food.Attributes.Energy(food.calories),
+//                    )
+//                ),
+//                quantity = _state.value.addFoodBottomSheetUiState.quantity.toInt()
+//            )
+//        }
     }
 
     fun find(mealId: Long) {
-        viewModelScope.launch(IO) {
-            _uiState.value = UiState.Loading
-            try {
-                val meal = mealRepository.findMeal(id = mealId)
-                _state.value = _state.value.copy(topBarTitle = meal.name)
-                _uiState.value = UiState.Success(_state.value)
-            } catch (e: Exception) {
-                _uiState.value = UiState.Error(e.message)
-            }
-        }
+//        viewModelScope.launch(IO) {
+//            _uiState.value = UiState.Loading
+//            try {
+//                val meal = mealRepository.findMeal(id = mealId)
+//                _state.value = _state.value.copy(topBarTitle = meal.name)
+//                _uiState.value = UiState.Success(_state.value)
+//            } catch (e: Exception) {
+//                _uiState.value = UiState.Error(e.message)
+//            }
+//        }
     }
 
     class Factory(

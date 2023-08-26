@@ -23,18 +23,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.food.meal.state.MealUiState
 import br.com.devcapu.beehealthy.food.meal.state.MealsUiState
-import br.com.devcapu.beehealthy.screen.main.MainScreens
 import br.com.devcapu.beehealthy.theme.Carme
 
 @Composable
-fun Meals(
-    uiState: MealsUiState,
-    mainNavController: NavController
-) {
+fun Meals(uiState: MealsUiState) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -46,22 +41,22 @@ fun Meals(
             uiState.breakfastUiState,
             name = stringResource(R.string.breakfast_label),
             emoji = "\uD83C\uDF5E"
-        ) { mainNavController.navigate(MainScreens.AddFoodScreen.route) }
+        ) { /* TODO: GO TO SPECIFIC MEAL */ }
         Meal(
             uiState.lunchUiState,
             name = stringResource(R.string.lunch_label),
             emoji = "\uD83C\uDF73"
-        ) { mainNavController.navigate(MainScreens.AddFoodScreen.route) }
+        ) { /* TODO: GO TO SPECIFIC MEAL */ }
         Meal(
             uiState.snackUiState,
             name = stringResource(R.string.snack_label),
             emoji = "\uD83E\uDD6A"
-        ) { mainNavController.navigate(MainScreens.AddFoodScreen.route) }
+        ) { /* TODO: GO TO SPECIFIC MEAL */ }
         Meal(
             uiState.dinnerUiState,
             name = stringResource(R.string.dinner_label),
             emoji = "\uD83E\uDED4"
-        ) { mainNavController.navigate(MainScreens.AddFoodScreen.route + "/1") }
+        ) { /* TODO: GO TO SPECIFIC MEAL */ }
     }
 }
 

@@ -24,7 +24,7 @@ import br.com.devcapu.beehealthy.theme.Protein
 import br.com.devcapu.beehealthy.uistate.CaloriesUiState
 import br.com.devcapu.beehealthy.uistate.MacroUiState
 import br.com.devcapu.beehealthy.uistate.MacrosUiState
-import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
+import br.com.devcapu.beehealthy.usecase.DiaryUiState
 
 
 @Composable

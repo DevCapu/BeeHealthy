@@ -1,71 +1,84 @@
 package br.com.devcapu.beehealthy.viewmodel
 
 import androidx.lifecycle.ViewModel
-import br.com.devcapu.beehealthy.repository.LoginRepository
+import androidx.lifecycle.viewModelScope
 import br.com.devcapu.beehealthy.uistate.LoginUIState
+import br.com.devcapu.beehealthy.uistate.UiState
+import br.com.devcapu.beehealthy.uistate.UiState.Initial
+import br.com.devcapu.beehealthy.uistate.UiState.Success
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-@HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
+class LoginViewModel : ViewModel() {
+    private var _uiState = MutableStateFlow<UiState<Boolean>>(Initial)
+    val uiState = _uiState.asStateFlow()
 
-    private var _uiState = MutableStateFlow(LoginUIState())
-    val uiState: StateFlow<LoginUIState> = _uiState
-
-    private val loginRepository = LoginRepository()
-
-    val isSignedIn = loginRepository.isSignedIn
+    private var _formState = MutableStateFlow(LoginUIState())
+    val formState = _formState.asStateFlow()
 
     init {
-        _uiState.value = LoginUIState(
+        _formState.value = LoginUIState(
             onEmailChanged = {
-                _uiState.value = _uiState.value.copy(email = it, showEmailErrorMessage = false)
+                _formState.value = _formState.value.copy(email = it, showEmailErrorMessage = false)
             },
             onPasswordChanged = {
-                _uiState.value =
-                    _uiState.value.copy(password = it, showPasswordErrorMessage = false)
+                _formState.value =
+                    _formState.value.copy(password = it, showPasswordErrorMessage = false)
             },
             onClickLogin = {
-                if (_uiState.value.email.isEmpty()) {
-                    _uiState.value = _uiState.value.copy(
+                if (_formState.value.email.isEmpty()) {
+                    _formState.value = _formState.value.copy(
                         emailErrorMessage = "Email vazio",
                         showEmailErrorMessage = true
                     )
-                } else if (_uiState.value.password.isEmpty()) {
-                    _uiState.value = _uiState.value.copy(
+                } else if (_formState.value.password.isEmpty()) {
+                    _formState.value = _formState.value.copy(
                         passwordErrorMessage = "Password vazio",
                         showPasswordErrorMessage = true
                     )
                 } else {
-                    loginRepository.login(
-                        email = _uiState.value.email,
-                        password = _uiState.value.password,
-                        onSuccess = {
-                            _uiState.value = _uiState.value.copy(loggedIn = true)
-                        },
-                        onFailure = {
-                            when (it) {
-                                is FirebaseAuthInvalidCredentialsException -> {
-                                    _uiState.value = _uiState.value.copy(
-                                        passwordErrorMessage = "Senha inválida",
-                                        showPasswordErrorMessage = true
-                                    )
-                                }
-                                is FirebaseAuthInvalidUserException -> {
-                                    _uiState.value = _uiState.value.copy(
-                                        emailErrorMessage = "Email ou usuário não existe",
-                                        showEmailErrorMessage = true
-                                    )
-                                }
-                            }
-                        }
-                    )
+                    viewModelScope.launch {
+                        login()
+                    }
                 }
             }
         )
+    }
+
+    private suspend fun login() {
+        viewModelScope.launch {
+            _uiState.emit(UiState.Loading)
+
+            val auth = FirebaseAuth.getInstance()
+            val loginTask = auth.signInWithEmailAndPassword(
+                _formState.value.email,
+                _formState.value.password
+            )
+            loginTask.addOnSuccessListener { _uiState.value = Success() }
+            loginTask.addOnFailureListener { handleError(it) }
+        }
+    }
+
+    private fun handleError(it: Exception) {
+        when (it) {
+            is FirebaseAuthInvalidCredentialsException -> {
+                _formState.value = _formState.value.copy(
+                    passwordErrorMessage = "Senha inválida",
+                    showPasswordErrorMessage = true
+                )
+            }
+
+            is FirebaseAuthInvalidUserException -> {
+                _formState.value = _formState.value.copy(
+                    emailErrorMessage = "Email ou usuário não existe",
+                    showEmailErrorMessage = true
+                )
+            }
+        }
+        _uiState.value = Initial
     }
 }

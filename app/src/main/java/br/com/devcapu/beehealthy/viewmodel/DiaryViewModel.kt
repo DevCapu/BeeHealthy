@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import br.com.devcapu.beehealthy.dao.BeeHealthyDatabase
-import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
+import br.com.devcapu.beehealthy.usecase.DiaryUiState
 import br.com.devcapu.beehealthy.local.LocalCategoryDataSource
 import br.com.devcapu.beehealthy.repository.CategoryRepository
 import br.com.devcapu.beehealthy.repository.LoginRepository

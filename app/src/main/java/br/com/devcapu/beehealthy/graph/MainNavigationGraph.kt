@@ -11,12 +11,16 @@ const val MAIN_GRAPH_ROUTE = "MAIN_GRAPH_ROUTE"
 
 fun NavController.navigateToHomeScreen() = navigate(MAIN_GRAPH_ROUTE)
 
-fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.mainNavGraph(
+    onLogout: () -> Unit
+) {
     navigation(
         route = MAIN_GRAPH_ROUTE,
         startDestination = HOME_SCREEN_ROUTE,
     ) {
-        homeScreen(navController)
+        homeScreen(
+            onLogout = onLogout
+        )
 //        composable(
 //            route = "${AddFoodScreen.route}/{mealId}",
 //            arguments = listOf(navArgument("mealId") { type = NavType.StringType })

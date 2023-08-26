@@ -1,6 +1,7 @@
-package br.com.devcapu.beehealthy.diary.ui.screen
+package br.com.devcapu.beehealthy.screen.main
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,29 +11,46 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import br.com.devcapu.beehealthy.R
+import br.com.devcapu.beehealthy.component.Meals
 import br.com.devcapu.beehealthy.component.card.BeeCard
 import br.com.devcapu.beehealthy.component.card.BeeCardHeader
+import br.com.devcapu.beehealthy.food.nutrition.components.NutritionStats
 import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.theme.Carme
-import br.com.devcapu.beehealthy.component.Meals
-import br.com.devcapu.beehealthy.food.nutrition.components.NutritionStats
-import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
+import br.com.devcapu.beehealthy.usecase.DiaryUiState
+import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
+import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel.Companion.Factory
+
+const val DIARY_SCREEN_ROUTE = "DIARY_SCREEN_ROUTE"
+
+fun NavGraphBuilder.diaryScreen() {
+    composable(route = DIARY_SCREEN_ROUTE) {
+        val viewModel: DiaryViewModel = viewModel(
+            viewModelStoreOwner = LocalContext.current as ComponentActivity,
+            factory = Factory
+        )
+        val uiState by viewModel.state.collectAsState()
+
+        DiaryScreen(uiState = uiState)
+    }
+}
 
 @Composable
-fun DiaryScreen(
-    uiState: DiaryUiState,
-    mainNavController: NavController
-) = BeeHealthyTheme {
+fun DiaryScreen(uiState: DiaryUiState) = BeeHealthyTheme {
     LazyColumn(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
@@ -42,10 +60,7 @@ fun DiaryScreen(
     ) {
         item { NutritionCard(uiState) }
         item {
-            MealCard(
-                uiState = uiState,
-                mainNavController = mainNavController
-            )
+            MealCard(uiState = uiState)
         }
     }
 }
@@ -80,7 +95,7 @@ private fun NutritionCard(uiState: DiaryUiState) {
 }
 
 @Composable
-private fun MealCard(uiState: DiaryUiState, mainNavController: NavController) {
+private fun MealCard(uiState: DiaryUiState) {
     BeeCard(
         header = {
             BeeCardHeader(
@@ -95,10 +110,7 @@ private fun MealCard(uiState: DiaryUiState, mainNavController: NavController) {
             )
         },
         body = {
-            Meals(
-                uiState = uiState.mealsUiState,
-                mainNavController = mainNavController
-            )
+            Meals(uiState = uiState.mealsUiState)
         }
     )
 }
@@ -110,8 +122,5 @@ private fun MealCard(uiState: DiaryUiState, mainNavController: NavController) {
 )
 @Composable
 fun DiaryScreePreview() {
-    DiaryScreen(
-        uiState = DiaryUiState(),
-        mainNavController = rememberNavController()
-    )
+    DiaryScreen(uiState = DiaryUiState())
 }

@@ -32,33 +32,43 @@ import br.com.devcapu.beehealthy.common.ui.extension.visualizationMode
 import br.com.devcapu.beehealthy.component.FormWithBeeHealthIdentity
 import br.com.devcapu.beehealthy.component.OutlineInput
 import br.com.devcapu.beehealthy.component.PasswordTrailingIcon
+import br.com.devcapu.beehealthy.screen.LoadingScreen
 import br.com.devcapu.beehealthy.uistate.LoginUIState
+import br.com.devcapu.beehealthy.uistate.UiState.Error
+import br.com.devcapu.beehealthy.uistate.UiState.Initial
+import br.com.devcapu.beehealthy.uistate.UiState.Loading
+import br.com.devcapu.beehealthy.uistate.UiState.Success
 import br.com.devcapu.beehealthy.viewmodel.LoginViewModel
 
 const val LOGIN_ROUTE = "LOGIN_ROUTE"
 
 fun NavController.navigateToLogin() = navigate(LOGIN_ROUTE)
 
-fun NavGraphBuilder.loginScreen(onNavigateToRegisterScreen: () -> Unit) {
+fun NavGraphBuilder.loginScreen(
+    onNavigateToHome: () -> Unit,
+    onNavigateToRegisterScreen: () -> Unit
+) {
     composable(LOGIN_ROUTE) {
         val viewModel: LoginViewModel = viewModel()
-        val loginState by viewModel.uiState.collectAsState()
-        LoginScreen(
-            loginState = loginState,
-            onEmailChange = loginState.onEmailChanged,
-            onPasswordChange = loginState.onPasswordChanged,
-            onLogin = loginState.onClickLogin,
-            onGoToRegisterScreen = onNavigateToRegisterScreen
-        )
+        val uiState by viewModel.uiState.collectAsState()
+        val formState by viewModel.formState.collectAsState()
+
+        when (uiState) {
+            is Success -> { onNavigateToHome() }
+            Initial, is Error -> {
+                LoginScreen(
+                    formState = formState,
+                    onGoToRegisterScreen = onNavigateToRegisterScreen
+                )
+            }
+            Loading -> { LoadingScreen() }
+        }
     }
 }
 
 @Composable
 fun LoginScreen(
-    loginState: LoginUIState,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onLogin: () -> Unit,
+    formState: LoginUIState,
     onGoToRegisterScreen: () -> Unit
 ) {
     FormWithBeeHealthIdentity {
@@ -67,11 +77,11 @@ fun LoginScreen(
         val manager = LocalFocusManager.current
 
         OutlineInput(
-            value = loginState.email,
-            onValueChange = onEmailChange,
+            value = formState.email,
+            onValueChange = formState.onEmailChanged,
             label = { Text(text = stringResource(id = R.string.email_label)) },
-            isShowingError = loginState.showEmailErrorMessage,
-            errorMessage = loginState.emailErrorMessage,
+            isShowingError = formState.showEmailErrorMessage,
+            errorMessage = formState.emailErrorMessage,
             modifier = Modifier
                 .padding(bottom = 16.dp)
                 .fillMaxWidth(),
@@ -83,16 +93,20 @@ fun LoginScreen(
         )
 
         OutlineInput(
-            value = loginState.password,
-            onValueChange = onPasswordChange,
+            value = formState.password,
+            onValueChange = formState.onPasswordChanged,
             label = { Text(text = stringResource(id = R.string.password_label)) },
             visualTransformation = passwordVisualizationMode,
-            trailingIcon = { PasswordTrailingIcon(showPassword) { showPassword = !showPassword } },
+            trailingIcon = {
+                PasswordTrailingIcon(showPassword) {
+                    showPassword = !showPassword
+                }
+            },
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth(),
-            errorMessage = loginState.passwordErrorMessage,
-            isShowingError = loginState.showPasswordErrorMessage,
+            errorMessage = formState.passwordErrorMessage,
+            isShowingError = formState.showPasswordErrorMessage,
             options = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
@@ -101,7 +115,7 @@ fun LoginScreen(
         )
 
         Button(
-            onClick = onLogin,
+            onClick = formState.onClickLogin,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)
@@ -119,11 +133,8 @@ fun LoginScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(
-        loginState = LoginUIState(),
-        onEmailChange = { },
-        onPasswordChange = { },
-        onLogin = { },
-        onGoToRegisterScreen = { }
-    )
+//    LoginScreen(
+//        state = LoginUIState(),
+//        onGoToRegisterScreen = { }
+//    )
 }

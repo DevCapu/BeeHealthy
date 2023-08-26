@@ -1,4 +1,4 @@
-package br.com.devcapu.beehealthy.diary.ui.state
+package br.com.devcapu.beehealthy.usecase
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color

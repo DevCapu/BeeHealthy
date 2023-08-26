@@ -1,26 +1,20 @@
-package br.com.devcapu.beehealthy.main.navigation
+package br.com.devcapu.beehealthy.graph
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import br.com.devcapu.beehealthy.component.BottomNavItem
-import br.com.devcapu.beehealthy.diary.ui.screen.DiaryScreen
-import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
+import br.com.devcapu.beehealthy.screen.main.DIARY_SCREEN_ROUTE
+import br.com.devcapu.beehealthy.screen.main.DiaryScreen
+import br.com.devcapu.beehealthy.screen.main.diaryScreen
+import br.com.devcapu.beehealthy.usecase.DiaryUiState
 
 @Composable
 fun BottomNavigationGraph(
     navController: NavHostController,
-    mainNavController: NavController,
-    state: DiaryUiState
 ) {
-    NavHost(navController, startDestination = BottomNavItem.Home.screen_route) {
-        composable(BottomNavItem.Home.screen_route) {
-            DiaryScreen(
-                uiState = state,
-                mainNavController = mainNavController
-            )
-        }
+    NavHost(navController, startDestination = DIARY_SCREEN_ROUTE) {
+        diaryScreen()
     }
 }

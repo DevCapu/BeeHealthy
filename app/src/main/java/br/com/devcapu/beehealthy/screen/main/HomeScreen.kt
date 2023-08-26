@@ -1,7 +1,5 @@
 package br.com.devcapu.beehealthy.screen.main
 
-import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
@@ -24,20 +22,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.devcapu.beehealthy.activity.LoginActivity
 import br.com.devcapu.beehealthy.component.TopBar
-import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
-import br.com.devcapu.beehealthy.main.navigation.BottomNavigationGraph
+import br.com.devcapu.beehealthy.graph.BottomNavigationGraph
 import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
+import br.com.devcapu.beehealthy.usecase.DiaryUiState
 import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
 import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel.Companion.Factory
 
 const val HOME_SCREEN_ROUTE = "HOME_SCREEN_ROUTE"
+
 @OptIn(ExperimentalMaterialApi::class)
-fun NavGraphBuilder.homeScreen(mainNavController: NavHostController) {
+fun NavGraphBuilder.homeScreen(onLogout: () -> Unit) {
     composable(route = HOME_SCREEN_ROUTE) {
         val viewModel: DiaryViewModel = viewModel(
             viewModelStoreOwner = LocalContext.current as ComponentActivity,
@@ -45,7 +42,7 @@ fun NavGraphBuilder.homeScreen(mainNavController: NavHostController) {
         )
         val uiState by viewModel.state.collectAsState()
 
-        HomeScreen(state = uiState, mainNavController = mainNavController)
+        HomeScreen(state = uiState, onLogout = onLogout)
     }
 }
 
@@ -53,14 +50,13 @@ fun NavGraphBuilder.homeScreen(mainNavController: NavHostController) {
 @Composable
 fun HomeScreen(
     state: DiaryUiState,
-    mainNavController: NavHostController
+    onLogout: () -> Unit,
 ) {
-    val context = LocalContext.current
     val navController = rememberNavController()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         backgroundColor = MaterialTheme.colors.background,
-        topBar = { TopBar { state.onClickLogout { logout(context) } } },
+        topBar = { TopBar { state.onClickLogout { onLogout() } } },
         floatingActionButton = {
             FloatingActionButton(
                 backgroundColor = MaterialTheme.colors.primary,
@@ -77,19 +73,8 @@ fun HomeScreen(
         floatingActionButtonPosition = FabPosition.End,
         isFloatingActionButtonDocked = true,
     ) {
-        BottomNavigationGraph(
-            navController = navController,
-            mainNavController = mainNavController,
-            state = state
-        )
+        BottomNavigationGraph(navController = navController)
     }
-}
-
-@ExperimentalMaterialApi
-private fun logout(context: Context) {
-    val intent = LoginActivity.getIntent(context)
-    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-    context.startActivity(intent)
 }
 
 @ExperimentalMaterialApi
@@ -98,9 +83,6 @@ private fun logout(context: Context) {
 @Composable
 fun HomeScreenPreview() {
     BeeHealthyTheme {
-        HomeScreen(
-            state = DiaryUiState(),
-            mainNavController = rememberNavController()
-        )
+        HomeScreen(state = DiaryUiState()) { }
     }
 }

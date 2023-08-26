@@ -19,7 +19,8 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
         route = AUTH_GRAPH_ROUTE
     ) {
         loginScreen(
-            onNavigateToRegisterScreen = { navController.navigateToRegisterGraph() }
+            onNavigateToRegisterScreen = { navController.navigateToRegisterGraph() },
+            onNavigateToHome = { navController.navigateToHomeScreen() }
         )
 
         registerGraph(
@@ -28,7 +29,7 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
             onGoToUserGenderScreen = { navController.navigateToGenderSelection() },
             onGoToObjectiveScreen = { navController.navigateToObjectiveSelection() },
             onGoToActivityScreen = { navController.navigateToActivityLevelSelection() },
-            onFinish = { navController.navigateToHomeScreen()}
+            onFinish = { navController.navigateToHomeScreen() }
         )
     }
 }
