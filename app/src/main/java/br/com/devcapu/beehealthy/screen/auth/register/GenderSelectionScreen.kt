@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.screen.auth.register
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -53,7 +55,10 @@ fun NavController.navigateToGenderSelection() = navigate(GENDER_SELECTION_SCREEN
 
 fun NavGraphBuilder.genderSelectionScreen(onClickNextStep: () -> Unit) {
     composable(route = GENDER_SELECTION_SCREEN_ROUTE) {
-        val viewModel: RegisterViewModel = viewModel(factory = Factory)
+        val viewModel: RegisterViewModel = viewModel(
+            viewModelStoreOwner = LocalContext.current as ComponentActivity,
+            factory = Factory
+        )
         val uiState by viewModel.uiState.collectAsState()
 
         GenderSelectionScreen(

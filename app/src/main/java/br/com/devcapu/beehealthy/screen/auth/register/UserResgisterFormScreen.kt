@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.screen.auth.register
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
@@ -9,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,7 +30,10 @@ fun NavController.navigateToBasicInfo() = navigate(USER_BASIC_INFO_SCREEN_ROUTE)
 
 fun NavGraphBuilder.userBasicInfoScreen(onClickNextStep: () -> Unit) {
     composable(route = USER_BASIC_INFO_SCREEN_ROUTE) {
-        val viewModel: RegisterViewModel = viewModel(factory = Factory)
+        val viewModel: RegisterViewModel = viewModel(
+            viewModelStoreOwner = LocalContext.current as ComponentActivity,
+            factory = Factory
+        )
         val uiState by viewModel.uiState.collectAsState()
 
         UserRegisterScreen(

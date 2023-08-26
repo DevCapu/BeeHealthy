@@ -7,10 +7,12 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun BeeHealthyNavHost() {
     val navHostController = rememberNavController()
+    val mainNavController = rememberNavController()
     NavHost(
         navController = navHostController,
         startDestination = AUTH_GRAPH_ROUTE
     ) {
         authGraph(navHostController)
+        mainNavGraph(mainNavController)
     }
 }

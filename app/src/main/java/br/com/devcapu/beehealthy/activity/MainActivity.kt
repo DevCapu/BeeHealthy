@@ -8,25 +8,22 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.lifecycleScope
+import br.com.devcapu.beehealthy.dao.BeeHealthyDatabase
 import br.com.devcapu.beehealthy.local.JsonUtil.Companion.getJsonFromAssets
 import br.com.devcapu.beehealthy.local.LocalFoodDataSource
 import br.com.devcapu.beehealthy.repository.FoodRepository
 import br.com.devcapu.beehealthy.repository.MealRepository
-import br.com.devcapu.beehealthy.repository.PatientRepository
 import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.dao.BeeHealthyDatabase
-import br.com.devcapu.beehealthy.graph.MainNavigationGraph
-import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
 import br.com.devcapu.beehealthy.viewmodel.AddFoodViewModel
 
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
 
-    private val diaryViewModel: DiaryViewModel by viewModels {
-        val database = BeeHealthyDatabase.getInstance(this)
-        val patientRepository = PatientRepository(database.patientDao())
-        DiaryViewModel.Factory(patientRepository)
-    }
+//    private val diaryViewModel: DiaryViewModel by viewModels {
+//        val database = BeeHealthyDatabase.getInstance(this)
+//        val patientRepository = PatientRepository(database.patientDao())
+//        DiaryViewModel.Factory(patientRepository)
+//    }
 
     private val addFoodViewModel: AddFoodViewModel by viewModels {
         val database = BeeHealthyDatabase.getInstance(this)
@@ -43,19 +40,19 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             BeeHealthyTheme {
-                MainNavigationGraph(
-                    homeViewModel = diaryViewModel,
-                    addFoodViewModel = addFoodViewModel
-                )
+//                MainNavigationGraph(
+//                    homeViewModel = diaryViewModel,
+//                    addFoodViewModel = addFoodViewModel
+//                )
             }
         }
-    } 
+    }
 
     private fun configureLifecycleObservers() {
         lifecycleScope.launchWhenCreated {
-            diaryViewModel.findAllCategories(
-                getJsonFromAssets(this@MainActivity, "categoryList.json")!!
-            )
+//            diaryViewModel.findAllCategories(
+//                getJsonFromAssets(this@MainActivity, "categoryList.json")!!
+//            )
             addFoodViewModel.findAllFoods(
                 getJsonFromAssets(this@MainActivity, "foodList.json")!!
             )

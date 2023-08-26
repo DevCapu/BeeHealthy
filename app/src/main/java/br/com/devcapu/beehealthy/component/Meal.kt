@@ -1,9 +1,19 @@
-package br.com.devcapu.beehealthy.food.meal.components
+package br.com.devcapu.beehealthy.component
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
@@ -15,10 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.devcapu.beehealthy.R
-import br.com.devcapu.beehealthy.component.CircularProgressIndicatorWithBackground
 import br.com.devcapu.beehealthy.food.meal.state.MealUiState
 import br.com.devcapu.beehealthy.food.meal.state.MealsUiState
-import br.com.devcapu.beehealthy.graph.MainScreens
+import br.com.devcapu.beehealthy.screen.main.MainScreens
 import br.com.devcapu.beehealthy.theme.Carme
 
 @Composable
@@ -37,22 +46,22 @@ fun Meals(
             uiState.breakfastUiState,
             name = stringResource(R.string.breakfast_label),
             emoji = "\uD83C\uDF5E"
-        ) { mainNavController.navigate(MainScreens.AddFoodScreen.screen_route) }
+        ) { mainNavController.navigate(MainScreens.AddFoodScreen.route) }
         Meal(
             uiState.lunchUiState,
             name = stringResource(R.string.lunch_label),
             emoji = "\uD83C\uDF73"
-        ) { mainNavController.navigate(MainScreens.AddFoodScreen.screen_route) }
+        ) { mainNavController.navigate(MainScreens.AddFoodScreen.route) }
         Meal(
             uiState.snackUiState,
             name = stringResource(R.string.snack_label),
             emoji = "\uD83E\uDD6A"
-        ) { mainNavController.navigate(MainScreens.AddFoodScreen.screen_route) }
+        ) { mainNavController.navigate(MainScreens.AddFoodScreen.route) }
         Meal(
             uiState.dinnerUiState,
             name = stringResource(R.string.dinner_label),
             emoji = "\uD83E\uDED4"
-        ) { mainNavController.navigate(MainScreens.AddFoodScreen.screen_route + "/1") }
+        ) { mainNavController.navigate(MainScreens.AddFoodScreen.route + "/1") }
     }
 }
 

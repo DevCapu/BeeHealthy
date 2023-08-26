@@ -1,16 +1,21 @@
 package br.com.devcapu.beehealthy.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.ViewModelProvider.Factory
 import androidx.lifecycle.viewModelScope
-import br.com.devcapu.beehealthy.repository.LoginRepository
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import br.com.devcapu.beehealthy.dao.BeeHealthyDatabase
+import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
 import br.com.devcapu.beehealthy.local.LocalCategoryDataSource
 import br.com.devcapu.beehealthy.repository.CategoryRepository
+import br.com.devcapu.beehealthy.repository.LoginRepository
 import br.com.devcapu.beehealthy.repository.PatientRepository
 import br.com.devcapu.beehealthy.uistate.CaloriesUiState
 import br.com.devcapu.beehealthy.uistate.MacroUiState
 import br.com.devcapu.beehealthy.uistate.MacrosUiState
-import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -57,12 +62,13 @@ class DiaryViewModel(private val patientRepository: PatientRepository) : ViewMod
         )
     }
 
-    class Factory(
-        private val patientRepository: PatientRepository,
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return DiaryViewModel(patientRepository = patientRepository) as T
+    companion object {
+        val Factory: Factory = viewModelFactory {
+            initializer {
+                val context = this[APPLICATION_KEY] as Context
+                val dao = BeeHealthyDatabase.getInstance(context).patientDao()
+                DiaryViewModel(patientRepository = PatientRepository(dao))
+            }
         }
     }
 }

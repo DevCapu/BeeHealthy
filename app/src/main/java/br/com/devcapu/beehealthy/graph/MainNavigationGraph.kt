@@ -1,50 +1,33 @@
 package br.com.devcapu.beehealthy.graph
 
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import br.com.devcapu.beehealthy.screen.main.MainScreen
-import br.com.devcapu.beehealthy.screen.AddFoodScreen
-import br.com.devcapu.beehealthy.viewmodel.AddFoodViewModel
-import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.navigation
+import br.com.devcapu.beehealthy.screen.main.HOME_SCREEN_ROUTE
+import br.com.devcapu.beehealthy.screen.main.homeScreen
 
-sealed class MainScreens(val screen_route: String) {
-    object HomeScreen : MainScreens("home_screen")
-    object AddFoodScreen : MainScreens("add_food_screen")
-}
+const val MAIN_GRAPH_ROUTE = "MAIN_GRAPH_ROUTE"
 
-@ExperimentalMaterialApi
-@Composable
-fun MainNavigationGraph(
-    homeViewModel: DiaryViewModel,
-    addFoodViewModel: AddFoodViewModel,
-) {
-    val mainNavController = rememberNavController()
+fun NavController.navigateToHomeScreen() = navigate(MAIN_GRAPH_ROUTE)
 
-    NavHost(navController = mainNavController, startDestination = "home_screen") {
-        composable(MainScreens.HomeScreen.screen_route) {
-            MainScreen(
-                viewModel = homeViewModel,
-                mainNavController = mainNavController
-            )
-        }
-        composable(
-            route = "${MainScreens.AddFoodScreen.screen_route}/{mealId}",
-            arguments = listOf(navArgument("mealId") { type = NavType.StringType })
-        ) {
-            val mealId = remember { it.arguments?.getString("mealId")!! }
-            LaunchedEffect(key1 = null){ addFoodViewModel.find(mealId.toLong()) }
-
-            AddFoodScreen(
-                viewModel = addFoodViewModel,
-                mainNavController = mainNavController,
-            )
-        }
+fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
+    navigation(
+        route = MAIN_GRAPH_ROUTE,
+        startDestination = HOME_SCREEN_ROUTE,
+    ) {
+        homeScreen(navController)
+//        composable(
+//            route = "${AddFoodScreen.route}/{mealId}",
+//            arguments = listOf(navArgument("mealId") { type = NavType.StringType })
+//        ) {
+//            val mealId = remember { it.arguments?.getString("mealId")!! }
+//            LaunchedEffect(key1 = null) { addFoodViewModel.find(mealId.toLong()) }
+//
+//            AddFoodScreen(
+//                viewModel = addFoodViewModel,
+//                mainNavController = mainNavController,
+//            )
+//        }
     }
 }

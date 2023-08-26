@@ -24,7 +24,7 @@ import br.com.devcapu.beehealthy.component.card.BeeCard
 import br.com.devcapu.beehealthy.component.card.BeeCardHeader
 import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.theme.Carme
-import br.com.devcapu.beehealthy.food.meal.components.Meals
+import br.com.devcapu.beehealthy.component.Meals
 import br.com.devcapu.beehealthy.food.nutrition.components.NutritionStats
 import br.com.devcapu.beehealthy.diary.ui.state.DiaryUiState
 

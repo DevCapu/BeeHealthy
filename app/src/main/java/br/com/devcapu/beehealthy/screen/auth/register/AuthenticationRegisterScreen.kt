@@ -1,17 +1,34 @@
 package br.com.devcapu.beehealthy.screen.auth.register
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MailOutline
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection.Companion.Down
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,14 +48,18 @@ import br.com.devcapu.beehealthy.component.PasswordTrailingIcon
 import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
+import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel.Companion.Factory
 
 const val CREDENTIALS_SCREEN_ROUTE = "CREDENTIALS_SCREEN_ROUTE"
 fun NavGraphBuilder.credentialsScreen(
-    onClickNextStep: () ->Unit,
+    onClickNextStep: () -> Unit,
     onGoToLogin: () -> Unit
 ) {
     composable(route = CREDENTIALS_SCREEN_ROUTE) {
-        val viewModel: RegisterViewModel = viewModel(factory = RegisterViewModel.Factory)
+        val viewModel: RegisterViewModel = viewModel(
+            viewModelStoreOwner = LocalContext.current as ComponentActivity,
+            factory = Factory
+        )
         val uiState by viewModel.uiState.collectAsState()
 
         AuthRegisterScreen(
@@ -89,8 +110,13 @@ fun AuthRegisterScreen(
             value = state.email,
             onValueChange = onEmailChange,
             placeholder = { Text(text = "example@mail.com") },
-            label = {  Text(text = stringResource(R.string.email_label)) },
-            trailingIcon = { Icon(imageVector = Icons.Default.MailOutline, contentDescription = null) },
+            label = { Text(text = stringResource(R.string.email_label)) },
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.MailOutline,
+                    contentDescription = null
+                )
+            },
             options = KeyboardOptions(keyboardType = Email, imeAction = Next),
             actions = KeyboardActions(onNext = { manager.moveFocus(Down) })
         )
@@ -99,7 +125,7 @@ fun AuthRegisterScreen(
             modifier = modifier,
             value = state.password,
             onValueChange = onPasswordChange,
-            label =  { Text(text = stringResource(R.string.password_label)) },
+            label = { Text(text = stringResource(R.string.password_label)) },
             visualTransformation = passwordVisualizationMode,
             trailingIcon = { PasswordTrailingIcon(showPassword) { showPassword = !showPassword } },
             options = KeyboardOptions(keyboardType = Email, imeAction = Next),
@@ -110,7 +136,7 @@ fun AuthRegisterScreen(
             modifier = modifier,
             value = state.passwordConfirmation,
             onValueChange = onPasswordConfirmationChange,
-            label =  { Text(text = stringResource(R.string.confirm_password_label)) },
+            label = { Text(text = stringResource(R.string.confirm_password_label)) },
             visualTransformation = passwordVisualizationMode,
             options = KeyboardOptions(
                 keyboardType = Email, imeAction = ImeAction.Done

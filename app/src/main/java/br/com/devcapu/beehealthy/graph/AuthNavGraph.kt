@@ -11,7 +11,7 @@ import br.com.devcapu.beehealthy.screen.auth.register.navigateToBasicInfo
 import br.com.devcapu.beehealthy.screen.auth.register.navigateToGenderSelection
 import br.com.devcapu.beehealthy.screen.auth.register.navigateToObjectiveSelection
 
-const val AUTH_GRAPH_ROUTE = "auth_graph_route"
+const val AUTH_GRAPH_ROUTE = "AUTH_GRAPH_ROUTE"
 
 fun NavGraphBuilder.authGraph(navController: NavHostController) {
     navigation(
@@ -27,7 +27,8 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
             onGoToUserInfoRegistration = { navController.navigateToBasicInfo() },
             onGoToUserGenderScreen = { navController.navigateToGenderSelection() },
             onGoToObjectiveScreen = { navController.navigateToObjectiveSelection() },
-            onGoToActivityScreen = { navController.navigateToActivityLevelSelection() }
+            onGoToActivityScreen = { navController.navigateToActivityLevelSelection() },
+            onFinish = { navController.navigateToHomeScreen()}
         )
     }
 }

@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.screen.auth.register
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,7 +42,10 @@ fun NavController.navigateToObjectiveSelection() = navigate(OBJECTIVE_SELECTION_
 
 fun NavGraphBuilder.objectiveSelectionScreen(onClickNextStep: () -> Unit) {
     composable(route = OBJECTIVE_SELECTION_SCREEN_ROUTE) {
-        val viewModel: RegisterViewModel = viewModel(factory = Factory)
+        val viewModel: RegisterViewModel = viewModel(
+            viewModelStoreOwner = LocalContext.current as ComponentActivity,
+            factory = Factory
+        )
         val uiState by viewModel.uiState.collectAsState()
 
         ObjectiveSelectionScreen(

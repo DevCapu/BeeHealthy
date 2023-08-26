@@ -40,7 +40,7 @@ const val LOGIN_ROUTE = "LOGIN_ROUTE"
 fun NavController.navigateToLogin() = navigate(LOGIN_ROUTE)
 
 fun NavGraphBuilder.loginScreen(onNavigateToRegisterScreen: () -> Unit) {
-    composable("login") {
+    composable(LOGIN_ROUTE) {
         val viewModel: LoginViewModel = viewModel()
         val loginState by viewModel.uiState.collectAsState()
         LoginScreen(

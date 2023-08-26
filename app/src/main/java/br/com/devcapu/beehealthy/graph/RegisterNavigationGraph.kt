@@ -17,7 +17,8 @@ fun NavGraphBuilder.registerGraph(
     onGoToUserGenderScreen: () -> Unit = { },
     onGoToObjectiveScreen: () -> Unit = { },
     onGoToActivityScreen: () -> Unit = { },
-    onGoToLogin: () -> Unit = { }
+    onGoToLogin: () -> Unit = { },
+    onFinish: () -> Unit = {}
 ) {
     navigation(
         startDestination = CREDENTIALS_SCREEN_ROUTE,
@@ -27,7 +28,7 @@ fun NavGraphBuilder.registerGraph(
         userBasicInfoScreen(onClickNextStep = onGoToUserGenderScreen)
         genderSelectionScreen(onClickNextStep = onGoToObjectiveScreen)
         objectiveSelectionScreen(onClickNextStep = onGoToActivityScreen)
-        activityLevelSelectionScreen(onClickNextStep = onGoToLogin)
+        activityLevelSelectionScreen(onClickNextStep = onFinish)
     }
 }
 
