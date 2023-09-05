@@ -16,8 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import br.com.devcapu.beehealthy.component.AppBar
 import br.com.devcapu.beehealthy.component.FoodListWithSearch
-import br.com.devcapu.beehealthy.food.add.components.AddFoodBottomSheet
-import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
+import br.com.devcapu.ui.component.AddFoodBottomSheet
 import br.com.devcapu.beehealthy.uistate.AddFoodUiState
 import br.com.devcapu.beehealthy.uistate.FoodUiState
 import br.com.devcapu.beehealthy.viewmodel.AddFoodViewModel
@@ -94,7 +93,7 @@ fun AddFoodScreen(
 @Preview(showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun AddFoodScreenWithouthBottomSheetPreview() {
-    BeeHealthyTheme {
+    br.com.devcapu.ui.theme.BeeHealthyTheme {
         AddFoodScreen(
             topBar = { AppBar("Almoço", date = "Sexta-feira 13") { } },
             content = { FoodListWithSearch(uiState = AddFoodUiState()) { } },

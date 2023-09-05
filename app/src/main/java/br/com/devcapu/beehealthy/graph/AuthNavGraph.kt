@@ -1,5 +1,6 @@
 package br.com.devcapu.beehealthy.graph
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation

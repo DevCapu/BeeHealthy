@@ -1,6 +1,7 @@
 package br.com.devcapu.beehealthy.screen.main
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,10 +27,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.devcapu.beehealthy.component.TopBar
 import br.com.devcapu.beehealthy.graph.BottomNavigationGraph
-import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
+import br.com.devcapu.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.usecase.DiaryUiState
 import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
 import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel.Companion.Factory
+import kotlin.random.Random
 
 const val HOME_SCREEN_ROUTE = "HOME_SCREEN_ROUTE"
 
@@ -42,7 +44,10 @@ fun NavGraphBuilder.homeScreen(onLogout: () -> Unit) {
         )
         val uiState by viewModel.state.collectAsState()
 
-        HomeScreen(state = uiState, onLogout = onLogout)
+        HomeScreen(
+            state = uiState,
+            onLogout = onLogout
+        )
     }
 }
 
@@ -52,6 +57,7 @@ fun HomeScreen(
     state: DiaryUiState,
     onLogout: () -> Unit,
 ) {
+    Log.i("HOME_SCREEN", "HomeScreen: ${Random.nextInt()}")
     val navController = rememberNavController()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -82,7 +88,7 @@ fun HomeScreen(
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun HomeScreenPreview() {
-    BeeHealthyTheme {
+    br.com.devcapu.ui.theme.BeeHealthyTheme {
         HomeScreen(state = DiaryUiState()) { }
     }
 }

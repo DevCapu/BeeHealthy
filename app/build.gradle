@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk ProjectConfig.compileSdk
 
     defaultConfig {
         applicationId "br.com.devcapu.beehealthy"
-        minSdk 26
-        targetSdk 31
+        minSdk ProjectConfig.minSdk
+        targetSdk ProjectConfig.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -38,7 +38,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion ProjectConfig.extensionVersion
     }
     packagingOptions {
         resources {
@@ -92,5 +92,8 @@ dependencies {
     //Hilt
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
+    implementation(project(":core:ui"))
+    implementation(project(":data:auth"))
 }
 apply plugin: 'com.google.gms.google-services'

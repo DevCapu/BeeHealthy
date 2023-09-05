@@ -81,4 +81,11 @@ class LoginViewModel : ViewModel() {
         }
         _uiState.value = Initial
     }
+
+    fun verifyIfIsLoggedIn() {
+        val auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null) {
+            _uiState.value = Success()
+        }
+    }
 }

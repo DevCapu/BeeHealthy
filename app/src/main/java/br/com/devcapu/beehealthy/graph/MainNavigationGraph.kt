@@ -2,7 +2,6 @@ package br.com.devcapu.beehealthy.graph
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.navigation
 import br.com.devcapu.beehealthy.screen.main.HOME_SCREEN_ROUTE
 import br.com.devcapu.beehealthy.screen.main.homeScreen
@@ -18,9 +17,7 @@ fun NavGraphBuilder.mainNavGraph(
         route = MAIN_GRAPH_ROUTE,
         startDestination = HOME_SCREEN_ROUTE,
     ) {
-        homeScreen(
-            onLogout = onLogout
-        )
+        homeScreen(onLogout = onLogout)
 //        composable(
 //            route = "${AddFoodScreen.route}/{mealId}",
 //            arguments = listOf(navArgument("mealId") { type = NavType.StringType })

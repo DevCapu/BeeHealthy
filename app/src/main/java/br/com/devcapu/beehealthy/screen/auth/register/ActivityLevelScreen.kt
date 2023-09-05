@@ -32,7 +32,7 @@ import br.com.devcapu.beehealthy.model.patient.health.ActivityLevel.ACTIVE
 import br.com.devcapu.beehealthy.model.patient.health.ActivityLevel.LOW
 import br.com.devcapu.beehealthy.model.patient.health.ActivityLevel.MODERATE
 import br.com.devcapu.beehealthy.model.patient.health.ActivityLevel.SEDENTARY
-import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
+import br.com.devcapu.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
 
@@ -130,7 +130,7 @@ fun ActivityLevelSelectionScreen(
 @Preview(showSystemUi = true)
 @Composable
 fun ActivityLevelScreenPreview() {
-    BeeHealthyTheme {
+    br.com.devcapu.ui.theme.BeeHealthyTheme {
         ActivityLevelSelectionScreen(RegisterUIState()) { }
     }
 }

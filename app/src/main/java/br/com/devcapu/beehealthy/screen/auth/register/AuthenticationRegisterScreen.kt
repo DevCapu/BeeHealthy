@@ -45,7 +45,7 @@ import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.common.ui.extension.visualizationMode
 import br.com.devcapu.beehealthy.component.OutlineInput
 import br.com.devcapu.beehealthy.component.PasswordTrailingIcon
-import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
+import br.com.devcapu.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel.Companion.Factory
@@ -161,7 +161,7 @@ fun AuthRegisterScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    BeeHealthyTheme {
+    br.com.devcapu.ui.theme.BeeHealthyTheme {
         AuthRegisterScreen(
             state = RegisterUIState(),
             onEmailChange = { },

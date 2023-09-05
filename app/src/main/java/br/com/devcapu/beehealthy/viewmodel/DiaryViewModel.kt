@@ -8,14 +8,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import br.com.devcapu.beehealthy.dao.BeeHealthyDatabase
-import br.com.devcapu.beehealthy.usecase.DiaryUiState
 import br.com.devcapu.beehealthy.local.LocalCategoryDataSource
 import br.com.devcapu.beehealthy.repository.CategoryRepository
-import br.com.devcapu.beehealthy.repository.LoginRepository
 import br.com.devcapu.beehealthy.repository.PatientRepository
 import br.com.devcapu.beehealthy.uistate.CaloriesUiState
 import br.com.devcapu.beehealthy.uistate.MacroUiState
 import br.com.devcapu.beehealthy.uistate.MacrosUiState
+import br.com.devcapu.beehealthy.usecase.DiaryUiState
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,14 +22,13 @@ import kotlinx.coroutines.launch
 
 class DiaryViewModel(private val patientRepository: PatientRepository) : ViewModel() {
 
-    private val loginRepository = LoginRepository()
-    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     private var _state = MutableStateFlow(DiaryUiState())
     val state: StateFlow<DiaryUiState> = _state
 
     init {
-        firebaseAuth.currentUser?.email?.let {
+        auth.currentUser?.email?.let {
             viewModelScope.launch {
                 val patient = patientRepository.searchUserWith(email = it)
                 patient.bodyCaloriesNeeds?.let {
@@ -49,7 +47,7 @@ class DiaryViewModel(private val patientRepository: PatientRepository) : ViewMod
                                 total = it.macros.fats.toString()
                             )
                         ),
-                        onClickLogout = { loginRepository.logout { it() } }
+                        onClickLogout = { auth.signOut() }
                     )
                 }
             }

@@ -12,7 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
+import br.com.devcapu.ui.theme.BeeHealthyTheme
 
 @Composable
 fun LoadingScreen() {
@@ -32,7 +32,7 @@ fun LoadingScreen() {
 @Preview
 @Composable
 fun LoadingScreenPreview() {
-    BeeHealthyTheme {
+    br.com.devcapu.ui.theme.BeeHealthyTheme {
         LoadingScreen()
     }
 }

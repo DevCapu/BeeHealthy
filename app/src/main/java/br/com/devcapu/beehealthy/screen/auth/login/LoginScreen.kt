@@ -9,6 +9,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,14 +55,23 @@ fun NavGraphBuilder.loginScreen(
         val formState by viewModel.formState.collectAsState()
 
         when (uiState) {
-            is Success -> { onNavigateToHome() }
+            is Success -> {
+                LaunchedEffect(Unit) {
+                    onNavigateToHome()
+                }
+            }
+
             Initial, is Error -> {
+                LaunchedEffect(Unit) { viewModel.verifyIfIsLoggedIn() }
                 LoginScreen(
                     formState = formState,
                     onGoToRegisterScreen = onNavigateToRegisterScreen
                 )
             }
-            Loading -> { LoadingScreen() }
+
+            Loading -> {
+                LoadingScreen()
+            }
         }
     }
 }
@@ -111,7 +121,10 @@ fun LoginScreen(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             ),
-            actions = KeyboardActions(onDone = { manager.clearFocus() })
+            actions = KeyboardActions(onDone = {
+                formState.onClickLogin()
+                manager.clearFocus()
+            })
         )
 
         Button(

@@ -29,8 +29,8 @@ import br.com.devcapu.beehealthy.component.Meals
 import br.com.devcapu.beehealthy.component.card.BeeCard
 import br.com.devcapu.beehealthy.component.card.BeeCardHeader
 import br.com.devcapu.beehealthy.food.nutrition.components.NutritionStats
-import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.theme.Carme
+import br.com.devcapu.ui.theme.BeeHealthyTheme
+import br.com.devcapu.ui.theme.Carme
 import br.com.devcapu.beehealthy.usecase.DiaryUiState
 import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel
 import br.com.devcapu.beehealthy.viewmodel.DiaryViewModel.Companion.Factory
@@ -50,7 +50,7 @@ fun NavGraphBuilder.diaryScreen() {
 }
 
 @Composable
-fun DiaryScreen(uiState: DiaryUiState) = BeeHealthyTheme {
+fun DiaryScreen(uiState: DiaryUiState) = br.com.devcapu.ui.theme.BeeHealthyTheme {
     LazyColumn(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
@@ -74,7 +74,7 @@ private fun NutritionCard(uiState: DiaryUiState) {
                     Text(
                         text = stringResource(R.string.nutrition_label),
                         fontWeight = FontWeight.SemiBold,
-                        fontFamily = Carme,
+                        fontFamily = br.com.devcapu.ui.theme.Carme,
                         fontSize = 22.sp
                     )
                 },
@@ -84,7 +84,7 @@ private fun NutritionCard(uiState: DiaryUiState) {
                         text = stringResource(R.string.see_details_label),
                         color = Color(0xFF2196F3),
                         fontWeight = FontWeight.Bold,
-                        fontFamily = Carme,
+                        fontFamily = br.com.devcapu.ui.theme.Carme,
                         fontSize = 14.sp
                     )
                 }
@@ -103,7 +103,7 @@ private fun MealCard(uiState: DiaryUiState) {
                     Text(
                         text = stringResource(R.string.meals_label),
                         fontWeight = FontWeight.SemiBold,
-                        fontFamily = Carme,
+                        fontFamily = br.com.devcapu.ui.theme.Carme,
                         fontSize = 22.sp
                     )
                 },

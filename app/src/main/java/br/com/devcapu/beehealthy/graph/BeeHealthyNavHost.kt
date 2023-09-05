@@ -14,7 +14,9 @@ fun BeeHealthyNavHost() {
     ) {
         authGraph(authNavController)
         mainNavGraph(
-            onLogout = { authNavController.navigateToLogin()}
+            onLogout = {
+                authNavController.navigateToLogin()
+            }
         )
     }
 }

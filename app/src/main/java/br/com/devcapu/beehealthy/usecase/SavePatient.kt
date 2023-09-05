@@ -1,6 +1,6 @@
 package br.com.devcapu.beehealthy.usecase
 
-import br.com.devcapu.beehealthy.repository.RegisterRepository
+import br.com.devcapu.auth.repository.RegisterRepository
 import br.com.devcapu.beehealthy.repository.HealthRepository
 import br.com.devcapu.beehealthy.repository.PatientRepository
 import br.com.devcapu.beehealthy.model.nutrition.Macros
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class SavePatient(
     private val patientRepository: PatientRepository,
     private val healthRepository: HealthRepository,
-    private val registerRepository: RegisterRepository,
+    private val registerRepository: br.com.devcapu.auth.repository.RegisterRepository,
 ) {
     operator fun invoke(
         patient: Patient,

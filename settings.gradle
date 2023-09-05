@@ -14,3 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "BeeHealthy"
 include ':app'
+include ':core:ui'
+enableFeaturePreview("VERSION_CATALOGS")
+include ':data:auth'
+include ':domain:auth'

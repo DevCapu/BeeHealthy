@@ -31,7 +31,7 @@ import br.com.devcapu.beehealthy.component.SelectionTitle
 import br.com.devcapu.beehealthy.model.patient.health.Objective.GAIN
 import br.com.devcapu.beehealthy.model.patient.health.Objective.LOSE
 import br.com.devcapu.beehealthy.model.patient.health.Objective.MAINTAIN
-import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
+import br.com.devcapu.ui.theme.BeeHealthyTheme
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel.Companion.Factory
@@ -115,7 +115,7 @@ fun ObjectiveSelectionScreen(
 @Preview(showSystemUi = true)
 @Composable
 fun ObjectiveSelectionScreenPreview() {
-    BeeHealthyTheme {
+    br.com.devcapu.ui.theme.BeeHealthyTheme {
         ObjectiveSelectionScreen(RegisterUIState()) { }
     }
 }

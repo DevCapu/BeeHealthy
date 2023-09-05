@@ -43,8 +43,8 @@ import androidx.navigation.compose.composable
 import br.com.devcapu.beehealthy.R
 import br.com.devcapu.beehealthy.model.patient.health.BiologicalGender.FEMALE
 import br.com.devcapu.beehealthy.model.patient.health.BiologicalGender.MALE
-import br.com.devcapu.beehealthy.theme.BeeHealthyTheme
-import br.com.devcapu.beehealthy.theme.PrimaryFont
+import br.com.devcapu.ui.theme.BeeHealthyTheme
+import br.com.devcapu.ui.theme.PrimaryFont
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel
 import br.com.devcapu.beehealthy.viewmodel.RegisterViewModel.Companion.Factory
@@ -85,7 +85,7 @@ fun GenderSelectionScreen(
         Text(
             text = stringResource(R.string.gender_selection_title),
             fontSize = 36.sp,
-            fontFamily = PrimaryFont,
+            fontFamily = br.com.devcapu.ui.theme.PrimaryFont,
             color = MaterialTheme.colors.primary,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -159,7 +159,7 @@ fun GenderCard(icon: ImageVector, title: String, isSelected: Boolean, onClick: (
                 text = title,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = PrimaryFont,
+                fontFamily = br.com.devcapu.ui.theme.PrimaryFont,
                 color = Color.White
             )
         }
@@ -169,7 +169,7 @@ fun GenderCard(icon: ImageVector, title: String, isSelected: Boolean, onClick: (
 @Preview(showSystemUi = true)
 @Composable
 fun SelectGenderPreview() {
-    BeeHealthyTheme {
+    br.com.devcapu.ui.theme.BeeHealthyTheme {
         GenderSelectionScreen(RegisterUIState()) { }
     }
 }

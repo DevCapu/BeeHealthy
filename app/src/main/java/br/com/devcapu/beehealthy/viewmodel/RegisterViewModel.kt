@@ -11,7 +11,7 @@ import br.com.devcapu.beehealthy.model.patient.Email
 import br.com.devcapu.beehealthy.model.patient.Patient
 import br.com.devcapu.beehealthy.repository.HealthRepository
 import br.com.devcapu.beehealthy.repository.PatientRepository
-import br.com.devcapu.beehealthy.repository.RegisterRepository
+import br.com.devcapu.auth.repository.RegisterRepository
 import br.com.devcapu.beehealthy.uistate.RegisterUIState
 import br.com.devcapu.beehealthy.usecase.SavePatient
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +25,7 @@ class RegisterViewModel(
     private var _uiState = MutableStateFlow(RegisterUIState())
     val uiState: StateFlow<RegisterUIState> = _uiState
 
-    private val registerRepository = RegisterRepository()
+    private val registerRepository = br.com.devcapu.auth.repository.RegisterRepository()
 
     init {
         _uiState.value =
